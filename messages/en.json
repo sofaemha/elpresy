@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "research": "Research",
+    "about": "About",
+    "getStarted": "Get Started",
+    "language": "EN"
+  },
+  "hero": {
+    "badge": "Undergraduate Thesis Project • 2025",
+    "headline1": "Machine Learning‑Driven",
+    "headline2": "AC Ampere Prediction",
+    "headline3": "for Smarter Energy Use.",
+    "subheadline": "ELPRESY leverages CART Decision Tree Regression to forecast your air conditioner's daily ampere consumption from just two inputs — enabling data-driven energy optimization for academic research and real-world application.",
+    "ctaPrimary": "Try ELPRESY",
+    "ctaSecondary": "Learn More",
+    "mockStatus": "Model Ready — CART Decision Tree",
+    "mockAmpereLabel": "Ampere Per Cycle",
+    "mockHoursLabel": "Daily Usage Hours",
+    "mockPredict": "Run Prediction",
+    "mockComplete": "Prediction Complete",
+    "mockResultLabel": "Predicted Daily Usage",
+    "mockVsLast": "vs. last prediction",
+    "mockConfidence": "Confidence",
+    "mockMin": "Min",
+    "mockMax": "Max",
+    "mockTrend": "7-Day Trend",
+    "mockLive": "Live"
+  },
+  "features": {
+    "heading": "Everything You Need to Analyze AC Energy Consumption",
+    "subheading": "A comprehensive suite of tools built for rigorous academic analysis and practical energy monitoring.",
+    "predictionEngine": {
+      "title": "CART Decision Tree\nRegression Engine",
+      "description": "Powered by the ml-cart algorithm, our prediction engine delivers high-accuracy estimations using robust machine learning models optimized for continuous variables."
+    },
+    "charts": {
+      "title": "Charts & Visualization",
+      "description": "Interactive charts that map out your predictions over time, making it easy to spot trends and anomalies."
+    },
+    "history": {
+      "title": "History & Log",
+      "description": "A detailed repository of all past predictions. Filter, search, and review historical data with ease."
+    },
+    "export": {
+      "title": "Export Data",
+      "description": "Export your findings instantly to CSV and PDF formats for academic reporting and further analysis."
+    },
+    "multiLanguage": {
+      "title": "Multi-language",
+      "description": "Fully localized interface supporting both Indonesian and English to suit your audience."
+    }
+  },
+  "howItWorks": {
+    "heading": "From Input to Insight in Three Steps",
+    "subheading": "Our streamlined process makes complex machine learning predictions accessible and actionable.",
+    "step1": {
+      "title": "Input Variables",
+      "description": "Enter your AC's ampere per cycle and the total daily usage hours into the system."
+    },
+    "step2": {
+      "title": "Run Prediction",
+      "description": "The CART Decision Tree Regression model processes your inputs to calculate the expected usage."
+    },
+    "step3": {
+      "title": "Analyze Results",
+      "description": "View detailed charts, track historical performance, and export your data for further analysis."
+    },
+    "poweredBy": "Powered by ml-cart — CART Decision Tree Regression algorithm"
+  },
+  "preview": {
+    "heading": "A Research Tool Built for Precision",
+    "subheading": "Experience an interface designed for academic rigor without compromising on modern usability.",
+    "dashboard": "Dashboard",
+    "predictions": "Predictions",
+    "history": "History",
+    "settings": "Settings",
+    "pageTitle": "Dashboard",
+    "pageSubtitle": "Overview of your prediction activity",
+    "modelActive": "Model Active",
+    "totalPredictions": "Total Predictions",
+    "latestAmpere": "Latest Ampere",
+    "averageDaily": "Average Daily",
+    "usageTrend": "Usage Trend",
+    "recentPredictions": "Recent Predictions",
+    "viewAll": "View All",
+    "tableId": "ID",
+    "tableDate": "Date",
+    "tableInputA": "Input A",
+    "tableHours": "Hours",
+    "tableResult": "Result",
+    "tableStatus": "Status",
+    "statusDone": "Done",
+    "proofOpenSource": "Open Source",
+    "proofAccuracy": "Thesis-Grade Accuracy",
+    "proofNextjs": "Built with Next.js 15"
+  },
+  "research": {
+    "heading": "The Research Behind ELPRESY",
+    "subheading": "Understanding why predicting AC ampere usage matters — and how ELPRESY approaches it.",
+    "quote": "AC units account for 40–60% of residential electricity consumption in tropical climates.",
+    "quoteCite": "— IEA, The Future of Cooling (2018)",
+    "paragraph1": "In Indonesia and other tropical nations, air conditioning is not a luxury — it's a necessity. Yet most households have little visibility into how much energy their AC units actually draw on a daily basis. ELPRESY was built to close that gap.",
+    "paragraph2": "By applying machine learning to just two easily measurable inputs, the system delivers reliable daily ampere forecasts without requiring specialized metering equipment or electrical expertise.",
+    "objectivesLabel": "Core Research Objectives",
+    "objective1": "Predict daily AC ampere usage with high reliability based on minimal input variables.",
+    "objective2": "Visualize consumption trends over time to identify inefficiencies and usage patterns.",
+    "objective3": "Provide exportable data logging in CSV and PDF formats for continuous academic analysis.",
+    "methodologyLabel": "Methodology:",
+    "methodology": "CART (Classification and Regression Trees) via the ml-cart library, configured for regression on continuous variables with pruning to prevent overfitting.",
+    "specTitle": "Technical Specification",
+    "specDataSheet": "Data Sheet",
+    "specAlgorithm": "Algorithm",
+    "specAlgorithmValue": "CART Decision Tree Regression",
+    "specLibrary": "Library",
+    "specLibraryValue": "ml-cart",
+    "specInputs": "Input Variables",
+    "specInputsValue": "2 (Ampere/Cycle, Usage Hours)",
+    "specOutput": "Output",
+    "specOutputValue": "Daily Ampere Prediction (A)",
+    "specModelType": "Model Type",
+    "specModelTypeValue": "Supervised — Regression",
+    "specLanguage": "Language Support",
+    "specLanguageValue": "Indonesian (ID) & English (EN)",
+    "specFooter": "Model trained & validated"
+  },
+  "author": {
+    "badge": "Built for the Thesis Defense",
+    "heading": "The Mind Behind ELPRESY",
+    "name": "[Your Name]",
+    "affiliation": "Computer Science / Electrical Engineering • [University] • 2025",
+    "bio": "This application serves as the practical implementation of my undergraduate thesis. It aims to demonstrate the viability of CART Decision Tree Regression in forecasting electrical consumption, providing an intuitive interface for a complex machine learning model.",
+    "githubLabel": "GitHub Profile",
+    "emailLabel": "Email Contact"
+  },
+  "footer": {
+    "tagline": "Predict. Analyze. Optimize.",
+    "copyright": "© 2025 ELPRESY — Electrical Predictions System.",
+    "thesis": "Undergraduate Thesis Project.",
+    "darkMode": "Dark Mode",
+    "active": "Active"
+  }
+}

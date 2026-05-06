@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "features": "Fitur",
+    "howItWorks": "Cara Kerja",
+    "research": "Penelitian",
+    "about": "Tentang",
+    "getStarted": "Mulai Sekarang",
+    "language": "ID"
+  },
+  "hero": {
+    "badge": "Proyek Skripsi Sarjana • 2025",
+    "headline1": "Prediksi Ampere AC",
+    "headline2": "Berbasis Machine Learning",
+    "headline3": "untuk Efisiensi Energi.",
+    "subheadline": "ELPRESY memanfaatkan CART Decision Tree Regression untuk memperkirakan konsumsi ampere harian AC Anda hanya dari dua input — memungkinkan optimasi energi berbasis data untuk penelitian akademis dan aplikasi dunia nyata.",
+    "ctaPrimary": "Coba ELPRESY",
+    "ctaSecondary": "Pelajari Lebih Lanjut",
+    "mockStatus": "Model Siap — CART Decision Tree",
+    "mockAmpereLabel": "Ampere Per Siklus",
+    "mockHoursLabel": "Jam Penggunaan Harian",
+    "mockPredict": "Jalankan Prediksi",
+    "mockComplete": "Prediksi Selesai",
+    "mockResultLabel": "Prediksi Penggunaan Harian",
+    "mockVsLast": "vs. prediksi sebelumnya",
+    "mockConfidence": "Kepercayaan",
+    "mockMin": "Min",
+    "mockMax": "Maks",
+    "mockTrend": "Tren 7 Hari",
+    "mockLive": "Langsung"
+  },
+  "features": {
+    "heading": "Semua yang Anda Butuhkan untuk Menganalisis Konsumsi Energi AC",
+    "subheading": "Rangkaian alat komprehensif yang dibangun untuk analisis akademis yang ketat dan pemantauan energi praktis.",
+    "predictionEngine": {
+      "title": "Mesin Regresi\nCART Decision Tree",
+      "description": "Didukung oleh algoritma ml-cart, mesin prediksi kami memberikan estimasi akurasi tinggi menggunakan model machine learning yang kuat dan dioptimalkan untuk variabel kontinu."
+    },
+    "charts": {
+      "title": "Grafik & Visualisasi",
+      "description": "Grafik interaktif yang memetakan prediksi Anda dari waktu ke waktu, memudahkan untuk menemukan tren dan anomali."
+    },
+    "history": {
+      "title": "Riwayat & Log",
+      "description": "Repositori lengkap dari semua prediksi sebelumnya. Filter, cari, dan tinjau data historis dengan mudah."
+    },
+    "export": {
+      "title": "Ekspor Data",
+      "description": "Ekspor temuan Anda secara instan ke format CSV dan PDF untuk pelaporan akademis dan analisis lanjutan."
+    },
+    "multiLanguage": {
+      "title": "Multi-bahasa",
+      "description": "Antarmuka yang sepenuhnya dilokalkan mendukung bahasa Indonesia dan Inggris sesuai kebutuhan audiens Anda."
+    }
+  },
+  "howItWorks": {
+    "heading": "Dari Input ke Insight dalam Tiga Langkah",
+    "subheading": "Proses kami yang efisien menjadikan prediksi machine learning yang kompleks dapat diakses dan ditindaklanjuti.",
+    "step1": {
+      "title": "Input Variabel",
+      "description": "Masukkan ampere per siklus AC Anda dan total jam penggunaan harian ke dalam sistem."
+    },
+    "step2": {
+      "title": "Jalankan Prediksi",
+      "description": "Model CART Decision Tree Regression memproses input Anda untuk menghitung penggunaan yang diharapkan."
+    },
+    "step3": {
+      "title": "Analisis Hasil",
+      "description": "Lihat grafik detail, lacak kinerja historis, dan ekspor data Anda untuk analisis lebih lanjut."
+    },
+    "poweredBy": "Didukung oleh ml-cart — Algoritma CART Decision Tree Regression"
+  },
+  "preview": {
+    "heading": "Alat Penelitian yang Dibangun untuk Presisi",
+    "subheading": "Rasakan antarmuka yang dirancang untuk ketelitian akademis tanpa mengorbankan kegunaan modern.",
+    "dashboard": "Dasbor",
+    "predictions": "Prediksi",
+    "history": "Riwayat",
+    "settings": "Pengaturan",
+    "pageTitle": "Dasbor",
+    "pageSubtitle": "Gambaran aktivitas prediksi Anda",
+    "modelActive": "Model Aktif",
+    "totalPredictions": "Total Prediksi",
+    "latestAmpere": "Ampere Terkini",
+    "averageDaily": "Rata-rata Harian",
+    "usageTrend": "Tren Penggunaan",
+    "recentPredictions": "Prediksi Terbaru",
+    "viewAll": "Lihat Semua",
+    "tableId": "ID",
+    "tableDate": "Tanggal",
+    "tableInputA": "Input A",
+    "tableHours": "Jam",
+    "tableResult": "Hasil",
+    "tableStatus": "Status",
+    "statusDone": "Selesai",
+    "proofOpenSource": "Sumber Terbuka",
+    "proofAccuracy": "Akurasi Tingkat Skripsi",
+    "proofNextjs": "Dibangun dengan Next.js 15"
+  },
+  "research": {
+    "heading": "Penelitian di Balik ELPRESY",
+    "subheading": "Memahami mengapa prediksi penggunaan ampere AC penting — dan bagaimana ELPRESY mendekat masalah ini.",
+    "quote": "Unit AC menyumbang 40–60% konsumsi listrik rumah tangga di iklim tropis.",
+    "quoteCite": "— IEA, The Future of Cooling (2018)",
+    "paragraph1": "Di Indonesia dan negara tropis lainnya, pendingin udara bukan kemewahan — melainkan kebutuhan. Namun sebagian besar rumah tangga memiliki sedikit visibilitas tentang seberapa banyak energi yang benar-benar ditarik oleh unit AC mereka setiap hari. ELPRESY dibangun untuk menutup kesenjangan tersebut.",
+    "paragraph2": "Dengan menerapkan machine learning pada hanya dua input yang mudah diukur, sistem ini memberikan perkiraan ampere harian yang andal tanpa memerlukan peralatan pengukuran khusus atau keahlian kelistrikan.",
+    "objectivesLabel": "Tujuan Penelitian Utama",
+    "objective1": "Memprediksi penggunaan ampere AC harian dengan keandalan tinggi berdasarkan variabel input minimal.",
+    "objective2": "Memvisualisasikan tren konsumsi dari waktu ke waktu untuk mengidentifikasi inefisiensi dan pola penggunaan.",
+    "objective3": "Menyediakan pencatatan data yang dapat diekspor dalam format CSV dan PDF untuk analisis akademis berkelanjutan.",
+    "methodologyLabel": "Metodologi:",
+    "methodology": "CART (Classification and Regression Trees) melalui pustaka ml-cart, dikonfigurasi untuk regresi pada variabel kontinu dengan pruning untuk mencegah overfitting.",
+    "specTitle": "Spesifikasi Teknis",
+    "specDataSheet": "Lembar Data",
+    "specAlgorithm": "Algoritma",
+    "specAlgorithmValue": "CART Decision Tree Regression",
+    "specLibrary": "Pustaka",
+    "specLibraryValue": "ml-cart",
+    "specInputs": "Variabel Input",
+    "specInputsValue": "2 (Ampere/Siklus, Jam Penggunaan)",
+    "specOutput": "Output",
+    "specOutputValue": "Prediksi Ampere Harian (A)",
+    "specModelType": "Tipe Model",
+    "specModelTypeValue": "Supervised — Regresi",
+    "specLanguage": "Dukungan Bahasa",
+    "specLanguageValue": "Indonesia (ID) & Inggris (EN)",
+    "specFooter": "Model terlatih & tervalidasi"
+  },
+  "author": {
+    "badge": "Dibangun untuk Sidang Skripsi",
+    "heading": "Sang Pemikir di Balik ELPRESY",
+    "name": "[Nama Anda]",
+    "affiliation": "Teknik Informatika / Teknik Elektro • [Universitas] • 2025",
+    "bio": "Aplikasi ini merupakan implementasi praktis dari skripsi sarjana saya. Bertujuan untuk mendemonstrasikan kelayakan CART Decision Tree Regression dalam memprediksi konsumsi listrik, menyediakan antarmuka intuitif untuk model machine learning yang kompleks.",
+    "githubLabel": "Profil GitHub",
+    "emailLabel": "Kontak Email"
+  },
+  "footer": {
+    "tagline": "Prediksi. Analisis. Optimalkan.",
+    "copyright": "© 2025 ELPRESY — Electrical Predictions System.",
+    "thesis": "Proyek Skripsi Sarjana.",
+    "darkMode": "Mode Gelap",
+    "active": "Aktif"
+  }
+}
