@@ -2,12 +2,11 @@ import { GitBranch, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useTranslations } from "next-intl";
 
-export default function AuthorSection() {
+export default function Author() {
   const t = useTranslations("author");
 
   return (
     <section id="about" className="py-32 bg-surface-2 relative overflow-hidden">
-      {/* Background Decor */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.02]">
         <div className="w-[800px] h-[800px] rounded-full border-[100px] border-white" />
       </div>
@@ -24,7 +23,6 @@ export default function AuthorSection() {
           </h2>
           
           <div className="bg-surface border border-border rounded-2xl p-8 md:p-12 w-full shadow-2xl relative group">
-            {/* Subtle Top Border Glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-50" />
             
             <h3 className="text-2xl md:text-3xl font-display font-semibold text-white mb-2">

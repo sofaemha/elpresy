@@ -1,7 +1,7 @@
 import { Network, LineChart, History, Download, Languages } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-export default function FeaturesSection() {
+export default function Features() {
   const t = useTranslations("features");
 
   return (

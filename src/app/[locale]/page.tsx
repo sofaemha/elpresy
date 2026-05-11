@@ -1,11 +1,11 @@
-import Navbar from "@/components/landing/Navbar";
-import HeroSection from "@/components/landing/HeroSection";
-import FeaturesSection from "@/components/landing/FeaturesSection";
-import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import Navbar from "@/components/landing/layout/navbar";
+import Hero from "@/components/landing/hero";
+import Features from "@/components/landing/features";
+import Workflow from "@/components/landing/workflow";
 import PreviewSection from "@/components/landing/PreviewSection";
 import ResearchSection from "@/components/landing/ResearchSection";
-import AuthorSection from "@/components/landing/AuthorSection";
-import Footer from "@/components/landing/Footer";
+import Author from "@/components/landing/author";
+import Footer from "@/components/landing/layout/footer";
 
 export default function Home() {
   return (
@@ -13,12 +13,12 @@ export default function Home() {
       <Navbar />
 
       <div className="flex-1 flex flex-col">
-        <HeroSection />
-        <FeaturesSection />
-        <HowItWorksSection />
+        <Hero />
+        <Features />
+        <Workflow />
         <PreviewSection />
         <ResearchSection />
-        <AuthorSection />
+        <Author />
       </div>
 
       <Footer />

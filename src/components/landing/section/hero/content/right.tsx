@@ -1,78 +1,11 @@
 import { ArrowRight, Activity, TrendingUp, Zap, Clock, BarChart3, CheckCircle2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
 
-export default function HeroSection() {
-  const t = useTranslations("hero");
-
-  return (
-    <section className="relative min-h-[100dvh] flex flex-col justify-center pt-20 overflow-hidden">
-      {/* Background Subtle Grid */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
-          backgroundSize: "4rem 4rem",
-        }}
-      />
-
-      {/* Ambient corner glow */}
-      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gold rounded-full blur-[200px] animate-pulse-gold pointer-events-none" />
-
-      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-        {/* Left Content */}
-        <div className="flex flex-col items-start max-w-[55ch]">
-          <div className="h-[1px] w-12 bg-gold mb-6" />
-
-          <Badge
-            variant="outline"
-            className="border-gold/30 text-gold-light bg-gold/5 mb-6 rounded-full px-4 py-1 font-medium"
-          >
-            {t("badge")}
-          </Badge>
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1] tracking-tight mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-500">
-              {t("headline1")}
-            </span>
-            <br />
-            <span className="gold-shimmer">{t("headline2")}</span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-zinc-300 to-zinc-600">
-              {t("headline3")}
-            </span>
-          </h1>
-
-          <p className="text-lg text-text-muted mb-10 leading-relaxed font-light">
-            {t("subheadline")}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <Button className="bg-gold hover:bg-gold-light text-black font-semibold rounded-full px-8 py-6 h-auto text-base transition-all duration-300 group shadow-[0_0_20px_rgba(201,168,76,0.25)] hover:shadow-[0_0_30px_rgba(201,168,76,0.4)]">
-              {t("ctaPrimary")}
-              <ArrowRight
-                className="ml-2 group-hover:translate-x-1 transition-transform"
-                size={18}
-              />
-            </Button>
-            <Button
-              variant="ghost"
-              className="text-text-primary hover:text-gold hover:bg-gold/10 rounded-full px-8 py-6 h-auto text-base transition-all duration-300"
-            >
-              {t("ctaSecondary")}
-            </Button>
-          </div>
-        </div>
-
-        {/* Right Visualization — Detailed Mock UI */}
+export default function Right({t}: {t: any}) {
+    return (
         <div className="relative lg:h-[640px] flex items-center justify-center lg:justify-end">
-          {/* Ambient Glow behind card */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-gold rounded-full blur-[140px] animate-pulse-gold pointer-events-none" />
 
           <div className="relative w-full max-w-[420px] bg-surface border border-border rounded-2xl shadow-2xl shadow-black/60 overflow-hidden backdrop-blur-xl transition-transform duration-500 hover:-translate-y-2 group">
-            {/* Window Chrome */}
             <div className="px-5 py-3.5 border-b border-border/50 bg-surface-2/60 flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
@@ -245,7 +178,5 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
+    )
 }

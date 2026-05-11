@@ -19,10 +19,8 @@ export default function Footer() {
     <footer className="bg-bg pt-16 pb-8 border-t border-border/30">
       <div className="container mx-auto px-6">
 
-        {/* Top Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
 
-          {/* Logo & Tagline */}
           <div className="flex flex-col items-center md:items-start gap-3">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="text-gold group-hover:text-gold-light transition-colors">
@@ -33,7 +31,6 @@ export default function Footer() {
             <p className="text-text-muted text-sm font-medium">{t("tagline")}</p>
           </div>
 
-          {/* Quick Links */}
           <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4">
             {NAV_ITEMS.map((item) => (
               <a
@@ -52,14 +49,12 @@ export default function Footer() {
             </a>
           </nav>
 
-          {/* Right Section (Theme Note) */}
           <div className="text-sm text-text-faint font-mono">
             {t("darkMode")} <span className="text-gold/50">{t("active")}</span>
           </div>
 
         </div>
 
-        {/* Bottom Section */}
         <div className="pt-8 border-t border-border/30 text-center flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-faint">
           <p>{t("copyright")}</p>
           <p>{t("thesis")}</p>

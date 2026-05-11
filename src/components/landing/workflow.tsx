@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-export default function HowItWorksSection() {
+export default function Workflow() {
   const t = useTranslations("howItWorks");
 
   const steps = [
