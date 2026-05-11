@@ -8,7 +8,7 @@
     "language": "EN"
   },
   "hero": {
-    "badge": "Undergraduate Thesis Project • 2025",
+    "badge": "Undergraduate Thesis Project • 2026",
     "headline1": "Machine Learning‑Driven",
     "headline2": "AC Ampere Prediction",
     "headline3": "for Smarter Energy Use.",
@@ -129,14 +129,14 @@
     "badge": "Built for the Thesis Defense",
     "heading": "The Mind Behind ELPRESY",
     "name": "[Your Name]",
-    "affiliation": "Computer Science / Electrical Engineering • [University] • 2025",
+    "affiliation": "Computer Science / Electrical Engineering • [University] • 2026",
     "bio": "This application serves as the practical implementation of my undergraduate thesis. It aims to demonstrate the viability of CART Decision Tree Regression in forecasting electrical consumption, providing an intuitive interface for a complex machine learning model.",
     "githubLabel": "GitHub Profile",
     "emailLabel": "Email Contact"
   },
   "footer": {
     "tagline": "Predict. Analyze. Optimize.",
-    "copyright": "© 2025 ELPRESY — Electrical Predictions System.",
+    "copyright": "© 2026 ELPRESY — Electrical Predictions System.",
     "thesis": "Undergraduate Thesis Project.",
     "darkMode": "Dark Mode",
     "active": "Active"

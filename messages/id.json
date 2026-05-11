@@ -8,7 +8,7 @@
     "language": "ID"
   },
   "hero": {
-    "badge": "Proyek Skripsi Sarjana • 2025",
+    "badge": "Proyek Skripsi Sarjana • 2026",
     "headline1": "Prediksi Ampere AC",
     "headline2": "Berbasis Machine Learning",
     "headline3": "untuk Efisiensi Energi.",
@@ -129,14 +129,14 @@
     "badge": "Dibangun untuk Sidang Skripsi",
     "heading": "Sang Pemikir di Balik ELPRESY",
     "name": "[Nama Anda]",
-    "affiliation": "Teknik Informatika / Teknik Elektro • [Universitas] • 2025",
+    "affiliation": "Teknik Informatika / Teknik Elektro • [Universitas] • 2026",
     "bio": "Aplikasi ini merupakan implementasi praktis dari skripsi sarjana saya. Bertujuan untuk mendemonstrasikan kelayakan CART Decision Tree Regression dalam memprediksi konsumsi listrik, menyediakan antarmuka intuitif untuk model machine learning yang kompleks.",
     "githubLabel": "Profil GitHub",
     "emailLabel": "Kontak Email"
   },
   "footer": {
     "tagline": "Prediksi. Analisis. Optimalkan.",
-    "copyright": "© 2025 ELPRESY — Electrical Predictions System.",
+    "copyright": "© 2026 ELPRESY — Electrical Predictions System.",
     "thesis": "Proyek Skripsi Sarjana.",
     "darkMode": "Mode Gelap",
     "active": "Aktif"
