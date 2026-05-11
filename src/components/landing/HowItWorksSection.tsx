@@ -1,19 +1,23 @@
+import { useTranslations } from "next-intl";
+
 export default function HowItWorksSection() {
+  const t = useTranslations("howItWorks");
+
   const steps = [
     {
       number: "01",
-      title: "Input Variables",
-      description: "Enter your AC's ampere per cycle and the total daily usage hours into the system."
+      title: t("step1.title"),
+      description: t("step1.description")
     },
     {
       number: "02",
-      title: "Run Prediction",
-      description: "The CART Decision Tree Regression model processes your inputs to calculate the expected usage."
+      title: t("step2.title"),
+      description: t("step2.description")
     },
     {
       number: "03",
-      title: "Analyze Results",
-      description: "View detailed charts, track historical performance, and export your data for further analysis."
+      title: t("step3.title"),
+      description: t("step3.description")
     }
   ];
 
@@ -22,10 +26,10 @@ export default function HowItWorksSection() {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-            From Input to Insight in Three Steps
+            {t("heading")}
           </h2>
           <p className="text-lg text-text-muted">
-            Our streamlined process makes complex machine learning predictions accessible and actionable.
+            {t("subheading")}
           </p>
         </div>
 
@@ -48,7 +52,7 @@ export default function HowItWorksSection() {
 
         <div className="mt-20 text-center">
           <p className="inline-block px-6 py-2 rounded-full bg-surface-2 border border-border text-sm text-text-faint font-mono">
-            Powered by <span className="text-gold-light">ml-cart</span> — CART Decision Tree Regression algorithm
+            {t("poweredBy")}
           </p>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 
 const PREDICTIONS_DATA = [
   {
@@ -54,13 +55,6 @@ const PREDICTIONS_DATA = [
   },
 ];
 
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: BarChart3, label: "Predictions", active: false },
-  { icon: History, label: "History", active: false },
-  { icon: Settings, label: "Settings", active: false },
-];
-
 function TrendIcon({ trend }: { trend: "up" | "down" | "neutral" }) {
   if (trend === "up") return <TrendingUp size={12} className="text-emerald-400" />;
   if (trend === "down") return <TrendingDown size={12} className="text-red-400" />;
@@ -68,16 +62,25 @@ function TrendIcon({ trend }: { trend: "up" | "down" | "neutral" }) {
 }
 
 export default function PreviewSection() {
+  const t = useTranslations("preview");
+
+  const NAV_ITEMS = [
+    { icon: LayoutDashboard, label: t("dashboard"), active: true },
+    { icon: BarChart3, label: t("predictions"), active: false },
+    { icon: History, label: t("history"), active: false },
+    { icon: Settings, label: t("settings"), active: false },
+  ];
+
   return (
     <section className="py-28 bg-surface relative overflow-hidden">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4 tracking-tight">
-            A Research Tool Built for Precision
+            {t("heading")}
           </h2>
           <p className="text-lg text-text-muted leading-relaxed">
-            Experience an interface designed for academic rigor without compromising on modern usability.
+            {t("subheading")}
           </p>
         </div>
 
@@ -148,20 +151,20 @@ export default function PreviewSection() {
                 {/* Page Header */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-base font-display font-semibold text-white">Dashboard</h3>
-                    <p className="text-[11px] text-text-faint mt-0.5">Overview of your prediction activity</p>
+                    <h3 className="text-base font-display font-semibold text-white">{t("pageTitle")}</h3>
+                    <p className="text-[11px] text-text-faint mt-0.5">{t("pageSubtitle")}</p>
                   </div>
                   <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 bg-emerald-500/5 text-[10px] px-2.5 py-0.5 rounded-full">
-                    Model Active
+                    {t("modelActive")}
                   </Badge>
                 </div>
 
                 {/* Stat Cards */}
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { label: "Total Predictions", value: "1,248", change: "+12%", up: true },
-                    { label: "Latest Ampere", value: "8.4 A", change: "+2.4%", up: true },
-                    { label: "Average Daily", value: "7.9 A", change: "-0.3%", up: false },
+                    { label: t("totalPredictions"), value: "1,248", change: "+12%", up: true },
+                    { label: t("latestAmpere"), value: "8.4 A", change: "+2.4%", up: true },
+                    { label: t("averageDaily"), value: "7.9 A", change: "-0.3%", up: false },
                   ].map((stat) => (
                     <Card
                       key={stat.label}
@@ -187,9 +190,9 @@ export default function PreviewSection() {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-2 text-sm font-medium text-white">
                         <ChartIcon size={14} className="text-gold" />
-                        <span>Usage Trend</span>
+                        <span>{t("usageTrend")}</span>
                       </div>
-                      <span className="text-[9px] text-text-faint font-mono uppercase tracking-wider">7 Days</span>
+                      <span className="text-[9px] text-text-faint font-mono uppercase tracking-wider">7 DAYS</span>
                     </div>
                     <div className="flex-1 min-h-[120px] relative">
                       <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 60">
@@ -233,19 +236,19 @@ export default function PreviewSection() {
                     <div className="px-4 pt-4 pb-3 flex items-center justify-between border-b border-white/[0.04]">
                       <div className="flex items-center gap-2 text-sm font-medium text-white">
                         <History size={14} className="text-gold" />
-                        <span>Recent Predictions</span>
+                        <span>{t("recentPredictions")}</span>
                       </div>
-                      <span className="text-[10px] text-gold font-medium cursor-default">View All</span>
+                      <span className="text-[10px] text-gold font-medium cursor-default">{t("viewAll")}</span>
                     </div>
 
                     {/* Table Header */}
                     <div className="grid grid-cols-6 gap-2 px-4 py-2.5 text-[9px] text-text-faint uppercase tracking-wider font-semibold border-b border-white/[0.03]">
-                      <span>ID</span>
-                      <span>Date</span>
-                      <span>Input A</span>
-                      <span>Hours</span>
-                      <span>Result</span>
-                      <span className="text-right">Status</span>
+                      <span>{t("tableId")}</span>
+                      <span>{t("tableDate")}</span>
+                      <span>{t("tableInputA")}</span>
+                      <span>{t("tableHours")}</span>
+                      <span>{t("tableResult")}</span>
+                      <span className="text-right">{t("tableStatus")}</span>
                     </div>
 
                     {/* Table Rows */}
@@ -267,7 +270,7 @@ export default function PreviewSection() {
                           </span>
                           <span className="text-right">
                             <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 text-[8px] px-1.5 py-0 rounded-full font-medium">
-                              Done
+                              {t("statusDone")}
                             </Badge>
                           </span>
                         </div>
@@ -284,15 +287,15 @@ export default function PreviewSection() {
         <div className="mt-14 flex flex-wrap justify-center gap-10 text-sm font-medium text-text-muted">
           <div className="flex items-center gap-2">
             <CheckCircle2 size={16} className="text-gold" strokeWidth={1.5} />
-            <span>Open Source</span>
+            <span>{t("proofOpenSource")}</span>
           </div>
           <div className="flex items-center gap-2">
             <ShieldCheck size={16} className="text-gold" strokeWidth={1.5} />
-            <span>Thesis-Grade Accuracy</span>
+            <span>{t("proofAccuracy")}</span>
           </div>
           <div className="flex items-center gap-2">
             <Code2 size={16} className="text-gold" strokeWidth={1.5} />
-            <span>Built with Next.js 15</span>
+            <span>{t("proofNextjs")}</span>
           </div>
         </div>
       </div>

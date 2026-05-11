@@ -1,16 +1,19 @@
 import { Network, LineChart, History, Download, Languages } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function FeaturesSection() {
+  const t = useTranslations("features");
+
   return (
     <section id="features" className="py-28 bg-surface-2 relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="mb-16 max-w-2xl">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4 tracking-tight">
-            Everything You Need to Analyze AC Energy Consumption
+            {t("heading")}
           </h2>
           <p className="text-lg text-text-muted leading-relaxed">
-            A comprehensive suite of tools built for rigorous academic analysis and practical energy monitoring.
+            {t("subheading")}
           </p>
         </div>
 
@@ -27,11 +30,11 @@ export default function FeaturesSection() {
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
                 <Network className="text-gold mb-6" size={28} strokeWidth={1.5} />
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-3 tracking-tight">
-                  CART Decision Tree<br />Regression Engine
+                <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-3 tracking-tight whitespace-pre-line">
+                  {t("predictionEngine.title")}
                 </h3>
                 <p className="text-text-muted leading-relaxed max-w-md">
-                  Powered by the <span className="text-gold font-medium">ml-cart</span> algorithm, our prediction engine delivers high-accuracy estimations using robust machine learning models optimized for continuous variables.
+                  {t("predictionEngine.description")}
                 </p>
               </div>
 
@@ -58,10 +61,10 @@ export default function FeaturesSection() {
             <div className="relative z-10 flex flex-col h-full">
               <LineChart className="text-gold mb-5" size={22} strokeWidth={1.5} />
               <h3 className="text-lg font-display font-semibold text-white mb-2 tracking-tight">
-                Charts & Visualization
+                {t("charts.title")}
               </h3>
               <p className="text-text-muted text-sm leading-relaxed">
-                Interactive charts that map out your predictions over time, making it easy to spot trends and anomalies.
+                {t("charts.description")}
               </p>
             </div>
           </div>
@@ -73,10 +76,10 @@ export default function FeaturesSection() {
             <div className="relative z-10 flex flex-col h-full">
               <History className="text-gold mb-5" size={22} strokeWidth={1.5} />
               <h3 className="text-lg font-display font-semibold text-white mb-2 tracking-tight">
-                History & Log
+                {t("history.title")}
               </h3>
               <p className="text-text-muted text-sm leading-relaxed">
-                A detailed repository of all past predictions. Filter, search, and review historical data with ease.
+                {t("history.description")}
               </p>
             </div>
           </div>
@@ -88,10 +91,10 @@ export default function FeaturesSection() {
             <div className="relative z-10 flex flex-col h-full">
               <Download className="text-gold mb-5" size={22} strokeWidth={1.5} />
               <h3 className="text-lg font-display font-semibold text-white mb-2 tracking-tight">
-                Export Data
+                {t("export.title")}
               </h3>
               <p className="text-text-muted text-sm leading-relaxed">
-                Export your findings instantly to CSV and PDF formats for academic reporting and further analysis.
+                {t("export.description")}
               </p>
             </div>
           </div>
@@ -103,10 +106,10 @@ export default function FeaturesSection() {
             <div className="relative z-10 flex flex-col h-full">
               <Languages className="text-gold mb-5" size={22} strokeWidth={1.5} />
               <h3 className="text-lg font-display font-semibold text-white mb-2 tracking-tight">
-                Multi-language
+                {t("multiLanguage.title")}
               </h3>
               <p className="text-text-muted text-sm leading-relaxed">
-                Fully localized interface supporting both Indonesian and English to suit your audience.
+                {t("multiLanguage.description")}
               </p>
             </div>
           </div>

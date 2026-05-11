@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
-import "./globals.css";
 import { cn } from "@/lib/utils";
+import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -17,7 +17,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "ELPRESY - Predict. Analyze. Optimize.",
-  description: "Electrical Predictions System - Predict your AC's daily ampere usage with precision. An undergraduate thesis project.",
+  description:
+    "Electrical Predictions System - Predict your AC's daily ampere usage with precision. An undergraduate thesis project.",
 };
 
 export default function RootLayout({
@@ -28,8 +29,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full antialiased dark scroll-smooth", spaceGrotesk.variable, dmSans.variable)}
+      className={cn(
+        "h-full antialiased dark scroll-smooth",
+        spaceGrotesk.variable,
+        dmSans.variable
+      )}
       style={{ colorScheme: "dark" }}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col font-sans bg-bg text-text-primary selection:bg-gold/30 selection:text-white">
         {children}

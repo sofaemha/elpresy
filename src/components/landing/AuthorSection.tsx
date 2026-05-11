@@ -1,7 +1,10 @@
 import { GitBranch, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useTranslations } from "next-intl";
 
 export default function AuthorSection() {
+  const t = useTranslations("author");
+
   return (
     <section id="about" className="py-32 bg-surface-2 relative overflow-hidden">
       {/* Background Decor */}
@@ -13,11 +16,11 @@ export default function AuthorSection() {
         <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
           
           <Badge className="bg-gold/10 text-gold border-gold/20 hover:bg-gold/20 mb-8 px-4 py-1.5 rounded-full uppercase tracking-wider text-xs font-semibold">
-            Built for the Thesis Defense
+            {t("badge")}
           </Badge>
           
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
-            The Mind Behind ELPRESY
+            {t("heading")}
           </h2>
           
           <div className="bg-surface border border-border rounded-2xl p-8 md:p-12 w-full shadow-2xl relative group">
@@ -25,15 +28,15 @@ export default function AuthorSection() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-50" />
             
             <h3 className="text-2xl md:text-3xl font-display font-semibold text-white mb-2">
-              [Your Name]
+              {t("name")}
             </h3>
             <p className="text-gold-light font-medium mb-8">
-              Computer Science / Electrical Engineering • [University] • 2025
+              {t("affiliation")}
             </p>
             
             <div className="text-text-muted leading-relaxed mb-10 max-w-2xl mx-auto">
               <p>
-                This application serves as the practical implementation of my undergraduate thesis. It aims to demonstrate the viability of CART Decision Tree Regression in forecasting electrical consumption, providing an intuitive interface for a complex machine learning model.
+                {t("bio")}
               </p>
             </div>
             

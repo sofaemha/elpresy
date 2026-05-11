@@ -1,40 +1,43 @@
 import { Quote, Target, Eye, FileOutput } from "lucide-react";
-
-const SPECS = [
-  { label: "Algorithm", value: "CART Decision Tree Regression" },
-  { label: "Library", value: "ml-cart" },
-  { label: "Input Variables", value: "2 (Ampere/Cycle, Usage Hours)" },
-  { label: "Output", value: "Daily Ampere Prediction (A)" },
-  { label: "Model Type", value: "Supervised — Regression" },
-  { label: "Language Support", value: "Indonesian (ID) & English (EN)" },
-];
-
-const OBJECTIVES = [
-  {
-    icon: Target,
-    text: "Predict daily AC ampere usage with high reliability based on minimal input variables.",
-  },
-  {
-    icon: Eye,
-    text: "Visualize consumption trends over time to identify inefficiencies and usage patterns.",
-  },
-  {
-    icon: FileOutput,
-    text: "Provide exportable data logging in CSV and PDF formats for continuous academic analysis.",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function ResearchSection() {
+  const t = useTranslations("research");
+
+  const SPECS = [
+    { label: t("specAlgorithm"), value: "CART Decision Tree Regression" },
+    { label: t("specLibrary"), value: "ml-cart" },
+    { label: t("specInputs"), value: t("specInputsValue") },
+    { label: t("specOutput"), value: t("specOutputValue") },
+    { label: t("specModelType"), value: t("specModelTypeValue") },
+    { label: t("specLanguage"), value: t("specLanguageValue") },
+  ];
+
+  const OBJECTIVES = [
+    {
+      icon: Target,
+      text: t("objective1"),
+    },
+    {
+      icon: Eye,
+      text: t("objective2"),
+    },
+    {
+      icon: FileOutput,
+      text: t("objective3"),
+    },
+  ];
+
   return (
     <section id="research" className="py-28 bg-bg relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="max-w-2xl mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4 tracking-tight">
-            The Research Behind ELPRESY
+            {t("heading")}
           </h2>
           <p className="text-lg text-text-muted leading-relaxed">
-            Understanding why predicting AC ampere usage matters — and how ELPRESY approaches it.
+            {t("subheading")}
           </p>
         </div>
 
@@ -47,34 +50,23 @@ export default function ResearchSection() {
             <blockquote className="relative mb-10 pl-6 border-l-2 border-gold/40">
               <Quote size={16} className="text-gold/40 mb-2" />
               <p className="text-base text-text-muted leading-relaxed italic">
-                &ldquo;AC units account for 40–60% of residential electricity consumption
-                in tropical climates.&rdquo;
+                &ldquo;{t("quote")}&rdquo;
               </p>
               <cite className="block mt-2 text-xs text-text-faint not-italic font-mono">
-                — IEA, The Future of Cooling (2018)
+                {t("quoteCite")}
               </cite>
             </blockquote>
 
             {/* Context Paragraph */}
             <div className="space-y-5 text-base text-text-muted leading-relaxed mb-10">
-              <p>
-                In Indonesia and other tropical nations, air conditioning is not
-                a luxury — it&apos;s a necessity. Yet most households have little
-                visibility into how much energy their AC units actually draw on a
-                daily basis. ELPRESY was built to close that gap.
-              </p>
-              <p>
-                By applying machine learning to just two easily measurable
-                inputs, the system delivers reliable daily ampere forecasts
-                without requiring specialized metering equipment or electrical
-                expertise.
-              </p>
+              <p>{t("paragraph1")}</p>
+              <p>{t("paragraph2")}</p>
             </div>
 
             {/* Objectives */}
             <div>
               <h3 className="text-sm text-text-faint uppercase tracking-wider font-semibold mb-5">
-                Core Research Objectives
+                {t("objectivesLabel")}
               </h3>
               <div className="space-y-4">
                 {OBJECTIVES.map((obj) => (
@@ -91,10 +83,8 @@ export default function ResearchSection() {
             {/* Methodology Note */}
             <div className="mt-10 pt-6 border-t border-white/[0.06]">
               <p className="text-xs text-text-faint font-mono leading-relaxed">
-                <span className="text-text-muted font-semibold">Methodology:</span>{" "}
-                CART (Classification and Regression Trees) via the{" "}
-                <span className="text-gold/80">ml-cart</span> library, configured for
-                regression on continuous variables with pruning to prevent overfitting.
+                <span className="text-text-muted font-semibold">{t("methodologyLabel")}</span>{" "}
+                {t("methodology")}
               </p>
             </div>
           </div>
@@ -114,10 +104,10 @@ export default function ResearchSection() {
               <div className="px-7 py-5 border-b border-white/[0.06] bg-[#111113]">
                 <div className="flex items-center justify-between">
                   <h3 className="text-base font-display font-semibold text-white tracking-tight">
-                    Technical Specification
+                    {t("specTitle")}
                   </h3>
                   <span className="text-[9px] text-text-faint font-mono uppercase tracking-widest">
-                    Data Sheet
+                    {t("specDataSheet")}
                   </span>
                 </div>
               </div>
@@ -130,7 +120,7 @@ export default function ResearchSection() {
                       {spec.label}
                     </dt>
                     <dd className="text-sm text-white font-medium">
-                      {spec.label === "Library" ? (
+                      {spec.value === "ml-cart" ? (
                         <code className="text-gold font-mono bg-gold/5 px-2 py-0.5 rounded-md border border-gold/10 text-xs">
                           {spec.value}
                         </code>
@@ -148,7 +138,7 @@ export default function ResearchSection() {
                   <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                     <span className="text-[10px] text-text-faint font-medium">
-                      Model trained & validated
+                      {t("specFooter")}
                     </span>
                   </div>
                   <span className="text-[10px] text-text-faint font-mono">

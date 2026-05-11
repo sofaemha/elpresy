@@ -11,11 +11,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-bg text-text-primary flex flex-col">
       <Navbar />
-      
-      {/* 
-        Wrap sections in a container if needed or let them span full width.
-        They are individually responsible for their inner containers.
-      */}
+
       <div className="flex-1 flex flex-col">
         <HeroSection />
         <FeaturesSection />

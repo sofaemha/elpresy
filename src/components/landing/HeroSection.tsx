@@ -1,8 +1,11 @@
 import { ArrowRight, Activity, TrendingUp, Zap, Clock, BarChart3, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export default function HeroSection() {
+  const t = useTranslations("hero");
+
   return (
     <section className="relative min-h-[100dvh] flex flex-col justify-center pt-20 overflow-hidden">
       {/* Background Subtle Grid */}
@@ -27,30 +30,28 @@ export default function HeroSection() {
             variant="outline"
             className="border-gold/30 text-gold-light bg-gold/5 mb-6 rounded-full px-4 py-1 font-medium"
           >
-            Undergraduate Thesis Project • 2025
+            {t("badge")}
           </Badge>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.1] tracking-tight mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-500">
-              Machine Learning&#8209;Driven
+              {t("headline1")}
             </span>
             <br />
-            <span className="gold-shimmer">AC Ampere Prediction</span>
+            <span className="gold-shimmer">{t("headline2")}</span>
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-br from-zinc-300 to-zinc-600">
-              for Smarter Energy Use.
+              {t("headline3")}
             </span>
           </h1>
 
           <p className="text-lg text-text-muted mb-10 leading-relaxed font-light">
-            ELPRESY leverages CART Decision Tree Regression to forecast your air
-            conditioner&apos;s daily ampere consumption from just two inputs — enabling
-            data-driven energy optimization for academic research and real-world application.
+            {t("subheadline")}
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
             <Button className="bg-gold hover:bg-gold-light text-black font-semibold rounded-full px-8 py-6 h-auto text-base transition-all duration-300 group shadow-[0_0_20px_rgba(201,168,76,0.25)] hover:shadow-[0_0_30px_rgba(201,168,76,0.4)]">
-              Try ELPRESY
+              {t("ctaPrimary")}
               <ArrowRight
                 className="ml-2 group-hover:translate-x-1 transition-transform"
                 size={18}
@@ -60,7 +61,7 @@ export default function HeroSection() {
               variant="ghost"
               className="text-text-primary hover:text-gold hover:bg-gold/10 rounded-full px-8 py-6 h-auto text-base transition-all duration-300"
             >
-              Learn More
+              {t("ctaSecondary")}
             </Button>
           </div>
         </div>
@@ -107,7 +108,7 @@ export default function HeroSection() {
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-[10px] text-emerald-400/80 font-medium uppercase tracking-wider">
-                  Model Ready — CART Decision Tree
+                  {t("mockStatus")}
                 </span>
               </div>
 
@@ -116,7 +117,7 @@ export default function HeroSection() {
                 <div className="space-y-1.5">
                   <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
                     <Activity size={10} className="text-gold/60" />
-                    Ampere Per Cycle
+                    {t("mockAmpereLabel")}
                   </label>
                   <div className="h-9 w-full bg-zinc-900/80 rounded-lg border border-border/50 flex items-center justify-between px-3 group-hover:border-gold/20 transition-colors">
                     <span className="text-text-primary font-mono text-sm">1.2</span>
@@ -126,7 +127,7 @@ export default function HeroSection() {
                 <div className="space-y-1.5">
                   <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
                     <Clock size={10} className="text-gold/60" />
-                    Daily Usage Hours
+                    {t("mockHoursLabel")}
                   </label>
                   <div className="h-9 w-full bg-zinc-900/80 rounded-lg border border-border/50 flex items-center justify-between px-3 group-hover:border-gold/20 transition-colors">
                     <span className="text-text-primary font-mono text-sm">8.5</span>
@@ -138,20 +139,20 @@ export default function HeroSection() {
               {/* Predict Button */}
               <button className="w-full h-10 bg-gold/90 hover:bg-gold text-black text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(201,168,76,0.15)]">
                 <BarChart3 size={14} />
-                Run Prediction
+                {t("mockPredict")}
               </button>
 
               {/* Results Area */}
               <div className="pt-4 border-t border-border/40 space-y-4">
                 <div className="flex items-center gap-2 mb-1">
                   <CheckCircle2 size={12} className="text-emerald-400" />
-                  <span className="text-[10px] text-emerald-400/80 font-medium">Prediction Complete</span>
+                  <span className="text-[10px] text-emerald-400/80 font-medium">{t("mockComplete")}</span>
                 </div>
 
                 <div className="flex items-end justify-between">
                   <div>
                     <div className="text-[10px] text-text-faint uppercase tracking-wider mb-1">
-                      Predicted Daily Usage
+                      {t("mockResultLabel")}
                     </div>
                     <div className="text-4xl font-display font-bold text-white leading-none">
                       8.4<span className="text-lg text-text-muted ml-0.5">A</span>
@@ -162,16 +163,16 @@ export default function HeroSection() {
                       <TrendingUp size={12} />
                       <span className="text-xs font-semibold">+2.4%</span>
                     </div>
-                    <span className="text-[9px] text-text-faint">vs. last prediction</span>
+                    <span className="text-[9px] text-text-faint">{t("mockVsLast")}</span>
                   </div>
                 </div>
 
                 {/* Mini Confidence Stats */}
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { label: "Confidence", value: "94.2%" },
-                    { label: "Min", value: "7.8 A" },
-                    { label: "Max", value: "9.1 A" },
+                    { label: t("mockConfidence"), value: "94.2%" },
+                    { label: t("mockMin"), value: "7.8 A" },
+                    { label: t("mockMax"), value: "9.1 A" },
                   ].map((stat) => (
                     <div
                       key={stat.label}
@@ -191,9 +192,9 @@ export default function HeroSection() {
                 <div className="bg-zinc-900/40 rounded-lg border border-border/30 p-3">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[9px] text-text-faint uppercase tracking-wider">
-                      7-Day Trend
+                      {t("mockTrend")}
                     </span>
-                    <span className="text-[9px] text-gold font-mono">Live</span>
+                    <span className="text-[9px] text-gold font-mono">{t("mockLive")}</span>
                   </div>
                   <div className="h-14 w-full relative">
                     <svg
@@ -213,7 +214,7 @@ export default function HeroSection() {
                       <line x1="0" y1="37.5" x2="100" y2="37.5" stroke="#ffffff" strokeOpacity="0.03" strokeWidth="0.5" />
                       {/* Area fill */}
                       <path
-                        d="M0,40 C8,38 12,30 20,28 C28,26 32,35 40,30 C48,25 52,15 60,18 C68,21 72,25 80,20 C88,15 92,8 100,10 L100,50 L0,50 Z"
+                         d="M0,40 C8,38 12,30 20,28 C28,26 32,35 40,30 C48,25 52,15 60,18 C68,21 72,25 80,20 C88,15 92,8 100,10 L100,50 L0,50 Z"
                         fill="url(#heroChartGrad)"
                       />
                       {/* Line */}
