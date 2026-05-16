@@ -30,7 +30,7 @@ export default function Explore() {
       </h2>
 
       {/* Gold divider before accordion */}
-      <div className="w-full h-px bg-[rgba(201,168,76,0.15)] mb-0" />
+      <div className="w-full h-px bg-border-gold mb-0" />
 
       {/*
         Base UI Accordion:
@@ -41,7 +41,7 @@ export default function Explore() {
       <Accordion
         id="research-explore-accordion"
         defaultValue={["item-engine"]}
-        className="border-0 rounded-none divide-y divide-[rgba(201,168,76,0.15)] overflow-hidden"
+        className="border-0 rounded-none divide-y divide-border-gold overflow-hidden"
       >
         {ACCORDION_KEYS.map((key) => (
           <AccordionItem
@@ -56,10 +56,10 @@ export default function Explore() {
                 flex w-full items-center justify-between
                 py-5 text-left bg-transparent border-0
                 font-sans text-base md:text-[1.0625rem] font-bold text-white
-                hover:opacity-80 transition-opacity duration-[180ms]
+                hover:opacity-80 transition-opacity duration-180
                 focus-visible:outline-none
                 hover:no-underline
-                [&_[data-slot='accordion-trigger-icon']]:hidden
+                **:data-[slot='accordion-trigger-icon']:hidden
               "
             >
               {t(`${key}.label` as Parameters<typeof t>[0])}
@@ -77,7 +77,7 @@ export default function Explore() {
               </p>
               <a
                 href="#"
-                className="font-sans text-sm font-bold text-gold hover:underline underline-offset-2 transition-all duration-[180ms]"
+                className="font-sans text-sm font-bold text-gold hover:underline underline-offset-2 transition-all duration-180"
               >
                 {t(`${key}.cta` as Parameters<typeof t>[0])}
               </a>

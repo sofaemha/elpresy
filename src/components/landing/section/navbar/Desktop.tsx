@@ -1,20 +1,68 @@
+// filepath: src/components/landing/section/navbar/desktop.tsx
+"use client";
 
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
-export default function Desktop({Links}: {Links: {
-    label: string;
-    href: string;
-}[]}) {
-    return (
-        <nav className="hidden md:flex items-center gap-8">
-          {Links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-text-muted hover:text-text-primary transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-    )
+type NavLink = {
+  label: string;
+  href: string;
+};
+
+export default function Desktop({ Links }: { Links: NavLink[] }) {
+  const [activeSection, setActiveSection] = useState<string>("");
+
+  useEffect(() => {
+    // Extract section IDs from anchor hrefs (e.g. "#research" → "research")
+    const sectionIds = Links
+      .map((link) => link.href.replace(/^#/, ""))
+      .filter(Boolean);
+
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) return;
+
+    // Observe a ~10% window centered in the upper-middle of the viewport.
+    // When a section scrolls into this window it becomes the "active" one.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [Links]);
+
+  return (
+    <nav className="hidden md:flex items-center gap-8">
+      {Links.map((link) => {
+        const sectionId = link.href.replace(/^#/, "");
+        const isActive = activeSection === sectionId;
+
+        return (
+          <a
+            key={link.label}
+            href={link.href}
+            aria-current={isActive ? "location" : undefined}
+            className={cn(
+              "text-sm font-medium motion-safe:transition-colors motion-safe:duration-300",
+              isActive
+                ? "text-gold [text-shadow:0_0_10px_rgba(201,168,76,0.75),0_0_22px_rgba(201,168,76,0.35)]"
+                : "text-text-muted hover:text-text-primary"
+            )}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </nav>
+  );
 }

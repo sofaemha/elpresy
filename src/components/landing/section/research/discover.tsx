@@ -39,7 +39,7 @@ export default function Discover() {
         <TabsList
           id="research-discover-tabs"
           variant="line"
-          className="w-full justify-start gap-0 rounded-none bg-transparent p-0 h-auto border-b border-[rgba(201,168,76,0.15)] overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          className="w-full justify-start gap-0 rounded-none bg-transparent p-0 h-auto border-b border-border-gold overflow-x-auto [&::-webkit-scrollbar]:hidden"
         >
           {TABS.map(({ value, label }) => (
             <TabsTrigger
@@ -52,7 +52,7 @@ export default function Discover() {
                 font-sans text-sm font-normal text-text-muted
                 whitespace-nowrap cursor-pointer
                 border-b-[3px] border-transparent -mb-px
-                transition-colors duration-[180ms]
+                transition-colors duration-180
                 hover:text-white
                 data-active:border-gold data-active:text-white
                 data-active:font-display data-active:font-bold
@@ -61,7 +61,6 @@ export default function Discover() {
               "
             >
               {label}
-              <ChevronDown className="size-3.5 shrink-0" strokeWidth={2} aria-hidden="true" />
             </TabsTrigger>
           ))}
         </TabsList>
@@ -76,7 +75,7 @@ export default function Discover() {
               className="mt-0 text-base focus-visible:outline-none"
             >
               {/* Bento grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] rounded-b-2xl overflow-hidden border-x border-b border-[rgba(201,168,76,0.15)]">
+              <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] rounded-b-2xl overflow-hidden border-x border-b border-border-gold">
 
                 {/* ── LEFT CARD — Gold ── */}
                 <div className="flex flex-col bg-gold">
@@ -97,7 +96,7 @@ export default function Discover() {
                           key={i}
                           type="button"
                           aria-label={["Zoom in", "Zoom out", "Maximize"][i]}
-                          className="flex items-center justify-center size-7 rounded-sm bg-black/60 text-white backdrop-blur-sm hover:bg-black/80 transition-colors duration-[180ms]"
+                          className="flex items-center justify-center size-7 rounded-sm bg-black/60 text-white backdrop-blur-sm hover:bg-black/80 transition-colors duration-180"
                         >
                           <Icon className="size-3.5" strokeWidth={1.5} />
                         </button>
@@ -106,7 +105,7 @@ export default function Discover() {
                     {/* Bottom-right save button */}
                     <button
                       type="button"
-                      className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 text-white backdrop-blur-sm px-2.5 py-1.5 rounded-sm text-xs font-sans font-medium hover:bg-black/80 transition-colors duration-[180ms]"
+                      className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 text-white backdrop-blur-sm px-2.5 py-1.5 rounded-sm text-xs font-sans font-medium hover:bg-black/80 transition-colors duration-180"
                     >
                       <Bookmark className="size-3" strokeWidth={1.5} />
                       Save to Workspace
@@ -115,18 +114,18 @@ export default function Discover() {
 
                   {/* Text block */}
                   <div className="flex flex-col flex-1 px-7 pt-7 pb-0 lg:px-8 lg:pt-8">
-                    <p className="font-display text-[1.35rem] lg:text-[1.5rem] font-bold text-[#09090B] leading-snug mb-4">
+                    <p className="font-display text-[1.35rem] lg:text-[1.5rem] font-bold text-bg leading-snug mb-4">
                       {t(`${tab}.cardHeading` as Parameters<typeof t>[0])}
                     </p>
-                    <p className="font-sans text-sm text-[#09090B]/75 leading-relaxed flex-1">
+                    <p className="font-sans text-sm text-bg/75 leading-relaxed flex-1">
                       {t(`${tab}.cardBody` as Parameters<typeof t>[0])}
                     </p>
                   </div>
                   {/* CTA row */}
-                  <div className="mx-7 lg:mx-8 mt-6 py-4 border-t border-[#09090B]/20">
+                  <div className="mx-7 lg:mx-8 mt-6 py-4 border-t border-bg/20">
                     <a
                       href="#"
-                      className="font-sans text-sm font-bold text-[#09090B] hover:underline underline-offset-2 transition-all duration-[180ms]"
+                      className="font-sans text-sm font-bold text-bg hover:underline underline-offset-2 transition-all duration-180"
                     >
                       {t("cardCta")}
                     </a>
@@ -134,9 +133,9 @@ export default function Discover() {
                 </div>
 
                 {/* ── RIGHT COLUMN — two stacked cards ── */}
-                <div className="flex flex-col lg:border-l border-[rgba(201,168,76,0.15)]">
+                <div className="flex flex-col lg:border-l border-border-gold">
                   {/* Card 1 — Resources (surface-2 / zinc-900) */}
-                  <div className="flex-1 bg-surface-2 px-7 pt-7 pb-0 lg:px-8 lg:pt-8 border-b border-[rgba(201,168,76,0.15)]">
+                  <div className="flex-1 bg-surface-2 px-7 pt-7 pb-0 lg:px-8 lg:pt-8 border-b border-border-gold">
                     <h3 className="font-display text-[1.1rem] lg:text-[1.25rem] font-semibold text-white mb-2 tracking-tight">
                       {t(`${tab}.resourcesHeading` as Parameters<typeof t>[0])}
                     </h3>
@@ -145,7 +144,7 @@ export default function Discover() {
                         <a
                           key={idx}
                           href="#"
-                          className="flex items-center justify-between w-full py-4 font-sans text-[0.9375rem] font-bold text-white border-b border-[rgba(201,168,76,0.15)] last:border-b-0 -mx-2 px-2 rounded-sm hover:bg-[rgba(201,168,76,0.05)] transition-colors duration-[180ms]"
+                          className="flex items-center justify-between w-full py-4 font-sans text-[0.9375rem] font-bold text-white border-b border-border-gold last:border-b-0 -mx-2 px-2 rounded-sm hover:bg-[rgba(201,168,76,0.05)] transition-colors duration-[180ms]"
                         >
                           {link}
                           <span aria-hidden="true" className="text-gold ml-4 shrink-0">→</span>
@@ -164,7 +163,7 @@ export default function Discover() {
                     </p>
                     <a
                       href="#"
-                      className="font-sans text-sm font-bold text-gold hover:underline underline-offset-2 transition-all duration-[180ms]"
+                      className="font-sans text-sm font-bold text-gold hover:underline underline-offset-2 transition-all duration-180"
                     >
                       {t("accessCta")}
                     </a>
