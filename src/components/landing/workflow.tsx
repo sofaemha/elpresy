@@ -7,7 +7,7 @@ export default function Workflow() {
   const t = useTranslations("howItWorks");
 
   return (
-    <section id="how-it-works" className="py-24 bg-bg relative">
+    <section id="workflow" className="py-24 bg-bg relative">
       <div className="container mx-auto px-6">
         <Header t={t} />
         <Steps t={t} />

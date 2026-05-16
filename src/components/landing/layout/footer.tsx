@@ -10,7 +10,7 @@ export default function Footer() {
 
   const NAV_ITEMS = [
     { label: nav("features"), href: "#features" },
-    { label: nav("howItWorks"), href: "#how-it-works" },
+    { label: nav("howItWorks"), href: "#workflow" },
     { label: nav("research"), href: "#research" },
     { label: nav("about"), href: "#about" },
   ];
