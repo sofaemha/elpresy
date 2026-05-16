@@ -2,8 +2,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Content from "./footer/content";
-import Mobile from "./footer/mobile";
+import Content from "../section/footer/content";
+import Mobile from "../section/footer/mobile";
 
 export default function Footer() {
   const t = useTranslations("footer");
