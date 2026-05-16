@@ -139,6 +139,12 @@
     "copyright": "© 2026 ELPRESY — Electrical Predictions System.",
     "thesis": "Undergraduate Thesis Project.",
     "darkMode": "Dark Mode",
-    "active": "Always Active"
+    "active": "Always Active",
+    "ctaText": "GOT SOME EXCITING IDEAS? LET'S CONNECT AND CREATE SOMETHING EXTRAORDINARY TOGETHER!",
+    "marqueeEmail": "HELLO@ELPRESY.COM",
+    "mobileReady": "READY TO WORK?",
+    "mobileChat": "LET'S CHAT",
+    "contactBtn": "CONTACT",
+    "craftedBy": "Crafted by"
   }
 }
