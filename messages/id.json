@@ -97,33 +97,65 @@
     "proofNextjs": "Dibangun dengan Next.js 16"
   },
   "research": {
-    "heading": "Penelitian di Balik ELPRESY",
-    "subheading": "Memahami mengapa prediksi penggunaan ampere AC penting — dan bagaimana ELPRESY mendekat masalah ini.",
-    "quote": "Unit AC menyumbang 40–60% konsumsi listrik rumah tangga di iklim tropis.",
-    "quoteCite": "— IEA, The Future of Cooling (2018)",
-    "paragraph1": "Di Indonesia dan negara tropis lainnya, pendingin udara bukan kemewahan — melainkan kebutuhan. Namun sebagian besar rumah tangga memiliki sedikit visibilitas tentang seberapa banyak energi yang benar-benar ditarik oleh unit AC mereka setiap hari. ELPRESY dibangun untuk menutup kesenjangan tersebut.",
-    "paragraph2": "Dengan menerapkan machine learning pada hanya dua input yang mudah diukur, sistem ini memberikan perkiraan ampere harian yang andal tanpa memerlukan peralatan pengukuran khusus atau keahlian kelistrikan.",
-    "objectivesLabel": "Tujuan Penelitian Utama",
-    "objective1": "Memprediksi penggunaan ampere AC harian dengan keandalan tinggi berdasarkan variabel input minimal.",
-    "objective2": "Memvisualisasikan tren konsumsi dari waktu ke waktu untuk mengidentifikasi inefisiensi dan pola penggunaan.",
-    "objective3": "Menyediakan pencatatan data yang dapat diekspor dalam format CSV dan PDF untuk analisis akademis berkelanjutan.",
-    "methodologyLabel": "Metodologi:",
-    "methodology": "CART (Classification and Regression Trees) melalui pustaka ml-cart, dikonfigurasi untuk regresi pada variabel kontinu dengan pruning untuk mencegah overfitting.",
-    "specTitle": "Spesifikasi Teknis",
-    "specDataSheet": "Lembar Data",
-    "specAlgorithm": "Algoritma",
-    "specAlgorithmValue": "CART Decision Tree Regression",
-    "specLibrary": "Pustaka",
-    "specLibraryValue": "ml-cart",
-    "specInputs": "Variabel Input",
-    "specInputsValue": "2 (Ampere/Siklus, Jam Penggunaan)",
-    "specOutput": "Output",
-    "specOutputValue": "Prediksi Ampere Harian (A)",
-    "specModelType": "Tipe Model",
-    "specModelTypeValue": "Supervised — Regresi",
-    "specLanguage": "Dukungan Bahasa",
-    "specLanguageValue": "Indonesia (ID) & Inggris (EN)",
-    "specFooter": "Model terlatih & tervalidasi"
+    "discoverHeading": "Temukan ELPRESY untuk:",
+    "tabAdministrators": "Administrator",
+    "tabOperators": "Operator",
+    "tabEngineers": "Insinyur",
+    "tabStudents": "Mahasiswa",
+    "cardCta": "Mulai eksplorasi ELPRESY →",
+    "link1": "Temukan konten terbuka dan gratis",
+    "link2": "Asah keterampilan penelitian Anda",
+    "link3": "Atur penelitian Anda dengan Workspace",
+    "accessCta": "Dapatkan akses →",
+    "students": {
+      "cardHeading": "Alat prediksi berkelas penelitian untuk skripsi Anda.",
+      "cardBody": "Dari entri data hingga ekspor akhir — ELPRESY memberikan alur kerja terstruktur berbasis ML yang mengubah pembacaan AC mentah menjadi analisis berkualitas skripsi menggunakan CART Decision Tree Regression.",
+      "resourcesHeading": "Sumber Daya untuk Mahasiswa",
+      "accessHeading": "Siap mendukung skripsi sarjana Anda?",
+      "accessBody": "Dapatkan akses penuh ke mesin prediksi, alat visualisasi, dan ekspor CSV/PDF ELPRESY — dibangun untuk penelitian akademis."
+    },
+    "administrators": {
+      "cardHeading": "Pengawasan terpusat untuk platform penelitian Anda.",
+      "cardBody": "Kelola akses pengguna, konfigurasikan parameter sistem, dan pantau aktivitas seluruh platform dengan alat yang dirancang untuk presisi administratif dan tata kelola penelitian.",
+      "resourcesHeading": "Sumber Daya untuk Administrator",
+      "accessHeading": "Kendalikan penuh lingkungan platform Anda.",
+      "accessBody": "Alat administratif untuk mengkonfigurasi, memantau, dan mengatur platform penelitian ELPRESY di semua peran pengguna."
+    },
+    "operators": {
+      "cardHeading": "Pemantauan harian dan manajemen prediksi yang presisi.",
+      "cardBody": "Jalankan sesi prediksi, lacak pembacaan ampere secara real-time, dan kelola alur kerja operasional harian ELPRESY dengan kontrol yang difokuskan untuk operator.",
+      "resourcesHeading": "Sumber Daya untuk Operator",
+      "accessHeading": "Sederhanakan alur kerja prediksi harian Anda.",
+      "accessBody": "Alat operasional untuk menjalankan prediksi, meninjau log, dan menjaga akurasi output model CART ELPRESY."
+    },
+    "engineers": {
+      "cardHeading": "Akses teknis mendalam ke mesin prediksi.",
+      "cardBody": "Periksa internal model, tinjau pipeline data pelatihan, dan validasi output regresi CART dengan alat tingkat rekayasa yang dirancang untuk analisis kinerja.",
+      "resourcesHeading": "Sumber Daya untuk Insinyur",
+      "accessHeading": "Bangun di atas infrastruktur ML ELPRESY.",
+      "accessBody": "Dokumentasi teknis, diagnostik model, dan detail integrasi untuk insinyur yang memperluas sistem prediksi ELPRESY."
+    },
+    "exploreHeading": "Jelajahi semua yang ditawarkan ELPRESY",
+    "engine": {
+      "label": "Mesin Prediksi",
+      "body": "Dibangun di atas CART Decision Tree Regression melalui pustaka ml-cart, mesin prediksi memproses dua input — ampere per siklus dan jam penggunaan harian — untuk menghasilkan prakiraan ampere harian berakurasi tinggi yang dioptimalkan untuk pola penggunaan AC tropis.",
+      "cta": "Pelajari tentang mesin →"
+    },
+    "dataManagement": {
+      "label": "Manajemen Data",
+      "body": "Catat, tinjau, dan kelola semua input dan output prediksi dalam tampilan riwayat terstruktur. Filter berdasarkan tanggal, ekspor dataset lengkap ke CSV, dan pertahankan jejak audit yang bersih untuk pelaporan akademis.",
+      "cta": "Jelajahi alat data →"
+    },
+    "analytics": {
+      "label": "Analitik & Laporan",
+      "body": "Ubah data prediksi mentah menjadi wawasan bermakna dengan grafik interaktif dan laporan PDF yang dibuat otomatis. Visualisasikan tren konsumsi, lacak akurasi historis, dan sajikan temuan dengan format berkualitas skripsi.",
+      "cta": "Lihat fitur analitik →"
+    },
+    "config": {
+      "label": "Konfigurasi Sistem",
+      "body": "Sesuaikan ELPRESY dengan lingkungan penelitian Anda — konfigurasikan parameter model, atur preferensi bahasa, kelola peran pengguna, dan kontrol pengaturan ekspor data dari panel konfigurasi terpadu.",
+      "cta": "Lihat opsi konfigurasi →"
+    }
   },
   "author": {
     "badge": "Dibangun untuk Sidang Skripsi",

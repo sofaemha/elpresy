@@ -1,27 +1,22 @@
-import { useTranslations } from "next-intl";
-import Header from "@/components/landing/section/research/header";
-import Content from "@/components/landing/section/research/content";
-import Specs from "@/components/landing/section/research/specs";
+// filepath: src/components/landing/research.tsx
+import { Separator } from "@/components/ui/separator";
+import Discover from "@/components/landing/section/research/discover";
+import Explore from "@/components/landing/section/research/explore";
 
 export default function Research() {
-  const t = useTranslations("research");
-
   return (
-    <section id="research" className="py-28 bg-bg relative">
-      <div className="container mx-auto px-6">
-        <Header t={t} />
+    <section id="research" className="bg-bg relative">
+      {/* Discover — Tabbed bento panel */}
+      <div className="mx-auto max-w-[1200px] px-6 md:px-12 lg:px-16 py-16 md:py-24">
+        <Discover />
+      </div>
 
-        {/* Two-Column Layout with Gold Divider */}
-        <div className="grid lg:grid-cols-2 gap-0 items-stretch relative">
-          <Content t={t} />
+      {/* Full-width gold divider between subsections */}
+      <Separator className="bg-[rgba(201,168,76,0.15)]" />
 
-          {/* ── Gold Vertical Divider (desktop only) ── */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 -translate-x-1/2">
-            <div className="w-[1px] h-full bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-          </div>
-
-          <Specs t={t} />
-        </div>
+      {/* Explore — Accordion panel */}
+      <div className="mx-auto max-w-[1200px] px-6 md:px-12 lg:px-16 py-16 md:py-24">
+        <Explore />
       </div>
     </section>
   );

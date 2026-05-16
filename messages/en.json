@@ -97,33 +97,65 @@
     "proofNextjs": "Built with Next.js 16"
   },
   "research": {
-    "heading": "The Research Behind ELPRESY",
-    "subheading": "Understanding why predicting AC ampere usage matters — and how ELPRESY approaches it.",
-    "quote": "AC units account for 40–60% of residential electricity consumption in tropical climates.",
-    "quoteCite": "— IEA, The Future of Cooling (2018)",
-    "paragraph1": "In Indonesia and other tropical nations, air conditioning is not a luxury — it's a necessity. Yet most households have little visibility into how much energy their AC units actually draw on a daily basis. ELPRESY was built to close that gap.",
-    "paragraph2": "By applying machine learning to just two easily measurable inputs, the system delivers reliable daily ampere forecasts without requiring specialized metering equipment or electrical expertise.",
-    "objectivesLabel": "Core Research Objectives",
-    "objective1": "Predict daily AC ampere usage with high reliability based on minimal input variables.",
-    "objective2": "Visualize consumption trends over time to identify inefficiencies and usage patterns.",
-    "objective3": "Provide exportable data logging in CSV and PDF formats for continuous academic analysis.",
-    "methodologyLabel": "Methodology:",
-    "methodology": "CART (Classification and Regression Trees) via the ml-cart library, configured for regression on continuous variables with pruning to prevent overfitting.",
-    "specTitle": "Technical Specification",
-    "specDataSheet": "Data Sheet",
-    "specAlgorithm": "Algorithm",
-    "specAlgorithmValue": "CART Decision Tree Regression",
-    "specLibrary": "Library",
-    "specLibraryValue": "ml-cart",
-    "specInputs": "Input Variables",
-    "specInputsValue": "2 (Ampere/Cycle, Usage Hours)",
-    "specOutput": "Output",
-    "specOutputValue": "Daily Ampere Prediction (A)",
-    "specModelType": "Model Type",
-    "specModelTypeValue": "Supervised — Regression",
-    "specLanguage": "Language Support",
-    "specLanguageValue": "Indonesian (ID) & English (EN)",
-    "specFooter": "Model trained & validated"
+    "discoverHeading": "Discover ELPRESY for:",
+    "tabAdministrators": "Administrators",
+    "tabOperators": "Operators",
+    "tabEngineers": "Engineers",
+    "tabStudents": "Students",
+    "cardCta": "Start exploring ELPRESY →",
+    "link1": "Find open and free content",
+    "link2": "Hone your research skills",
+    "link3": "Organize your research with Workspace",
+    "accessCta": "Get access →",
+    "students": {
+      "cardHeading": "A research-grade prediction tool built for your thesis.",
+      "cardBody": "From data entry to final export — ELPRESY gives you a structured, ML-powered workflow that transforms raw AC readings into thesis-grade analysis using CART Decision Tree Regression.",
+      "resourcesHeading": "Resources for Students",
+      "accessHeading": "Ready to power your undergraduate thesis?",
+      "accessBody": "Get full access to ELPRESY's prediction engine, visualization tools, and CSV/PDF export — built for academic research."
+    },
+    "administrators": {
+      "cardHeading": "Centralized oversight for your research platform.",
+      "cardBody": "Manage user access, configure system parameters, and monitor platform-wide activity with tools designed for administrative precision and research governance.",
+      "resourcesHeading": "Resources for Administrators",
+      "accessHeading": "Take full control of your platform environment.",
+      "accessBody": "Administrative tools to configure, monitor, and govern the ELPRESY research platform across all user roles."
+    },
+    "operators": {
+      "cardHeading": "Daily monitoring and precision prediction management.",
+      "cardBody": "Execute prediction sessions, track real-time ampere readings, and manage the daily operational workflow of ELPRESY with streamlined operator-focused controls.",
+      "resourcesHeading": "Resources for Operators",
+      "accessHeading": "Streamline your daily prediction workflow.",
+      "accessBody": "Operational tools for executing predictions, reviewing logs, and maintaining the accuracy of ELPRESY's CART model outputs."
+    },
+    "engineers": {
+      "cardHeading": "Deep technical access to the prediction engine.",
+      "cardBody": "Inspect model internals, review training data pipelines, and validate CART regression outputs with engineering-level tooling designed for performance analysis.",
+      "resourcesHeading": "Resources for Engineers",
+      "accessHeading": "Build on top of ELPRESY's ML infrastructure.",
+      "accessBody": "Technical documentation, model diagnostics, and integration details for engineers extending the ELPRESY prediction system."
+    },
+    "exploreHeading": "Explore everything ELPRESY has to offer",
+    "engine": {
+      "label": "Prediction Engine",
+      "body": "Built on CART Decision Tree Regression via the ml-cart library, the prediction engine processes two inputs — ampere per cycle and daily usage hours — to deliver high-accuracy daily ampere forecasts optimized for tropical AC usage patterns.",
+      "cta": "Learn about the engine →"
+    },
+    "dataManagement": {
+      "label": "Data Management",
+      "body": "Log, review, and manage all prediction inputs and outputs in a structured history view. Filter by date, export full datasets to CSV, and maintain a clean audit trail for academic reporting.",
+      "cta": "Explore data tools →"
+    },
+    "analytics": {
+      "label": "Analytics & Reports",
+      "body": "Transform raw prediction data into meaningful insights with interactive charts and auto-generated PDF reports. Visualize consumption trends, track historical accuracy, and present findings with thesis-grade formatting.",
+      "cta": "View analytics features →"
+    },
+    "config": {
+      "label": "System Configuration",
+      "body": "Customize ELPRESY to your research environment — configure model parameters, set language preferences, manage user roles, and control data export settings from a unified configuration panel.",
+      "cta": "See configuration options →"
+    }
   },
   "author": {
     "badge": "Built for the Thesis Defense",
