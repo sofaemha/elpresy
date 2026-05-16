@@ -144,7 +144,7 @@ export default function Discover() {
                         <a
                           key={idx}
                           href="#"
-                          className="flex items-center justify-between w-full py-4 font-sans text-[0.9375rem] font-bold text-white border-b border-border-gold last:border-b-0 -mx-2 px-2 rounded-sm hover:bg-[rgba(201,168,76,0.05)] transition-colors duration-[180ms]"
+                          className="flex items-center justify-between w-full py-4 font-sans text-[0.9375rem] font-bold text-white border-b border-border-gold last:border-b-0 -mx-2 px-2 rounded-sm hover:bg-[rgba(201,168,76,0.05)] transition-colors duration-180"
                         >
                           {link}
                           <span aria-hidden="true" className="text-gold ml-4 shrink-0">→</span>
