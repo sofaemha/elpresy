@@ -50,12 +50,12 @@ export default function Footer() {
           </nav>
 
           <div className="text-sm text-text-faint font-mono">
-            {t("darkMode")} <span className="text-gold/50">{t("active")}</span>
+            {t("darkMode")} • <span className="text-gold/50">{t("active")}</span>
           </div>
 
         </div>
 
-        <div className="pt-8 border-t border-border/30 text-center flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-faint">
+        <div className="border-t border-border/30 text-center flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-faint">
           <p>{t("copyright")}</p>
           <p>{t("thesis")}</p>
         </div>

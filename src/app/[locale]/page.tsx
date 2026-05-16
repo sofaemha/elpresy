@@ -2,8 +2,8 @@ import Navbar from "@/components/landing/layout/navbar";
 import Hero from "@/components/landing/hero";
 import Features from "@/components/landing/features";
 import Workflow from "@/components/landing/workflow";
-import PreviewSection from "@/components/landing/PreviewSection";
-import ResearchSection from "@/components/landing/ResearchSection";
+import Preview from "@/components/landing/preview";
+import Research from "@/components/landing/research";
 import Author from "@/components/landing/author";
 import Footer from "@/components/landing/layout/footer";
 
@@ -16,8 +16,8 @@ export default function Home() {
         <Hero />
         <Features />
         <Workflow />
-        <PreviewSection />
-        <ResearchSection />
+        <Preview />
+        <Research />
         <Author />
       </div>
 

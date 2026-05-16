@@ -94,7 +94,7 @@
     "statusDone": "Done",
     "proofOpenSource": "Open Source",
     "proofAccuracy": "Thesis-Grade Accuracy",
-    "proofNextjs": "Built with Next.js 15"
+    "proofNextjs": "Built with Next.js 16"
   },
   "research": {
     "heading": "The Research Behind ELPRESY",
@@ -139,6 +139,6 @@
     "copyright": "© 2026 ELPRESY — Electrical Predictions System.",
     "thesis": "Undergraduate Thesis Project.",
     "darkMode": "Dark Mode",
-    "active": "Active"
+    "active": "Always Active"
   }
 }

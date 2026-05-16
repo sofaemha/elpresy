@@ -94,7 +94,7 @@
     "statusDone": "Selesai",
     "proofOpenSource": "Sumber Terbuka",
     "proofAccuracy": "Akurasi Tingkat Skripsi",
-    "proofNextjs": "Dibangun dengan Next.js 15"
+    "proofNextjs": "Dibangun dengan Next.js 16"
   },
   "research": {
     "heading": "Penelitian di Balik ELPRESY",
@@ -139,6 +139,6 @@
     "copyright": "© 2026 ELPRESY — Electrical Predictions System.",
     "thesis": "Proyek Skripsi Sarjana.",
     "darkMode": "Mode Gelap",
-    "active": "Aktif"
+    "active": "Selalu Aktif"
   }
 }

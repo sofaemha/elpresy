@@ -31,8 +31,8 @@ export default function Left({t}: {t: any}) {
             {t("subheadline")}
           </p>
 
-          <div className="flex flex-wrap items-center gap-4">
-            <Button className="bg-gold hover:bg-gold-light text-black font-semibold rounded-full px-8 py-6 h-auto text-base transition-all duration-300 group shadow-[0_0_20px_rgba(201,168,76,0.25)] hover:shadow-[0_0_30px_rgba(201,168,76,0.4)]">
+          <div className="flex flex-wrap items-center gap-4 mb-14">
+            <Button className="bg-gold hover:bg-gold-light text-black font-semibold rounded-full px-8 py-3 h-auto text-base transition-all duration-300 group shadow-[0_0_20px_rgba(201,168,76,0.25)] hover:shadow-[0_0_30px_rgba(201,168,76,0.4)]">
               {t("ctaPrimary")}
               <ArrowRight
                 className="ml-2 group-hover:translate-x-1 transition-transform"
@@ -41,7 +41,7 @@ export default function Left({t}: {t: any}) {
             </Button>
             <Button
               variant="ghost"
-              className="text-text-primary hover:text-gold hover:bg-gold/10 rounded-full px-8 py-6 h-auto text-base transition-all duration-300"
+              className="text-text-primary hover:text-gold hover:bg-gold/10 rounded-full px-8 py-3 h-auto text-base transition-all duration-300"
             >
               {t("ctaSecondary")}
             </Button>
