@@ -41,6 +41,14 @@ export default function Desktop({ Links }: { Links: NavLink[] }) {
     return () => observer.disconnect();
   }, [Links]);
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const target = document.getElementById(sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <nav className="hidden md:flex items-center gap-8">
       {Links.map((link) => {
@@ -51,11 +59,12 @@ export default function Desktop({ Links }: { Links: NavLink[] }) {
           <a
             key={link.label}
             href={link.href}
+            onClick={(e) => handleClick(e, sectionId)}
             aria-current={isActive ? "location" : undefined}
             className={cn(
               "text-sm font-medium motion-safe:transition-colors motion-safe:duration-300",
               isActive
-                ? "text-gold [text-shadow:0_0_10px_rgba(201,168,76,0.75),0_0_22px_rgba(201,168,76,0.35)]"
+                ? "text-gold"
                 : "text-text-muted hover:text-text-primary"
             )}
           >
