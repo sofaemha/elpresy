@@ -35,7 +35,7 @@ export default function Discover() {
       </h2>
 
       {/* Base UI Tabs — variant="line" for flat text-tab style */}
-      <Tabs defaultValue="students" className="w-full">
+      <Tabs defaultValue="students" orientation="horizontal" className="w-full flex flex-col">
         <TabsList
           id="research-discover-tabs"
           variant="line"
