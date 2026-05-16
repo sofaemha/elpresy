@@ -3,8 +3,7 @@
 
 import { useTranslations } from "next-intl";
 import Content from "./footer/content";
-import BottomBar from "./footer/bottom-bar";
-import MobileVariant from "./footer/mobile-variant";
+import Mobile from "./footer/mobile";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -20,8 +19,15 @@ export default function Footer() {
       </div>
 
       <Content t={t} />
-      <BottomBar t={t} />
-      <MobileVariant t={t} />
+      
+    <div className="hidden md:flex w-full justify-center items-center px-8 py-6 bg-bg">
+      <div className="flex items-center gap-2">
+        <span className="text-gold font-display font-bold">ELPRESY</span> &mdash; 
+        <span className="text-white/50 text-sm font-sans">{t("credit")}</span>
+      </div>
+    </div>
+
+      <Mobile t={t} />
     </footer>
   );
 }

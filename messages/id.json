@@ -140,11 +140,15 @@
     "thesis": "Proyek Skripsi Sarjana.",
     "darkMode": "Mode Gelap",
     "active": "Selalu Aktif",
-    "ctaText": "ADA IDE MENARIK? MARI TERHUBUNG DAN BUAT SESUATU YANG LUAR BIASA BERSAMA!",
-    "marqueeEmail": "HELLO@ELPRESY.COM",
+    "tutor1Name": "Gunawan, S.E., M.Kom.",
+    "tutor1Role": "Pembimbing 1",
+    "tutor2Name": "Eko Budiraharjo, M.Kom.",
+    "tutor2Role": "Pembimbing 2",
+    "marqueeUniversity": "Universitas Pancasakti Tegal",
+    "marqueeProgram": "Informatika",
     "mobileReady": "SIAP BEKERJA?",
     "mobileChat": "MARI MENGOBROL",
     "contactBtn": "KONTAK",
-    "craftedBy": "Dibuat oleh"
+    "credit": "Tugas Skripsi Sarjana"
   }
 }

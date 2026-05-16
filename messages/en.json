@@ -140,11 +140,15 @@
     "thesis": "Undergraduate Thesis Project.",
     "darkMode": "Dark Mode",
     "active": "Always Active",
-    "ctaText": "GOT SOME EXCITING IDEAS? LET'S CONNECT AND CREATE SOMETHING EXTRAORDINARY TOGETHER!",
-    "marqueeEmail": "HELLO@ELPRESY.COM",
+    "tutor1Name": "Gunawan, S.E., M.Kom.",
+    "tutor1Role": "Advisor 1",
+    "tutor2Name": "Eko Budiraharjo, M.Kom.",
+    "tutor2Role": "Advisor 2",
+    "marqueeUniversity": "Pancasakti University Tegal",
+    "marqueeProgram": "Informatics",
     "mobileReady": "READY TO WORK?",
     "mobileChat": "LET'S CHAT",
     "contactBtn": "CONTACT",
-    "craftedBy": "Crafted by"
+    "credit": "Bachelor's Thesis Assignment"
   }
 }
