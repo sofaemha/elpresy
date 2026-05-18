@@ -4,7 +4,7 @@ import Features from "@/components/landing/features";
 import Workflow from "@/components/landing/workflow";
 import Preview from "@/components/landing/preview";
 import Research from "@/components/landing/research";
-import Author from "@/components/landing/author";
+import Author from "@/components/landing/about";
 import Footer from "@/components/landing/layout/footer";
 
 export default function Home() {

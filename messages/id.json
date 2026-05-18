@@ -1,7 +1,9 @@
 {
   "nav": {
+    "thesis": "Skripsi",
     "features": "Fitur",
     "howItWorks": "Cara Kerja",
+    "application": "Aplikasi",
     "research": "Penelitian",
     "about": "Tentang",
     "getStarted": "Mulai Sekarang",

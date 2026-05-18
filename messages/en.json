@@ -1,7 +1,9 @@
 {
   "nav": {
+    "thesis": "Thesis",
     "features": "Features",
     "howItWorks": "How It Works",
+    "application": "Application",
     "research": "Research",
     "about": "About",
     "getStarted": "Get Started",

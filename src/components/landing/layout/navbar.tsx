@@ -17,8 +17,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const Links = [
+    { label: t("thesis"), href: "#thesis" },
     { label: t("features"), href: "#features" },
     { label: t("howItWorks"), href: "#workflow" },
+    { label: t("application"), href: "#application" },
     { label: t("research"), href: "#research" },
     { label: t("about"), href: "#about" },
   ];

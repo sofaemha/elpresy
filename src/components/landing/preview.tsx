@@ -7,7 +7,7 @@ export default function Preview() {
   const t = useTranslations("preview");
 
   return (
-    <section className="py-28 bg-surface relative overflow-hidden">
+    <section id="application" className="py-28 bg-surface relative overflow-hidden">
       <div className="container mx-auto px-6">
         <Header t={t} />
         <Mockup />

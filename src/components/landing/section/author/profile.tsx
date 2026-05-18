@@ -22,28 +22,12 @@ export default function Profile({ t }: { t: any }) {
           {t("affiliation")}
         </p>
         
-        <div className="text-text-muted leading-relaxed mb-10 max-w-2xl mx-auto">
+        <div className="text-text-muted leading-relaxed max-w-2xl mx-auto">
           <p>
             {t("bio")}
           </p>
         </div>
         
-        <div className="flex items-center justify-center gap-4">
-          <a 
-            href="#" 
-            className="w-12 h-12 rounded-full bg-surface-2 border border-border flex items-center justify-center text-text-muted hover:text-gold hover:border-gold/50 hover:bg-gold/5 transition-all duration-300"
-            aria-label="GitHub Profile"
-          >
-            <GitBranch size={20} />
-          </a>
-          <a 
-            href="mailto:#" 
-            className="w-12 h-12 rounded-full bg-surface-2 border border-border flex items-center justify-center text-text-muted hover:text-gold hover:border-gold/50 hover:bg-gold/5 transition-all duration-300"
-            aria-label="Email Contact"
-          >
-            <Mail size={20} />
-          </a>
-        </div>
       </div>
     </div>
   );

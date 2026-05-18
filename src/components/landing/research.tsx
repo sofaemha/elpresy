@@ -7,9 +7,9 @@ export default function Research() {
   return (
     <section id="research" className="bg-bg relative">
       {/* Explore — Accordion panel */}
-      <div className="mx-auto max-w-[1200px] px-6 md:px-12 lg:px-16 py-16">
+      {/* <div className="mx-auto max-w-[1200px] px-6 md:px-12 lg:px-16 py-16">
         <Explore />
-      </div>
+      </div> */}
       
       {/* Discover — Tabbed bento panel */}
       <div className="mx-auto max-w-[1200px] px-6 md:px-12 lg:px-16 py-16">
