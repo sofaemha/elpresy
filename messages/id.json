@@ -26,7 +26,16 @@
     "mockMin": "Min",
     "mockMax": "Maks",
     "mockTrend": "Tren 7 Hari",
-    "mockLive": "Langsung"
+    "mockLive": "Langsung",
+    "mockMonthLabel": "Periode Prediksi",
+    "mockMonth1": "1 Bulan",
+    "mockMonth3": "3 Bulan",
+    "mockMonth6": "6 Bulan",
+    "mockTotalUsage": "Total Prediksi Penggunaan",
+    "mockWorkingDays": "Hari Kerja",
+    "mockAvgDaily": "Rata-rata Harian",
+    "mockMonthlyAvg": "Per Bulan",
+    "mockPerMonth": "Rincian Per Bulan"
   },
   "features": {
     "heading": "Semua yang Anda Butuhkan untuk Menganalisis Konsumsi Energi AC",

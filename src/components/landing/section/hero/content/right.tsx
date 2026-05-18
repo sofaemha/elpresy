@@ -1,182 +1,278 @@
-import { ArrowRight, Activity, TrendingUp, Zap, Clock, BarChart3, CheckCircle2 } from "lucide-react";
+"use client";
 
-export default function Right({t}: {t: any}) {
-    return (
-        <div className="relative lg:h-[640px] flex items-center justify-center lg:justify-end">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-gold rounded-full blur-[140px] animate-pulse-gold pointer-events-none" />
+import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
+import { Activity, Zap, Clock, BarChart3 } from "lucide-react";
+import { DecisionTreeRegression } from "ml-cart";
 
-          <div className="relative w-full max-w-[420px] bg-surface border border-border rounded-2xl shadow-2xl shadow-black/60 overflow-hidden backdrop-blur-xl transition-transform duration-500 hover:-translate-y-2 group">
-            <div className="px-5 py-3.5 border-b border-border/50 bg-surface-2/60 flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                </div>
+// ── CART Model — trained once at module level ─────────────────────────────
+// Features: [amperePerCycle, dailyHours]
+// Target:   daily ampere-hour consumption (realistic AC data with slight variance)
+const TRAIN_X = [
+  [3.5, 4],  [4.0, 4],  [4.0, 8],  [4.5, 6],
+  [5.0, 8],  [5.0, 10], [5.5, 6],  [5.5, 10],
+  [6.0, 6],  [6.0, 8],  [6.5, 9],  [6.5, 12],
+  [7.0, 7],  [7.0, 10], [7.5, 8],  [7.5, 12],
+  [8.0, 7],  [8.0, 9],  [8.0, 10], [8.5, 8],
+  [8.5, 9],  [8.5, 12], [9.0, 8],  [9.0, 10],
+  [9.0, 12], [9.5, 9],  [9.5, 11], [10.0, 8],
+  [10.0, 10],[10.0, 12],
+];
+
+const TRAIN_Y = [
+  14.2, 16.1, 31.7, 27.4,
+  39.8, 50.5, 33.2, 54.6,
+  36.3, 47.8, 58.9, 77.7,
+  49.3, 69.6, 60.5, 89.8,
+  56.3, 71.7, 80.2, 68.4,
+  76.3, 102.3, 71.6, 90.3,
+  107.7, 85.9, 104.3, 80.3,
+  99.6, 120.3,
+];
+
+const cartModel = new DecisionTreeRegression({ maxDepth: 5, minNumSamples: 2 });
+cartModel.train(TRAIN_X, TRAIN_Y);
+
+// ── Constants ─────────────────────────────────────────────────────────────
+// 30 days/month − 4 Saturdays − 4 Sundays = 22 working days
+const WORKING_DAYS_PER_MONTH = 22;
+const MONTH_OPTIONS = [1, 3, 6] as const;
+type MonthOption = (typeof MONTH_OPTIONS)[number];
+
+const GOLD = "#C9A84C";
+const GOLD_DIM = "#C9A84C44";
+
+// ── Component ─────────────────────────────────────────────────────────────
+export default function Right() {
+  const t = useTranslations("hero");
+
+  const [ampere, setAmpere] = useState<number>(8.0);
+  const [hours, setHours] = useState<number>(9);
+  const [months, setMonths] = useState<MonthOption>(1);
+
+  const workingDays = months * WORKING_DAYS_PER_MONTH;
+
+  const prediction = useMemo(() => {
+    const rawVal = cartModel.predict([[ampere, hours]])[0];
+    const dailyUsage = Math.max(0, rawVal);
+    const perMonth = dailyUsage * WORKING_DAYS_PER_MONTH;
+    const totalUsage = perMonth * months;
+    const monthlyBreakdown = Array.from({ length: months }, (_, i) => ({
+      month: i + 1,
+      usage: perMonth,
+    }));
+    return { dailyUsage, perMonth, totalUsage, monthlyBreakdown };
+  }, [ampere, hours, months]);
+
+  const maxBar = prediction.perMonth || 1;
+
+  const handleAmpere = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseFloat(e.target.value);
+    if (!isNaN(v)) setAmpere(Math.min(20, Math.max(0.1, v)));
+  };
+
+  const handleHours = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseFloat(e.target.value);
+    if (!isNaN(v)) setHours(Math.min(24, Math.max(1, v)));
+  };
+
+  return (
+    <div className="relative lg:h-[640px] flex items-center justify-center lg:justify-end">
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-gold rounded-full blur-[140px] animate-pulse-gold pointer-events-none" />
+
+      {/* Card */}
+      <div className="relative w-full max-w-[420px] bg-surface border border-border rounded-2xl shadow-2xl shadow-black/60 overflow-hidden backdrop-blur-xl">
+
+        {/* Browser chrome */}
+        <div className="px-5 py-3.5 border-b border-border/50 bg-surface-2/60 flex justify-between items-center">
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+          </div>
+          <div className="flex-1 flex justify-center">
+            <div className="px-4 py-1 bg-black/40 rounded-md border border-border/30 text-[10px] text-text-faint font-mono">
+              elpresy.app/predict
+            </div>
+          </div>
+          <div className="w-12" />
+        </div>
+
+        {/* App header */}
+        <div className="px-5 py-3 border-b border-border/30 bg-surface-2/30 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-text-primary font-display font-semibold text-sm">
+            <Zap className="text-gold" size={14} fill="currentColor" />
+            <span>ELPRESY</span>
+          </div>
+          <div className="flex items-center gap-3 text-text-faint text-[10px] font-medium">
+            <span className="hover:text-text-muted cursor-default transition-colors">Dashboard</span>
+            <span className="text-gold border-b border-gold pb-0.5 cursor-default">Predict</span>
+            <span className="hover:text-text-muted cursor-default transition-colors">History</span>
+          </div>
+        </div>
+
+        {/* Main content */}
+        <div className="p-5 space-y-4">
+
+          {/* Status badge */}
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] text-emerald-400/80 font-medium uppercase tracking-wider">
+              {t("mockStatus")}
+            </span>
+          </div>
+
+          {/* ── Inputs ── */}
+          <div className="space-y-3">
+
+            {/* Ampere Per Cycle */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
+                <Activity size={10} className="text-gold/60" />
+                {t("mockAmpereLabel")}
+              </label>
+              <div className="h-9 w-full bg-zinc-900/80 rounded-lg border border-border/50 flex items-center px-3 gap-2 focus-within:border-gold/40 transition-colors">
+                <input
+                  id="hero-ampere-input"
+                  type="number"
+                  value={ampere}
+                  min={0.1}
+                  max={20}
+                  step={0.1}
+                  onChange={handleAmpere}
+                  className="bg-transparent text-text-primary font-mono text-sm flex-1 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                />
+                <span className="text-[10px] text-text-faint font-mono shrink-0">A</span>
               </div>
-              <div className="flex-1 flex justify-center">
-                <div className="px-4 py-1 bg-black/40 rounded-md border border-border/30 text-[10px] text-text-faint font-mono">
-                  elpresy.app/predict
-                </div>
-              </div>
-              <div className="w-12" />
             </div>
 
-            {/* App Header inside card */}
-            <div className="px-5 py-3 border-b border-border/30 bg-surface-2/30 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-text-primary font-display font-semibold text-sm">
-                <Zap className="text-gold" size={14} fill="currentColor" />
-                <span>ELPRESY</span>
-              </div>
-              <div className="flex items-center gap-3 text-text-faint text-[10px] font-medium">
-                <span className="hover:text-text-muted cursor-default">Dashboard</span>
-                <span className="text-gold border-b border-gold pb-0.5 cursor-default">Predict</span>
-                <span className="hover:text-text-muted cursor-default">History</span>
+            {/* Daily Usage Hours */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
+                <Clock size={10} className="text-gold/60" />
+                {t("mockHoursLabel")}
+              </label>
+              <div className="h-9 w-full bg-zinc-900/80 rounded-lg border border-border/50 flex items-center px-3 gap-2 focus-within:border-gold/40 transition-colors">
+                <input
+                  id="hero-hours-input"
+                  type="number"
+                  value={hours}
+                  min={1}
+                  max={24}
+                  step={0.5}
+                  onChange={handleHours}
+                  className="bg-transparent text-text-primary font-mono text-sm flex-1 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                />
+                <span className="text-[10px] text-text-faint font-mono shrink-0">hrs/day</span>
               </div>
             </div>
 
-            {/* Main Prediction Form */}
-            <div className="p-5 space-y-5">
-              {/* Status Badge */}
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] text-emerald-400/80 font-medium uppercase tracking-wider">
-                  {t("mockStatus")}
+            {/* Month Selector */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
+                <BarChart3 size={10} className="text-gold/60" />
+                {t("mockMonthLabel")}
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {MONTH_OPTIONS.map((m) => {
+                  const label = m === 1 ? t("mockMonth1") : m === 3 ? t("mockMonth3") : t("mockMonth6");
+                  return (
+                    <button
+                      key={m}
+                      id={`hero-month-${m}`}
+                      onClick={() => setMonths(m)}
+                      className={`h-9 rounded-lg border text-[11px] font-semibold font-mono transition-all duration-200 ${
+                        months === m
+                          ? "bg-gold/15 border-gold/50 text-gold shadow-[0_0_8px_rgba(201,168,76,0.15)]"
+                          : "bg-zinc-900/60 border-border/40 text-text-faint hover:border-gold/30 hover:text-text-muted"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* ── Results ── */}
+          <div className="pt-4 border-t border-border/40 space-y-3">
+
+            {/* Total usage hero number */}
+            <div className="flex items-end justify-between">
+              <div>
+                <div className="text-[10px] text-text-faint uppercase tracking-wider mb-1">
+                  {t("mockTotalUsage")}
+                </div>
+                <div className="text-3xl font-display font-bold text-white leading-none tabular-nums">
+                  {prediction.totalUsage.toFixed(1)}
+                  <span className="text-base text-text-muted ml-1">Ah</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-1 pb-0.5">
+                <div className="text-[9px] text-text-faint uppercase tracking-wider">{t("mockWorkingDays")}</div>
+                <div className="text-sm font-bold text-gold font-mono">{workingDays}d</div>
+              </div>
+            </div>
+
+            {/* Mini stats */}
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30">
+                <div className="text-[9px] text-text-faint uppercase tracking-wider">{t("mockAvgDaily")}</div>
+                <div className="text-xs font-semibold text-text-primary font-mono mt-0.5 tabular-nums">
+                  {prediction.dailyUsage.toFixed(1)} Ah
+                </div>
+              </div>
+              <div className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30">
+                <div className="text-[9px] text-text-faint uppercase tracking-wider">{t("mockMonthlyAvg")}</div>
+                <div className="text-xs font-semibold text-text-primary font-mono mt-0.5 tabular-nums">
+                  {prediction.perMonth.toFixed(1)} Ah
+                </div>
+              </div>
+            </div>
+
+            {/* Per-month bar chart */}
+            <div className="bg-zinc-900/40 rounded-lg border border-border/30 p-3">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[9px] text-text-faint uppercase tracking-wider">
+                  {t("mockPerMonth")}
                 </span>
+                <span className="text-[9px] text-gold font-mono">{t("mockLive")}</span>
               </div>
 
-              {/* Input Fields */}
-              <div className="space-y-3">
-                <div className="space-y-1.5">
-                  <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
-                    <Activity size={10} className="text-gold/60" />
-                    {t("mockAmpereLabel")}
-                  </label>
-                  <div className="h-9 w-full bg-zinc-900/80 rounded-lg border border-border/50 flex items-center justify-between px-3 group-hover:border-gold/20 transition-colors">
-                    <span className="text-text-primary font-mono text-sm">1.2</span>
-                    <span className="text-[10px] text-text-faint font-mono">A</span>
-                  </div>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[11px] text-text-muted font-medium uppercase tracking-wider flex items-center gap-1.5">
-                    <Clock size={10} className="text-gold/60" />
-                    {t("mockHoursLabel")}
-                  </label>
-                  <div className="h-9 w-full bg-zinc-900/80 rounded-lg border border-border/50 flex items-center justify-between px-3 group-hover:border-gold/20 transition-colors">
-                    <span className="text-text-primary font-mono text-sm">8.5</span>
-                    <span className="text-[10px] text-text-faint font-mono">hrs/day</span>
-                  </div>
-                </div>
+              {/* Bars */}
+              <div className="h-12 flex items-end gap-1.5">
+                {prediction.monthlyBreakdown.map((bar) => {
+                  const pct = maxBar > 0 ? (bar.usage / maxBar) * 100 : 0;
+                  return (
+                    <div key={bar.month} className="flex-1 flex flex-col items-center justify-end gap-1">
+                      <div
+                        style={{
+                          height: `${pct}%`,
+                          background: `linear-gradient(to top, ${GOLD}, ${GOLD_DIM})`,
+                          minHeight: "4px",
+                          transition: "height 0.4s cubic-bezier(0.4,0,0.2,1)",
+                        }}
+                        className="w-full rounded-sm"
+                      />
+                      <span className="text-[7px] text-text-faint font-mono">M{bar.month}</span>
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Predict Button */}
-              <button className="w-full h-10 bg-gold/90 hover:bg-gold text-black text-sm font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(201,168,76,0.15)]">
-                <BarChart3 size={14} />
-                {t("mockPredict")}
-              </button>
-
-              {/* Results Area */}
-              <div className="pt-4 border-t border-border/40 space-y-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <CheckCircle2 size={12} className="text-emerald-400" />
-                  <span className="text-[10px] text-emerald-400/80 font-medium">{t("mockComplete")}</span>
-                </div>
-
-                <div className="flex items-end justify-between">
-                  <div>
-                    <div className="text-[10px] text-text-faint uppercase tracking-wider mb-1">
-                      {t("mockResultLabel")}
-                    </div>
-                    <div className="text-4xl font-display font-bold text-white leading-none">
-                      8.4<span className="text-lg text-text-muted ml-0.5">A</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <div className="flex items-center text-gold gap-1">
-                      <TrendingUp size={12} />
-                      <span className="text-xs font-semibold">+2.4%</span>
-                    </div>
-                    <span className="text-[9px] text-text-faint">{t("mockVsLast")}</span>
-                  </div>
-                </div>
-
-                {/* Mini Confidence Stats */}
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { label: t("mockConfidence"), value: "94.2%" },
-                    { label: t("mockMin"), value: "7.8 A" },
-                    { label: t("mockMax"), value: "9.1 A" },
-                  ].map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30"
-                    >
-                      <div className="text-[9px] text-text-faint uppercase tracking-wider">
-                        {stat.label}
-                      </div>
-                      <div className="text-xs font-semibold text-text-primary font-mono mt-0.5">
-                        {stat.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Mini Line Chart */}
-                <div className="bg-zinc-900/40 rounded-lg border border-border/30 p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[9px] text-text-faint uppercase tracking-wider">
-                      {t("mockTrend")}
-                    </span>
-                    <span className="text-[9px] text-gold font-mono">{t("mockLive")}</span>
-                  </div>
-                  <div className="h-14 w-full relative">
-                    <svg
-                      className="w-full h-full"
-                      preserveAspectRatio="none"
-                      viewBox="0 0 100 50"
-                    >
-                      <defs>
-                        <linearGradient id="heroChartGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#C9A84C" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#C9A84C" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      {/* Grid lines */}
-                      <line x1="0" y1="12.5" x2="100" y2="12.5" stroke="#ffffff" strokeOpacity="0.03" strokeWidth="0.5" />
-                      <line x1="0" y1="25" x2="100" y2="25" stroke="#ffffff" strokeOpacity="0.03" strokeWidth="0.5" />
-                      <line x1="0" y1="37.5" x2="100" y2="37.5" stroke="#ffffff" strokeOpacity="0.03" strokeWidth="0.5" />
-                      {/* Area fill */}
-                      <path
-                         d="M0,40 C8,38 12,30 20,28 C28,26 32,35 40,30 C48,25 52,15 60,18 C68,21 72,25 80,20 C88,15 92,8 100,10 L100,50 L0,50 Z"
-                        fill="url(#heroChartGrad)"
-                      />
-                      {/* Line */}
-                      <path
-                        d="M0,40 C8,38 12,30 20,28 C28,26 32,35 40,30 C48,25 52,15 60,18 C68,21 72,25 80,20 C88,15 92,8 100,10"
-                        fill="none"
-                        stroke="#C9A84C"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                      />
-                      {/* End dot */}
-                      <circle cx="100" cy="10" r="2.5" fill="#C9A84C" />
-                      <circle cx="100" cy="10" r="4" fill="#C9A84C" fillOpacity="0.2" />
-                    </svg>
-                    {/* Day labels */}
-                    <div className="absolute -bottom-3 left-0 right-0 flex justify-between text-[7px] text-text-faint font-mono">
-                      <span>Mon</span>
-                      <span>Tue</span>
-                      <span>Wed</span>
-                      <span>Thu</span>
-                      <span>Fri</span>
-                      <span>Sat</span>
-                      <span>Sun</span>
-                    </div>
-                  </div>
-                </div>
+              {/* Y-axis label */}
+              <div className="flex justify-between mt-2">
+                <span className="text-[7px] text-text-faint font-mono">0</span>
+                <span className="text-[7px] text-text-faint font-mono">
+                  {maxBar.toFixed(0)} Ah
+                </span>
               </div>
             </div>
           </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

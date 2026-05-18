@@ -13,7 +13,7 @@ export default function Hero() {
         <Ambient />
 
         <Left t={t}/>
-        <Right t={t}/>
+        <Right />
       </div>
     </section>
   );

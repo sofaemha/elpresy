@@ -26,7 +26,16 @@
     "mockMin": "Min",
     "mockMax": "Max",
     "mockTrend": "7-Day Trend",
-    "mockLive": "Live"
+    "mockLive": "Live",
+    "mockMonthLabel": "Prediction Period",
+    "mockMonth1": "1 Month",
+    "mockMonth3": "3 Months",
+    "mockMonth6": "6 Months",
+    "mockTotalUsage": "Total Predicted Usage",
+    "mockWorkingDays": "Working Days",
+    "mockAvgDaily": "Avg Daily",
+    "mockMonthlyAvg": "Per Month",
+    "mockPerMonth": "Per-Month Breakdown"
   },
   "features": {
     "heading": "Everything You Need to Analyze AC Energy Consumption",
