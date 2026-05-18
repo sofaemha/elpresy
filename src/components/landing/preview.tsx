@@ -10,7 +10,7 @@ export default function Preview() {
     <section className="py-28 bg-surface relative overflow-hidden">
       <div className="container mx-auto px-6">
         <Header t={t} />
-        <Mockup t={t} />
+        <Mockup />
         <Proof t={t} />
       </div>
     </section>
