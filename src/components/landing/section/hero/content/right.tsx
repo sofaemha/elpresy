@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Activity, Zap, Clock, Database, RefreshCw, BarChart3, Play } from "lucide-react";
+import { Activity, Zap, Clock, Database, RefreshCw, BarChart3, Play, ChevronDown } from "lucide-react";
 import { DecisionTreeRegression } from "ml-cart";
 
 // ── Constants ─────────────────────────────────────────────────────────────
@@ -125,6 +125,10 @@ export default function Right() {
   // Prediction result — only set on explicit submit
   const [result, setResult] = useState<{ daily: number; perMonth: number; total: number; pts: number[] } | null>(null);
 
+  // Accordion open state
+  const [trainOpen, setTrainOpen] = useState(true);
+  const [predOpen, setPredOpen]   = useState(true);
+
   const workingDays = predMonths * WORKING_DAYS_PER_MONTH;
 
   const avgY = useMemo(() => {
@@ -171,43 +175,57 @@ export default function Right() {
         <div className="p-5 space-y-4">
 
           {/* ── Training Data ─────────────────────────────────────────── */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-1.5">
-              <Database size={10} className="text-gold/60" />
-              <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider">Training Data</span>
-            </div>
-
-            {/* Availability */}
-            <div className={`grid grid-cols-2 gap-2 transition-opacity duration-500 ${trainData ? "opacity-100" : "opacity-35 pointer-events-none"}`}>
-              <div className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30">
-                <div className="text-[9px] text-white uppercase tracking-wider">Samples</div>
-                <div className={`text-sm font-bold font-mono mt-0.5 tabular-nums ${trainData ? "text-emerald-400" : "text-white"}`}>
-                  {trainData ? trainData.x.length : "—"}
-                </div>
+          <div>
+            {/* Accordion header */}
+            <button
+              onClick={() => setTrainOpen((o) => !o)}
+              className="w-full flex items-center justify-between py-0.5 group"
+            >
+              <div className="flex items-center gap-1.5">
+                <Database size={10} className="text-gold/60" />
+                <span className="text-[11px] text-text-muted font-medium uppercase tracking-wider group-hover:text-text-primary transition-colors">Training Data</span>
               </div>
-              <div className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30">
-                <div className="text-[9px] text-white uppercase tracking-wider">Avg Target</div>
-                <div className={`text-sm font-bold font-mono mt-0.5 tabular-nums ${trainData ? "text-emerald-400" : "text-white"}`}>
-                  {avgY !== null ? `${avgY.toFixed(1)} Ah` : "—"}
-                </div>
-              </div>
-            </div>
-
-            {/* Train month cards */}
-            <div className="grid grid-cols-3 gap-2">
-              {TRAIN_MONTHS.map((m) => (
-                <button key={m} id={`hero-train-${m}mo`} onClick={() => setTrainMonths(m)}
-                  className={`h-10 rounded-lg border flex flex-col items-center justify-center gap-0.5 transition-all duration-200 ${trainMonths === m ? "bg-gold/15 border-gold/50 text-gold shadow-[0_0_8px_rgba(201,168,76,0.15)]" : "bg-zinc-900/60 border-border/40 text-text-faint hover:border-gold/30 hover:text-text-muted"}`}>
-                  <span className="text-[11px] font-bold font-mono">{m} mo</span>
-                  <span className="text-[8px] font-normal opacity-60">{m * WORKING_DAYS_PER_MONTH} samples</span>
-                </button>
-              ))}
-            </div>
-
-            <button id="hero-generate-btn" onClick={handleGenerate}
-              className="w-full h-9 bg-zinc-800/80 hover:bg-gold/10 border border-border/50 hover:border-gold/40 text-text-muted hover:text-gold text-[11px] font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
-              <RefreshCw size={11} />Generate Training Data
+              <ChevronDown size={12} className={`text-text-faint transition-transform duration-300 ${trainOpen ? "rotate-180" : ""}`} />
             </button>
+
+            {/* Collapsible content */}
+            <div className={`grid transition-all duration-300 ease-in-out ${trainOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+              <div className="overflow-hidden">
+                <div className="space-y-3 pt-3">
+                  {/* Availability */}
+                  <div className={`grid grid-cols-2 gap-2 transition-opacity duration-500 ${trainData ? "opacity-100" : "opacity-35 pointer-events-none"}`}>
+                    <div className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30">
+                      <div className="text-[9px] text-white uppercase tracking-wider">Samples</div>
+                      <div className={`text-sm font-bold font-mono mt-0.5 tabular-nums ${trainData ? "text-emerald-400" : "text-white"}`}>
+                        {trainData ? trainData.x.length : "—"}
+                      </div>
+                    </div>
+                    <div className="bg-zinc-900/60 rounded-md px-2.5 py-2 border border-border/30">
+                      <div className="text-[9px] text-white uppercase tracking-wider">Avg Target</div>
+                      <div className={`text-sm font-bold font-mono mt-0.5 tabular-nums ${trainData ? "text-emerald-400" : "text-white"}`}>
+                        {avgY !== null ? `${avgY.toFixed(1)} Ah` : "—"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Train month cards */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {TRAIN_MONTHS.map((m) => (
+                      <button key={m} id={`hero-train-${m}mo`} onClick={() => setTrainMonths(m)}
+                        className={`h-10 rounded-lg border flex flex-col items-center justify-center gap-0.5 transition-all duration-200 ${trainMonths === m ? "bg-gold/15 border-gold/50 text-gold shadow-[0_0_8px_rgba(201,168,76,0.15)]" : "bg-zinc-900/60 border-border/40 text-text-faint hover:border-gold/30 hover:text-text-muted"}`}>
+                        <span className="text-[11px] font-bold font-mono">{m} mo</span>
+                        <span className="text-[8px] font-normal opacity-60">{m * WORKING_DAYS_PER_MONTH} samples</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <button id="hero-generate-btn" onClick={handleGenerate}
+                    className="w-full h-9 bg-zinc-800/80 hover:bg-gold/10 border border-border/50 hover:border-gold/40 text-text-muted hover:text-gold text-[11px] font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
+                    <RefreshCw size={11} />Generate Training Data
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* ── Gold divider ───────────────────────────────────────────── */}
@@ -216,13 +234,25 @@ export default function Right() {
           </div>
 
           {/* ── Prediction ────────────────────────────────────────────── */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${isReady ? "bg-emerald-500 animate-pulse" : "bg-zinc-600"}`} />
-              <span className={`text-[10px] font-medium uppercase tracking-wider transition-colors duration-500 ${isReady ? "text-emerald-400/80" : "text-zinc-600"}`}>
-                {isReady ? t("mockStatus") : "No Model — Generate Data First"}
-              </span>
-            </div>
+          <div>
+            {/* Accordion header */}
+            <button
+              onClick={() => setPredOpen((o) => !o)}
+              className="w-full flex items-center justify-between py-0.5 group"
+            >
+              <div className="flex items-center gap-2">
+                <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${isReady ? "bg-emerald-500 animate-pulse" : "bg-zinc-600"}`} />
+                <span className={`text-[10px] font-medium uppercase tracking-wider transition-colors duration-500 ${isReady ? "text-emerald-400/80" : "text-zinc-600"}`}>
+                  {isReady ? t("mockStatus") : "No Model — Generate Data First"}
+                </span>
+              </div>
+              <ChevronDown size={12} className={`text-text-faint transition-transform duration-300 ${predOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {/* Collapsible content */}
+            <div className={`grid transition-all duration-300 ease-in-out ${predOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+              <div className="overflow-hidden">
+                <div className="space-y-3 pt-3">
 
             {/* Inputs */}
             <div className="space-y-2.5">
@@ -311,6 +341,9 @@ export default function Right() {
                 </span>
               </div>
             )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
