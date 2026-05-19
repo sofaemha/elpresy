@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 
-import Logo from "@/components/landing/layout/navbar/logo";
-import Desktop from "@/components/landing/layout/navbar/desktop";
-import Actions from "@/components/landing/layout/navbar/actions";
-import Mobile from "@/components/landing/layout/navbar/mobile";
+import Logo from "@/components/landing/section/navbar/logo";
+import Desktop from "@/components/landing/section/navbar/desktop";
+import Actions from "@/components/landing/section/navbar/actions";
+import Mobile from "@/components/landing/section/navbar/mobile";
 
 export default function Navbar() {
   const t = useTranslations("nav");
