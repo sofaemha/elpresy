@@ -7,12 +7,13 @@ export default function Hero() {
   const t = useTranslations("hero");
 
   return (
-    <section id="thesis" className="relative min-h-[100dvh] flex flex-col justify-center pt-20 overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+    <section id="thesis" className="relative min-h-[100dvh] flex flex-col justify-center pt-20 py-20 lg:py-0 overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 items-center">
         <Background />
         <Ambient />
 
         <Left t={t}/>
+        
         <Right />
       </div>
     </section>

@@ -22,52 +22,13 @@ export default function Content({ t }: { t: any }) {
   return (
     <div className="hidden md:flex w-full border-b border-border/30">
 
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee {
-          animation: marquee 20s linear infinite;
-        }
-      `}</style>
-
-      {/* Left Column */}
-      <div className="w-1/3 p-8 border-r border-gold/20 flex flex-col xl:flex-row items-center justify-center gap-6 bg-bg">
-        <div className="flex flex-col gap-1">
-          <p className="text-gold/80 font-sans text-xs uppercase tracking-widest">
-            {t("tutor1Role")}
-          </p>
-          <Link href="https://estaff.upstegal.ac.id/tenaga-pendidik/386">
-            <p className="text-white/90 font-display font-bold text-sm lg:text-base tracking-wide">
-              {t("tutor1Name")}
-            </p>
-          </Link>
-        </div>
-        <div className="w-8 h-px bg-border/30" />
-        <div className="flex flex-col gap-1">
-          <p className="text-gold/80 font-sans text-xs uppercase tracking-widest">
-            {t("tutor2Role")}
-          </p>
-          <Link href="https://estaff.upstegal.ac.id/tenaga-pendidik/189">
-            <p className="text-white/90 font-display font-bold text-sm lg:text-base tracking-wide">
-              {t("tutor2Name")}
-            </p>
-          </Link>
-        </div>
+    <div className="hidden md:flex w-full justify-center items-center px-8 py-6 bg-bg">
+      <div className="flex items-center gap-2">
+        <span className="text-gold font-display font-bold">ELPRESY</span> &mdash; 
+        <span className="text-white/50 text-sm font-sans">{t("credit")}</span>
       </div>
+    </div>
 
-      {/* Right Column (Marquee) */}
-      <div className="w-2/3 overflow-hidden flex items-center bg-bg relative py-8">
-        <div className="flex overflow-hidden w-full group">
-          <div className="flex animate-marquee motion-reduce:animate-none shrink-0 items-center">
-            <MarqueeContent />
-          </div>
-          <div className="flex animate-marquee motion-reduce:animate-none shrink-0 items-center" aria-hidden="true">
-            <MarqueeContent />
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
