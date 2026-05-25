@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Globe, Menu, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -256,11 +257,27 @@ export default function Mobile({
 }) {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [mounted, setMounted] = useState(false);
 
-  /* Lock body scroll when drawer is open */
+  /* Mount guard — createPortal needs document to exist */
+  useEffect(() => { setMounted(true); }, []);
+
+  /* Scroll-lock that preserves scroll position */
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!open) return;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    return () => {
+      body.style.position = "";
+      body.style.top = "";
+      body.style.width = "";
+      body.style.overflow = "";
+      window.scrollTo(0, scrollY);
+    };
   }, [open]);
 
   /* Close on Escape key */
@@ -300,16 +317,21 @@ export default function Mobile({
   return (
     <div className="md:hidden flex items-center">
       <Trigger onOpen={handleOpen} />
-      <Overlay open={open} onClose={handleClose} />
-      <Drawer
-        open={open}
-        onClose={handleClose}
-        Links={Links}
-        activeSection={activeSection}
-        toggleLocale={toggleLocale}
-        locale={locale}
-        t={t}
-      />
+      {mounted && createPortal(
+        <>
+          <Overlay open={open} onClose={handleClose} />
+          <Drawer
+            open={open}
+            onClose={handleClose}
+            Links={Links}
+            activeSection={activeSection}
+            toggleLocale={toggleLocale}
+            locale={locale}
+            t={t}
+          />
+        </>,
+        document.body
+      )}
     </div>
   );
 }
