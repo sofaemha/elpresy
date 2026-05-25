@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { LayoutDashboard, BarChart3, History, Settings, Zap, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -14,6 +14,7 @@ type Tab = "dashboard" | "predictions" | "history" | "settings";
 export default function App() {
   const t = useTranslations("preview");
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const NAV_ITEMS: { icon: React.ElementType; key: Tab; label: string }[] = [
     { icon: LayoutDashboard, key: "dashboard",   label: t("dashboard") },
@@ -23,7 +24,7 @@ export default function App() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[520px]">
+    <div ref={containerRef} className="relative overflow-hidden flex flex-col md:flex-row min-h-[520px]">
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between border-b border-white/[0.06] bg-[#0e0e10] p-4 shrink-0">
         <div className="flex items-center gap-2 text-gold font-display font-bold text-base">
@@ -35,7 +36,7 @@ export default function App() {
             <Menu size={20} />
             <span className="sr-only">Toggle Menu</span>
           </SheetTrigger>
-          <SheetContent usePortal={false} side="left" className="w-64 bg-[#0e0e10] border-r border-white/[0.06] p-4 flex flex-col">
+          <SheetContent container={() => containerRef.current} side="left" className="w-64 bg-[#0e0e10] border-r border-white/[0.06] p-4 flex flex-col">
             <SheetTitle className="sr-only">Menu</SheetTitle>
             <div className="flex items-center gap-2 text-gold font-display font-bold text-base mb-8 px-2">
               <Zap size={16} fill="currentColor" />
