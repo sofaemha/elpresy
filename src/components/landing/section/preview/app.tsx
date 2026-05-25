@@ -35,7 +35,7 @@ export default function App() {
             <Menu size={20} />
             <span className="sr-only">Toggle Menu</span>
           </SheetTrigger>
-          <SheetContent side="left" className="w-64 bg-[#0e0e10] border-r border-white/[0.06] p-4 flex flex-col">
+          <SheetContent usePortal={false} side="left" className="w-64 bg-[#0e0e10] border-r border-white/[0.06] p-4 flex flex-col">
             <SheetTitle className="sr-only">Menu</SheetTitle>
             <div className="flex items-center gap-2 text-gold font-display font-bold text-base mb-8 px-2">
               <Zap size={16} fill="currentColor" />
