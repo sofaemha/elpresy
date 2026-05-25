@@ -2,16 +2,16 @@ import App from "@/components/landing/section/preview/app";
 
 export default function Mockup() {
   return (
-    <div className="relative max-w-5xl mx-auto">
+    <div className="relative max-w-5xl mx-auto -mx-6 md:mx-auto">
       {/* Gold glow behind frame */}
-      <div className="absolute -inset-4 bg-gold/[0.04] blur-[60px] rounded-[3rem] pointer-events-none" />
+      <div className="absolute -inset-4 bg-gold/[0.04] blur-[60px] rounded-[3rem] pointer-events-none hidden md:block" />
 
       <div
-        className="relative rounded-2xl border border-white/[0.08] bg-[#0a0a0c] overflow-hidden"
+        className="relative md:rounded-2xl border-y md:border border-white/[0.08] bg-[#0a0a0c] overflow-hidden"
         style={{ boxShadow: "0 0 80px rgba(201,168,76,0.08), 0 25px 50px rgba(0,0,0,0.5)" }}
       >
         {/* Browser Chrome */}
-        <div className="h-11 bg-[#111113] border-b border-white/[0.06] flex items-center px-4 gap-4 shrink-0">
+        <div className="hidden h-11 bg-[#111113] border-b border-white/[0.06] md:flex items-center px-4 gap-4 shrink-0">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
             <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
