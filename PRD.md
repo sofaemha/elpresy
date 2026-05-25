@@ -1,9 +1,9 @@
 # PRD.md — Product Requirements Document
 ## ELPRESY: Electrical Predictions System
 
-> **Document Status:** v2.2 — Fully Resolved
+> **Document Status:** v2.3 — Fully Resolved (Next.js 16 updated)
 > **Architecture:** Option B — Neon + Better Auth (locked)
-> **Last Updated:** May 2026
+> **Last Updated:** May 2026 (aligned to Next.js 16.2.4)
 > **Authority:** This is the single source of truth for all product, feature, ML, and architecture decisions on ELPRESY. All development and code generation must conform to rules stated here. All items are resolved and must be treated as hard constraints. Do not invent, assume, or hallucinate values for any entry in this document.
 
 ***
@@ -106,8 +106,11 @@ This option is locked. Do not mix elements from other options.
 
 | Layer | Technology | Package |
 |-------|-----------|---------|
-| Framework | Next.js 16 App Router | `next` |
-| Language | TypeScript strict | — |
+| Framework | Next.js 16 App Router (v16.2.4) | `next` |
+| Runtime | Node.js ≥ 20.9.0 (LTS) | — |
+| React | React 19.2 (bundled with Next.js 16) | `react`, `react-dom` |
+| Language | TypeScript ≥ 5.1 strict | — |
+| Bundler | Turbopack (default in Next.js 16) | built-in |
 | Styling | Tailwind CSS v4 + shadcn/ui + Base UI | `tailwindcss`, `@base-ui/react` |
 | i18n | next-intl | `next-intl` |
 | ML | CART Regression | `ml-cart` v2.1.1 |
@@ -188,10 +191,12 @@ import { toNextJsHandler } from "better-auth/next-js";
 export const { GET, POST } = toNextJsHandler(auth);
 ```
 
-### 5.5 Route Protection Middleware
+### 5.5 Route Protection Proxy
+
+> **Next.js 16 Breaking Change:** `middleware.ts` is deprecated and renamed to `proxy.ts`. The exported function must also be renamed from `middleware` to `proxy`. The `edge` runtime is **not** supported in `proxy` — it runs Node.js only. If you need the `edge` runtime, keep the old `middleware.ts` file instead.
 
 ```typescript
-// filepath: src/middleware.ts
+// filepath: src/proxy.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromRequest } from "better-auth/next-js";
 import { auth } from "@/lib/auth";
@@ -199,7 +204,7 @@ import { auth } from "@/lib/auth";
 const protectedRoutes = ["/dashboard", "/predict"];
 const adminRoutes = ["/admin"];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const session = await getSessionFromRequest(req, auth);
   const pathname = req.nextUrl.pathname;
   const isProtected = protectedRoutes.some((r) => pathname.includes(r));
@@ -904,7 +909,7 @@ src/
 │               ├── train.ts
 │               └── dataset.json
 ├── i18n/
-├── middleware.ts
+├── proxy.ts                              # Next.js 16: renamed from middleware.ts
 └── messages/
     ├── en.json
     └── id.json
@@ -923,6 +928,8 @@ src/
 | `/api/auth/[...all]` | Managed by Better Auth | Auth endpoints |
 | `/api/predict` | Called by predict form | Prediction API |
 
+> **Note (Next.js 16):** Route protection is handled by `src/proxy.ts` (renamed from `src/middleware.ts`). The exported function is `proxy()`, not `middleware()`.
+
 ### 10.3 Hard Implementation Constraints
 
 1. Complete, production-ready code — never truncate with `// rest of code here`
@@ -937,6 +944,9 @@ src/
 10. Shell & Section pattern for all complex components
 11. `"use client"` only where required (Recharts, Better Auth hooks, event handlers)
 12. Use `pg` driver — never `@neondatabase/serverless` with Better Auth
+13. **(Next.js 16)** Route protection file is `src/proxy.ts`, export is `proxy()` — not `middleware`
+14. **(Next.js 16)** All Request-time APIs (`cookies()`, `headers()`, `params`, `searchParams`) are async-only — always `await` them; sync access is removed
+15. **(Next.js 16)** Node.js ≥ 20.9.0 required; TypeScript ≥ 5.1 required
 
 ***
 
@@ -1015,6 +1025,8 @@ All decisions are fully resolved. No open decisions remain.
 | OD-N | Admin role assignment | Manually seeded via `seed-admin.ts` | §6.5 |
 | OD-O | Password rules | Min 8 chars, at least 1 number | §9.4 |
 | OD-P | DB driver | `pg` (node-postgres) — not `@neondatabase/serverless` | §5.3 |
+| OD-Q | Next.js 16 proxy | Route protection file is `src/proxy.ts`; export is `proxy()` — `middleware` name is deprecated in Next.js 16 | §5.5 |
+| OD-R | Next.js 16 runtime | Node.js ≥ 20.9.0 (LTS), TypeScript ≥ 5.1, React 19.2 (bundled), Turbopack enabled by default | §5.1 |
 
 ***
 
@@ -1023,6 +1035,7 @@ All decisions are fully resolved. No open decisions remain.
 ### 14.1 Dependency Installation
 
 ```bash
+# Next.js 16 requires Node.js >= 20.9.0
 pnpm add better-auth drizzle-orm pg recharts next-intl ml-cart
 pnpm add -D drizzle-kit @types/pg tsx
 ```
@@ -1040,7 +1053,7 @@ pnpm add -D drizzle-kit @types/pg tsx
 9. Merge auth schema with product schema in `src/lib/db/schema.ts` (§6.2, §6.3)
 10. Run `pnpm drizzle-kit push` → push schema to Neon
 11. Run `pnpm tsx src/lib/db/seed-admin.ts` → assign admin role
-12. Add `src/middleware.ts` (§5.5)
+12. Add `src/proxy.ts` (§5.5) — **Next.js 16**: file is `proxy.ts`, function export is `proxy()`, not `middleware`
 13. Run dummy data generator: `pnpm tsx src/lib/ml/data/dummy/generate.ts`
 14. Run dummy model training: `pnpm tsx src/lib/ml/data/dummy/train.ts` → outputs `model.json`
 15. Create `src/lib/ml/predict.ts` (§7.5)
