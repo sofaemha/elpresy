@@ -1,7 +1,14 @@
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
 
-export default function Actions({ toggleLocale, t }: { toggleLocale: () => void, t: any }) {
+export default function Actions({
+  toggleLocale,
+  t,
+}: {
+  toggleLocale: () => void;
+  t: ReturnType<typeof useTranslations>;
+}) {
   return (
     <div className="hidden md:flex items-center gap-4">
       <button
@@ -19,5 +26,5 @@ export default function Actions({ toggleLocale, t }: { toggleLocale: () => void,
         {t("getStarted")}
       </Button>
     </div>
-  )
+  );
 }
