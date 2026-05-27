@@ -7,7 +7,16 @@
     "research": "Penelitian",
     "about": "Tentang",
     "getStarted": "Mulai Sekarang",
-    "language": "ID"
+    "language": "ID",
+    "home": "Beranda",
+    "predict": "Prediksi",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "login": "Masuk",
+    "register": "Mulai",
+    "logout": "Keluar",
+    "backHome": "Kembali ke Beranda",
+    "newPrediction": "Prediksi Baru"
   },
   "hero": {
     "badge": "Proyek Skripsi Sarjana • 2026",
@@ -193,5 +202,27 @@
     "mobileChat": "MARI MENGOBROL",
     "contactBtn": "KONTAK",
     "credit": "Tugas Skripsi Sarjana"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Gambaran aktivitas prediksi Anda",
+    "newPrediction": "Prediksi Baru",
+    "modelActive": "Model Aktif",
+    "totalPredictions": "Total Prediksi",
+    "lastRange": "Rentang Prediksi Terakhir",
+    "lastDate": "Tanggal Prediksi Terakhir",
+    "historyTitle": "Riwayat Prediksi",
+    "trendTitle": "Tren Ampere",
+    "trendSubtitle": "resultUpper terhadap waktu",
+    "colDate": "Tanggal",
+    "colAmpere": "Ampere / Siklus",
+    "colHours": "Jam / Hari",
+    "colPeriod": "Periode (hari)",
+    "colRange": "Rentang Prediksi",
+    "empty": "Belum ada prediksi. Mulai prediksi pertama Anda.",
+    "showing": "Menampilkan {from}\u2013{to} dari {total} data",
+    "pagePrev": "Sebelumnya",
+    "pageNext": "Berikutnya",
+    "unit": "A"
   }
 }

@@ -7,7 +7,16 @@
     "research": "Research",
     "about": "About",
     "getStarted": "Get Started",
-    "language": "EN"
+    "language": "EN",
+    "home": "Home",
+    "predict": "Predict",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "login": "Log In",
+    "register": "Get Started",
+    "logout": "Log Out",
+    "backHome": "Back to Home",
+    "newPrediction": "New Prediction"
   },
   "hero": {
     "badge": "Undergraduate Thesis Project • 2026",
@@ -193,5 +202,27 @@
     "mobileChat": "LET'S CHAT",
     "contactBtn": "CONTACT",
     "credit": "Bachelor's Thesis Assignment"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your prediction activity",
+    "newPrediction": "New Prediction",
+    "modelActive": "Model Active",
+    "totalPredictions": "Total Predictions",
+    "lastRange": "Last Predicted Range",
+    "lastDate": "Last Prediction Date",
+    "historyTitle": "Prediction History",
+    "trendTitle": "Ampere Trend",
+    "trendSubtitle": "resultUpper over time",
+    "colDate": "Date",
+    "colAmpere": "Ampere / Cycle",
+    "colHours": "Hours / Day",
+    "colPeriod": "Period (days)",
+    "colRange": "Predicted Range",
+    "empty": "No predictions yet. Start your first forecast.",
+    "showing": "Showing {from}\u2013{to} of {total} records",
+    "pagePrev": "Previous",
+    "pageNext": "Next",
+    "unit": "A"
   }
 }
