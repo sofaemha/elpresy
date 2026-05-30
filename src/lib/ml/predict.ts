@@ -9,7 +9,7 @@ export interface PredictionResult {
   resultUpper: number;
 }
 
-const reg = DTR.load(modelJSON);
+const reg = DTR.load(modelJSON as any);
 
 export function runPrediction(
   amperePerCycle: number,

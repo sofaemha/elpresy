@@ -1,6 +1,6 @@
 // filepath: src/components/predict/result/chart.tsx
 "use client";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
 import type { ChartDataPoint } from "@/lib/ml/predict";
 import { useTranslations } from "next-intl";
 
@@ -16,38 +16,52 @@ export default function PredictionChart({ data }: { data: ChartDataPoint[] }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 16 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+    <ResponsiveContainer width="100%" height={160}>
+      <AreaChart data={data} margin={{ top: 16, right: 16, left: -24, bottom: 0 }}>
+        <defs>
+          <linearGradient id="colorAmpere" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#C9A84C" stopOpacity={0.45} />
+            <stop offset="75%" stopColor="#C9A84C" stopOpacity={0.08} />
+            <stop offset="100%" stopColor="#C9A84C" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
         <XAxis 
           dataKey="day" 
-          stroke="#A1A1AA" 
-          tick={{ fill: "#A1A1AA", fontSize: 12 }}
+          stroke="rgba(201,168,76,0.18)" 
+          tick={{ fill: "#52525B", fontSize: 9, fontFamily: "monospace" }}
           ticks={ticks.length > 0 ? ticks : undefined}
           tickFormatter={(value) => {
-            if (value % 7 === 0) return `${t("chart_week")} ${value / 7}`;
+            if (value % 7 === 0) return `M${value / 7}`;
             return value;
           }}
-          label={{ value: t("chart_axis_x"), position: "insideBottom", offset: -8, fill: "#A1A1AA" }} 
+          tickLine={false}
+          axisLine={false}
+          dy={10}
         />
         <YAxis 
-          stroke="#A1A1AA" 
-          tick={{ fill: "#A1A1AA", fontSize: 12 }}
-          label={{ value: t("chart_axis_y"), angle: -90, position: "insideLeft", fill: "#A1A1AA" }} 
+          stroke="none" 
+          tick={{ fill: "#52525B", fontSize: 9, fontFamily: "monospace" }}
+          tickLine={false}
+          axisLine={false}
+          dx={-10}
         />
         <Tooltip 
-          contentStyle={{ backgroundColor: "#111113", border: "1px solid rgba(201,168,76,0.2)", color: "#FAFAFA", borderRadius: "0.5rem" }}
+          contentStyle={{ backgroundColor: "rgba(9,9,11,0.9)", border: "1px solid rgba(201,168,76,0.2)", color: "#FAFAFA", borderRadius: "0.5rem", backdropFilter: "blur(4px)" }}
+          itemStyle={{ color: "#C9A84C", fontWeight: "bold", fontFamily: "monospace" }}
+          labelStyle={{ color: "#A1A1AA", fontSize: "10px", textTransform: "uppercase" }}
           labelFormatter={(label) => `${t("chart_day")} ${label}`}
         />
-        <Line 
+        <Area 
           type="monotone" 
           dataKey="ampere" 
           stroke="#C9A84C" 
           strokeWidth={2}
-          dot={false} 
-          activeDot={{ r: 4, fill: "#F5C842" }} 
+          fillOpacity={1} 
+          fill="url(#colorAmpere)"
+          activeDot={{ r: 4, fill: "#C9A84C", stroke: "#09090B", strokeWidth: 2 }} 
         />
-      </LineChart>
+      </AreaChart>
     </ResponsiveContainer>
   );
 }
