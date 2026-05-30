@@ -56,3 +56,23 @@ export async function deleteAllPredictions() {
   await db.delete(predictions).where(eq(predictions.userId, userId));
   revalidatePath("/history");
 }
+
+export async function savePrediction(data: {
+  amperePerCycle: number;
+  dailyUsageHours: number;
+  predictionPeriod: number;
+  resultLower: number;
+  resultUpper: number;
+  chartData: { day: number; ampere: number }[];
+}) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Unauthorized");
+
+  const [prediction] = await db.insert(predictions).values({
+    userId,
+    ...data
+  }).returning();
+
+  revalidatePath("/history");
+  return prediction;
+}

@@ -9,6 +9,8 @@ import { AreaChart } from "@/components/ui/area-chart";
 import PredictionChart from "@/components/predict/result/chart";
 import type { PredictionResult } from "@/lib/ml/predict";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { savePrediction } from "@/app/actions/predictions";
 
 // ── Constants ─────────────────────────────────────────────────────────────
 const WORKING_DAYS_PER_MONTH = 22;
@@ -80,28 +82,38 @@ export default function PredictPage() {
     else if (periodType === "custom") periodVal = customDays;
 
     if (isNaN(ampere) || ampere <= 0 || ampere > 50) {
+      toast.error(t("error_ampere"));
       setError(t("error_ampere"));
       setLoading(false);
       return;
     }
     if (isNaN(hours) || hours <= 0 || hours > 24) {
+      toast.error(t("error_hours"));
       setError(t("error_hours"));
       setLoading(false);
       return;
     }
     if (isNaN(periodVal) || periodVal < 1 || periodVal > 365) {
+      toast.error(t("error_period"));
       setError(t("error_period"));
       setLoading(false);
       return;
     }
 
+    const toastId = toast.loading("Processing prediction data...");
+
     if (modelType === "simulated") {
-      if (!simulatedModel) {
+      if (!simulatedModel || !trainData) {
+        toast.error(t("mock_status_unready"), { id: toastId });
         setError(t("mock_status_unready"));
         setLoading(false);
         return;
       }
       
+      if (trainData.x.length < 50) {
+        toast.warning("Warning: Model might be inaccurate due to low sample size", { id: toastId, duration: 4000 });
+      }
+
       const daily = Math.max(0, simulatedModel.predict([[ampere, hours]])[0]);
       
       const pts = Array.from({ length: periodVal }, (_, d) => {
@@ -111,11 +123,27 @@ export default function PredictPage() {
       
       const min = Math.min(...pts.map(p => p.ampere));
       const max = Math.max(...pts.map(p => p.ampere));
+      const resultLower = parseFloat((min * 0.9).toFixed(3));
+      const resultUpper = parseFloat((max * 1.1).toFixed(3));
       
+      try {
+        await savePrediction({
+           amperePerCycle: ampere,
+           dailyUsageHours: hours,
+           predictionPeriod: periodVal,
+           resultLower,
+           resultUpper,
+           chartData: pts
+        });
+        toast.success("Prediction processed and saved successfully", { id: toastId });
+      } catch (e: any) {
+        toast.error("Failed to save prediction to history", { id: toastId });
+      }
+
       setResult({
          chartData: pts,
-         resultLower: parseFloat((min * 0.9).toFixed(3)),
-         resultUpper: parseFloat((max * 1.1).toFixed(3))
+         resultLower,
+         resultUpper
       });
       setResultOpen(true);
       setPredOpen(false);
@@ -140,13 +168,15 @@ export default function PredictPage() {
         setResult(data);
         setResultOpen(true);
         setPredOpen(false);
+        toast.success("Prediction processed successfully", { id: toastId });
       } catch (err: any) {
         setError(err.message || t("error_required"));
+        toast.error(err.message || "Failed to generate prediction", { id: toastId });
       } finally {
         setLoading(false);
       }
     }
-  }, [ampere, hours, periodType, customDays, modelType, simulatedModel, t]);
+  }, [ampere, hours, periodType, customDays, modelType, simulatedModel, trainData, t]);
 
   const resultStats = useMemo(() => {
     if (!result) return null;
