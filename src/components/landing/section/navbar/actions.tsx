@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Globe } from "lucide-react";
+import { useRouter } from "@/i18n/navigation";
 
 export default function Actions({
   toggleLocale,
@@ -9,6 +10,7 @@ export default function Actions({
   toggleLocale: () => void;
   t: ReturnType<typeof useTranslations>;
 }) {
+  const router = useRouter();
   return (
     <div className="hidden md:flex items-center gap-4">
       <button
@@ -21,6 +23,7 @@ export default function Actions({
 
       <Button
         variant="outline"
+        onClick={() => router.push("/login")}
         className="border-gold text-gold dark:hover:bg-gold hover:text-black transition-all duration-300 rounded-full px-6"
       >
         {t("getStarted")}

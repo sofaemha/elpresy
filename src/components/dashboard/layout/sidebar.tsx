@@ -2,17 +2,20 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import {
   LayoutDashboard,
   Plus,
-  Globe,
   Home,
   Menu,
   Zap,
+  LogOut,
   ChevronRight,
+  History as HistoryIcon,
+  Settings as SettingsIcon,
 } from "lucide-react";
+import { signOut } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -31,6 +34,8 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
   { href: "/predict", labelKey: "newPrediction", icon: Plus },
+  { href: "/history", labelKey: "history", icon: HistoryIcon },
+  { href: "/settings", labelKey: "settings", icon: SettingsIcon },
 ];
 
 function NavLink({
@@ -83,14 +88,12 @@ function NavLink({
 function SidebarContent({
   t,
   pathname,
-  locale,
-  onToggleLocale,
+  onLogout,
   onNavClick,
 }: {
   t: ReturnType<typeof useTranslations>;
   pathname: string;
-  locale: string;
-  onToggleLocale: () => void;
+  onLogout: () => void;
   onNavClick?: () => void;
 }) {
   return (
@@ -128,15 +131,15 @@ function SidebarContent({
 
       {/* Bottom Actions */}
       <div className="px-3 py-4 border-t border-border-gold space-y-1">
-        {/* Locale toggle */}
+        {/* Log Out */}
         <button
           type="button"
-          onClick={onToggleLocale}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-text-muted hover:bg-gold/5 hover:text-text-primary border border-transparent transition-all duration-200"
-          aria-label={`Switch language to ${locale === "en" ? "Indonesian" : "English"}`}
+          onClick={onLogout}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-text-muted hover:bg-red-500/10 hover:text-red-500 border border-transparent transition-all duration-200"
+          aria-label="Log Out"
         >
-          <Globe size={16} className="shrink-0 text-text-faint" aria-hidden="true" />
-          <span>{locale === "en" ? "EN → ID" : "ID → EN"}</span>
+          <LogOut size={16} className="shrink-0 text-red-500/70" aria-hidden="true" />
+          <span>{t("logout")}</span>
         </button>
 
         {/* Back to landing */}
@@ -155,14 +158,18 @@ function SidebarContent({
 
 export default function Sidebar() {
   const t = useTranslations("nav");
-  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleToggleLocale = () => {
-    const next = locale === "en" ? "id" : "en";
-    router.replace(pathname, { locale: next });
+  const handleLogout = async () => {
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+        },
+      },
+    });
   };
 
   return (
@@ -175,8 +182,7 @@ export default function Sidebar() {
         <SidebarContent
           t={t}
           pathname={pathname}
-          locale={locale}
-          onToggleLocale={handleToggleLocale}
+          onLogout={handleLogout}
         />
       </aside>
 
@@ -210,9 +216,8 @@ export default function Sidebar() {
             <SidebarContent
               t={t}
               pathname={pathname}
-              locale={locale}
-              onToggleLocale={() => {
-                handleToggleLocale();
+              onLogout={() => {
+                handleLogout();
                 setMobileOpen(false);
               }}
               onNavClick={() => setMobileOpen(false)}
