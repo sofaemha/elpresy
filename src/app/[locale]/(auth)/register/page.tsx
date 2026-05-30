@@ -1,10 +1,10 @@
 // filepath: src/app/[locale]/(auth)/register/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
-import { signUp } from "@/lib/auth-client";
+import { signUp, useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 
 export default function RegisterPage() {
@@ -42,6 +42,22 @@ export default function RegisterPage() {
       router.push("/dashboard");
     }
   };
+
+  const { data: session, isPending } = useSession();
+
+  useEffect(() => {
+    if (!isPending && session?.user) {
+      router.push("/dashboard");
+    }
+  }, [isPending, session, router]);
+
+  if (isPending || session?.user) {
+    return (
+      <main className="flex min-h-[100dvh] items-center justify-center bg-bg p-6">
+        <div className="size-6 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+      </main>
+    );
+  }
 
   return (
     <main className="flex min-h-[100dvh] items-center justify-center bg-bg p-6">

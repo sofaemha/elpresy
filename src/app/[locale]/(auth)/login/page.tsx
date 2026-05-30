@@ -42,6 +42,14 @@ export default function LoginPage() {
     }
   };
 
+  if (isPending || session?.user) {
+    return (
+      <main className="flex min-h-[100dvh] items-center justify-center bg-bg p-6">
+        <div className="size-6 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+      </main>
+    );
+  }
+
   return (
     <main className="flex min-h-[100dvh] items-center justify-center bg-bg p-6">
       <div className="w-full max-w-md space-y-8 rounded-2xl border border-border bg-surface p-8 shadow-lg">
