@@ -21,7 +21,7 @@ export default async function DashboardPage() {
   
   if (!session) {
     const locale = await getLocale();
-    redirect({ href: "/login", locale });
+    return redirect({ href: "/login", locale });
   }
 
   const userPredictions = await db

@@ -335,5 +335,21 @@
     "success_deleted": "Prediction deleted successfully.",
     "success_deleted_bulk": "Predictions deleted successfully.",
     "success_deleted_all": "All predictions deleted successfully."
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "tab_users": "Users",
+    "col_name": "Name",
+    "col_email": "Email",
+    "col_role": "Role",
+    "col_registered": "Registered",
+    "tab_predictions": "Predictions",
+    "col_user": "User",
+    "tab_sessions": "Sessions",
+    "col_ip": "IP Address",
+    "col_device": "Device",
+    "search_users": "Search users...",
+    "search_predictions": "Search predictions...",
+    "search_sessions": "Search sessions..."
   }
 }

@@ -8,7 +8,6 @@ import { PredictTraining, type TrainMonth, WORKING_DAYS_PER_MONTH } from "@/comp
 import { PredictInput } from "@/components/dashboard/section/predict/predict-input";
 import { PredictResult } from "@/components/dashboard/section/predict/predict-result";
 import type { PredictionResult } from "@/lib/ml/predict";
-import type { PredictionResult } from "@/lib/ml/predict";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { savePrediction } from "@/app/actions/predictions";

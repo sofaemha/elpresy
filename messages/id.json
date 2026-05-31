@@ -335,5 +335,21 @@
     "success_deleted": "Prediksi berhasil dihapus.",
     "success_deleted_bulk": "Prediksi berhasil dihapus.",
     "success_deleted_all": "Semua prediksi berhasil dihapus."
+  },
+  "admin": {
+    "title": "Panel Admin",
+    "tab_users": "Pengguna",
+    "col_name": "Nama",
+    "col_email": "Email",
+    "col_role": "Peran",
+    "col_registered": "Terdaftar",
+    "tab_predictions": "Prediksi",
+    "col_user": "Pengguna",
+    "tab_sessions": "Sesi",
+    "col_ip": "Alamat IP",
+    "col_device": "Perangkat",
+    "search_users": "Cari pengguna...",
+    "search_predictions": "Cari prediksi...",
+    "search_sessions": "Cari sesi..."
   }
 }

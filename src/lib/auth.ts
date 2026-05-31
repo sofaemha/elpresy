@@ -14,6 +14,15 @@ export const auth = betterAuth({
       verification: schema.verifications,
     },
   }),
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: true,
+        defaultValue: "user",
+      },
+    },
+  },
   emailAndPassword: { enabled: true, minPasswordLength: 8 },
   trustedOrigins: [process.env.BETTER_AUTH_URL!],
 });

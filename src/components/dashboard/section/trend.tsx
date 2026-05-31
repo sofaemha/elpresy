@@ -24,7 +24,7 @@ interface TrendProps {
   data: TrendDataPoint[];
 }
 
-function CustomTooltip({ active, payload, label }: TooltipProps<number, string>) {
+function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload || payload.length === 0) return null;
 
   return (
