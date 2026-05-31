@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Search } from "lucide-react";
+import { Search, Filter } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type SessionItem = {
   session: {
@@ -21,18 +30,31 @@ type SessionItem = {
 export function SessionsTable({ sessions }: { sessions: SessionItem[] }) {
   const t = useTranslations("admin");
   const [search, setSearch] = useState("");
+  const [selectedColumns, setSelectedColumns] = useState<string[]>(["userName", "ipAddress", "userAgent", "date"]);
 
   const filteredSessions = sessions.filter((s) => {
     const q = search.toLowerCase();
-    const name = s.userName || "unknown";
-    const ip = s.session.ipAddress || "";
-    const agent = s.session.userAgent || "";
-    return (
-      name.toLowerCase().includes(q) ||
-      ip.toLowerCase().includes(q) ||
-      agent.toLowerCase().includes(q)
-    );
+    if (!q) return true;
+
+    return selectedColumns.some((col) => {
+      const ip = s.session.ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000" || s.session.ipAddress === "::1" ? "localhost" : (s.session.ipAddress || "");
+      if (col === "userName") return (s.userName || "unknown").toLowerCase().includes(q);
+      if (col === "ipAddress") return ip.toLowerCase().includes(q);
+      if (col === "userAgent") return (s.session.userAgent || "").toLowerCase().includes(q);
+      if (col === "date") return new Date(s.session.createdAt).toISOString().split("T")[0].includes(q);
+      return false;
+    });
   });
+
+  const toggleColumn = (col: string, checked: boolean) => {
+    if (checked) {
+      setSelectedColumns([...selectedColumns, col]);
+    } else {
+      if (selectedColumns.length > 1) {
+        setSelectedColumns(selectedColumns.filter((c) => c !== col));
+      }
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -40,17 +62,58 @@ export function SessionsTable({ sessions }: { sessions: SessionItem[] }) {
         <h2 className="text-xl font-bold text-foreground">
           {t("tab_sessions")} ({filteredSessions.length})
         </h2>
-        <div className="relative max-w-sm w-full">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search size={14} className="text-text-faint" />
+        <div className="flex items-center gap-2 max-w-sm w-full">
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search size={14} className="text-text-faint" />
+            </div>
+            <input
+              type="text"
+              className="w-full h-9 bg-surface-2 border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
+              placeholder={t("search_sessions")}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
-          <input
-            type="text"
-            className="w-full h-9 bg-surface-2 border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
-            placeholder={t("search_sessions")}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <DropdownMenu>
+            <DropdownMenuTrigger className="h-9 px-3 border border-border bg-surface-2 rounded-lg text-sm flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors whitespace-nowrap outline-none">
+              <Filter size={14} /> Filter
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 bg-surface border border-border">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel className="text-text-primary">Search Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-border" />
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("userName")}
+                  onCheckedChange={(checked) => toggleColumn("userName", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  {t("col_user")}
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("ipAddress")}
+                  onCheckedChange={(checked) => toggleColumn("ipAddress", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  {t("col_ip")}
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("userAgent")}
+                  onCheckedChange={(checked) => toggleColumn("userAgent", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  {t("col_device")}
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("date")}
+                  onCheckedChange={(checked) => toggleColumn("date", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  Date
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -69,7 +132,7 @@ export function SessionsTable({ sessions }: { sessions: SessionItem[] }) {
               <tr key={session.id} className="text-foreground">
                 <td className="px-4 py-3">{userName || "Unknown"}</td>
                 <td className="px-4 py-3 text-text-muted font-mono text-xs">
-                  {session.ipAddress || "N/A"}
+                  {session.ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000" || session.ipAddress === "::1" ? "localhost" : (session.ipAddress || "N/A")}
                 </td>
                 <td className="px-4 py-3 text-text-muted text-xs">
                   <div className="max-w-[150px] sm:max-w-[200px] truncate" title={session.userAgent || ""}>

@@ -39,6 +39,7 @@ export default async function DashboardPage() {
     predictionPeriod: p.predictionPeriod,
     resultLower: p.resultLower,
     resultUpper: p.resultUpper,
+    chartData: p.chartData,
     createdAt: p.createdAt.toISOString().split("T")[0],
   }));
 

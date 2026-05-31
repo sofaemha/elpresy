@@ -214,6 +214,8 @@
     "lastRange": "Rentang Prediksi Terakhir",
     "lastDate": "Tanggal Prediksi Terakhir",
     "historyTitle": "Riwayat Prediksi",
+    "chart_live": "LANGSUNG",
+    "lastPredictionTitle": "Prediksi Terakhir",
     "trendTitle": "Tren Ampere",
     "trendSubtitle": "resultUpper terhadap waktu",
     "colDate": "Tanggal",
@@ -319,6 +321,7 @@
   "history": {
     "title": "Riwayat Prediksi",
     "subtitle": "Lihat dan kelola semua prediksi Anda sebelumnya.",
+    "search": "Cari prediksi...",
     "col_date": "Tanggal",
     "col_ampere": "Ampere",
     "col_hours": "Jam",

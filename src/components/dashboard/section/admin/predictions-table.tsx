@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Search } from "lucide-react";
+import { Search, Filter } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type PredictionItem = {
   prediction: {
@@ -20,12 +29,40 @@ type PredictionItem = {
 export function PredictionsTable({ predictions }: { predictions: PredictionItem[] }) {
   const t = useTranslations("admin");
   const [search, setSearch] = useState("");
+  const [selectedColumns, setSelectedColumns] = useState<string[]>(["userName", "inputs", "range", "date"]);
 
   const filteredPredictions = predictions.filter((p) => {
     const q = search.toLowerCase();
-    const name = p.userName || "unknown";
-    return name.toLowerCase().includes(q);
+    if (!q) return true;
+
+    return selectedColumns.some((col) => {
+      if (col === "userName") {
+        return (p.userName || "unknown").toLowerCase().includes(q);
+      }
+      if (col === "inputs") {
+        const str = `${p.prediction.amperePerCycle}A, ${p.prediction.dailyUsageHours}h, ${p.prediction.predictionPeriod}d`;
+        return str.toLowerCase().includes(q);
+      }
+      if (col === "range") {
+        const str = `${p.prediction.resultLower.toFixed(1)} - ${p.prediction.resultUpper.toFixed(1)} A`;
+        return str.toLowerCase().includes(q);
+      }
+      if (col === "date") {
+        return new Date(p.prediction.createdAt).toISOString().split("T")[0].includes(q);
+      }
+      return false;
+    });
   });
+
+  const toggleColumn = (col: string, checked: boolean) => {
+    if (checked) {
+      setSelectedColumns([...selectedColumns, col]);
+    } else {
+      if (selectedColumns.length > 1) {
+        setSelectedColumns(selectedColumns.filter((c) => c !== col));
+      }
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -33,17 +70,58 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
         <h2 className="text-xl font-bold text-foreground">
           {t("tab_predictions")} ({filteredPredictions.length})
         </h2>
-        <div className="relative max-w-sm w-full">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search size={14} className="text-text-faint" />
+        <div className="flex items-center gap-2 max-w-sm w-full">
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search size={14} className="text-text-faint" />
+            </div>
+            <input
+              type="text"
+              className="w-full h-9 bg-surface-2 border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
+              placeholder={t("search_predictions")}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
-          <input
-            type="text"
-            className="w-full h-9 bg-surface-2 border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
-            placeholder={t("search_predictions")}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <DropdownMenu>
+            <DropdownMenuTrigger className="h-9 px-3 border border-border bg-surface-2 rounded-lg text-sm flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors whitespace-nowrap outline-none">
+              <Filter size={14} /> Filter
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 bg-surface border border-border">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel className="text-text-primary">Search Columns</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-border" />
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("userName")}
+                  onCheckedChange={(checked) => toggleColumn("userName", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  {t("col_user")}
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("inputs")}
+                  onCheckedChange={(checked) => toggleColumn("inputs", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  Inputs
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("range")}
+                  onCheckedChange={(checked) => toggleColumn("range", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  Range
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedColumns.includes("date")}
+                  onCheckedChange={(checked) => toggleColumn("date", checked)}
+                  className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                >
+                  Date
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 

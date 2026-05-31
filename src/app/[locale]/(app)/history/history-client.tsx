@@ -3,7 +3,16 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Search, Filter, Trash2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { deletePrediction, deletePredictions, deleteAllPredictions } from "@/app/actions/predictions";
 import type { Prediction } from "@/lib/db/schema";
 
@@ -11,6 +20,44 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
   const t = useTranslations("history");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isDeleting, setIsDeleting] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedColumns, setSelectedColumns] = useState<string[]>(["date", "ampere", "hours", "period", "range"]);
+
+  const filteredPredictions = initialPredictions.filter((p) => {
+    const q = search.toLowerCase();
+    if (!q) return true;
+
+    return selectedColumns.some((col) => {
+      if (col === "date") {
+        return new Date(p.createdAt).toLocaleDateString().includes(q) || 
+               new Date(p.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).includes(q);
+      }
+      if (col === "ampere") {
+        return `${p.amperePerCycle} a`.toLowerCase().includes(q) || `${p.amperePerCycle}`.includes(q);
+      }
+      if (col === "hours") {
+        return `${p.dailyUsageHours} h`.toLowerCase().includes(q) || `${p.dailyUsageHours}`.includes(q);
+      }
+      if (col === "period") {
+        return `${p.predictionPeriod} d`.toLowerCase().includes(q) || `${p.predictionPeriod}`.includes(q);
+      }
+      if (col === "range") {
+        return `${p.resultLower} - ${p.resultUpper} a`.toLowerCase().includes(q) || 
+               `${p.resultLower}`.includes(q) || `${p.resultUpper}`.includes(q);
+      }
+      return false;
+    });
+  });
+
+  const toggleColumn = (col: string, checked: boolean) => {
+    if (checked) {
+      setSelectedColumns([...selectedColumns, col]);
+    } else {
+      if (selectedColumns.length > 1) {
+        setSelectedColumns(selectedColumns.filter((c) => c !== col));
+      }
+    }
+  };
 
   const toggleSelect = (id: string) => {
     const newSet = new Set(selectedIds);
@@ -20,10 +67,10 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
   };
 
   const toggleSelectAll = () => {
-    if (selectedIds.size === initialPredictions.length) {
+    if (selectedIds.size === filteredPredictions.length) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(initialPredictions.map(p => p.id)));
+      setSelectedIds(new Set(filteredPredictions.map(p => p.id)));
     }
   };
 
@@ -51,22 +98,58 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
   };
 
   return (
-    <main className="flex-1 p-6 lg:p-10 max-w-6xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <main className="flex-1 p-6 lg:p-10 max-w-6xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500 min-w-0">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="font-display text-3xl font-bold text-foreground">{t("title")}</h1>
-          <p className="text-text-muted mt-1">{t("subtitle")}</p>
+          <p className="text-text-muted mt-1">{t("subtitle")} ({filteredPredictions.length})</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <div className="flex flex-1 md:flex-none items-center gap-2 max-w-sm w-full">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search size={14} className="text-text-faint" />
+              </div>
+              <input
+                type="text"
+                className="w-full h-9 bg-surface border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
+                placeholder={t("search") || "Search..."}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="h-9 px-3 border border-border bg-surface rounded-lg text-sm flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors whitespace-nowrap outline-none">
+                <Filter size={14} /> Filter
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-surface border border-border">
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="text-text-primary">Search Columns</DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-border" />
+                  {["date", "ampere", "hours", "period", "range"].map((col) => (
+                    <DropdownMenuCheckboxItem
+                      key={col}
+                      checked={selectedColumns.includes(col)}
+                      onCheckedChange={(checked) => toggleColumn(col, checked)}
+                      className="text-foreground focus:bg-surface-2 focus:text-text-primary"
+                    >
+                      {t(`col_${col}`)}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
           {selectedIds.size > 0 && (
-            <Button variant="destructive" size="sm" onClick={handleDeleteSelected} disabled={isDeleting}>
+            <Button variant="destructive" size="sm" onClick={handleDeleteSelected} disabled={isDeleting} className="h-9">
               <Trash2 className="w-4 h-4 mr-2" />
               {t("btn_delete_selected")} ({selectedIds.size})
             </Button>
           )}
           {initialPredictions.length > 0 && (
-            <Button variant="outline" size="sm" onClick={handleDeleteAll} disabled={isDeleting} className="text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20">
+            <Button variant="outline" size="sm" onClick={handleDeleteAll} disabled={isDeleting} className="text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20 h-9">
               <Trash2 className="w-4 h-4 mr-2" />
               {t("btn_delete_all")}
             </Button>
@@ -89,7 +172,7 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
                       <input 
                         type="checkbox" 
                         className="w-4 h-4 rounded border-border bg-transparent text-primary focus:ring-primary focus:ring-offset-surface cursor-pointer"
-                        checked={selectedIds.size === initialPredictions.length && initialPredictions.length > 0}
+                        checked={selectedIds.size === filteredPredictions.length && filteredPredictions.length > 0}
                         onChange={toggleSelectAll}
                       />
                     </div>
@@ -103,7 +186,7 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {initialPredictions.map((prediction) => (
+                {filteredPredictions.map((prediction) => (
                   <tr key={prediction.id} className="hover:bg-bg/30 transition-colors">
                     <td className="w-4 p-4">
                       <div className="flex items-center">

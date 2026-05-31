@@ -14,6 +14,7 @@ export interface MockPrediction {
   resultLower: number;
   resultUpper: number;
   createdAt: string;
+  chartData?: any;
 }
 
 interface HistoryProps {

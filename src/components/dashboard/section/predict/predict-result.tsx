@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChartBar, ChevronDown, Sparkles, LayoutTemplate } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AreaChart } from "@/components/ui/area-chart";
 import PredictionChart from "@/components/predict/result/chart";
 import type { PredictionResult } from "@/lib/ml/predict";
 
@@ -31,7 +30,6 @@ export function PredictResult({
   isReady,
 }: PredictResultProps) {
   const t = useTranslations("predict");
-  const [chartType, setChartType] = useState<"premium" | "interactive">("premium");
 
   return (
     <div>
@@ -84,36 +82,9 @@ export function PredictResult({
                   </div>
                 </div>
 
-                {/* Chart Toggle */}
-                <div className="flex bg-zinc-900/80 rounded-lg p-1 border border-border/50">
-                   <button 
-                      onClick={() => setChartType("premium")}
-                      className={cn("flex-1 text-[10px] font-semibold py-1.5 rounded-md transition-all", chartType === "premium" ? "bg-surface border border-border/50 shadow-sm text-gold" : "text-text-muted hover:text-text-primary")}
-                   >
-                      <Sparkles size={10} className="inline mr-1 mb-0.5" />
-                      {t("tab_premium")}
-                   </button>
-                   <button 
-                      onClick={() => setChartType("interactive")}
-                      className={cn("flex-1 text-[10px] font-semibold py-1.5 rounded-md transition-all", chartType === "interactive" ? "bg-surface border border-border/50 shadow-sm text-gold" : "text-text-muted hover:text-text-primary")}
-                   >
-                      <LayoutTemplate size={10} className="inline mr-1 mb-0.5" />
-                      {t("tab_interactive")}
-                   </button>
+                <div className="rounded-lg border border-border/30 overflow-hidden p-2 mt-4">
+                  <PredictionChart data={result!.chartData} height={400}/>
                 </div>
-
-                {chartType === "premium" ? (
-                   <AreaChart 
-                      pts={resultStats.pts} 
-                      months={resultStats.monthsLabel} 
-                      liveLabel={t("chart_live")} 
-                      trendLabel={t("chart_trend")} 
-                   />
-                ) : (
-                   <div className="rounded-lg border border-border/30 overflow-hidden bg-zinc-950/80 p-2">
-                      <PredictionChart data={result!.chartData} />
-                   </div>
-                )}
 
               </div>
             ) : (

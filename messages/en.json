@@ -214,6 +214,8 @@
     "lastRange": "Last Predicted Range",
     "lastDate": "Last Prediction Date",
     "historyTitle": "Prediction History",
+    "chart_live": "LIVE",
+    "lastPredictionTitle": "Last Prediction",
     "trendTitle": "Ampere Trend",
     "trendSubtitle": "resultUpper over time",
     "colDate": "Date",
@@ -319,6 +321,7 @@
   "history": {
     "title": "Prediction History",
     "subtitle": "View and manage all your past predictions.",
+    "search": "Search predictions...",
     "col_date": "Date",
     "col_ampere": "Ampere",
     "col_hours": "Hours",

@@ -215,7 +215,7 @@ export default function PredictPage() {
           <div className="p-5 space-y-4 lg:p-0 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-6 lg:items-start">
             
             {/* Left Column: Controls (Training + Input) */}
-            <div className="lg:col-span-5 lg:flex lg:flex-col lg:gap-6">
+            <div className="lg:col-span-5 lg:flex lg:flex-col lg:gap-6 min-w-0">
                 
                 {/* Training Data Card */}
                 <div className="lg:bg-surface lg:border lg:border-border lg:rounded-2xl lg:p-6 lg:shadow-xl">
@@ -262,7 +262,7 @@ export default function PredictPage() {
             </div>
 
             {/* Right Column: Results */}
-            <div className="lg:col-span-7 lg:bg-surface lg:border lg:border-border lg:rounded-2xl lg:p-6 lg:shadow-xl lg:sticky lg:top-8">
+            <div className="lg:col-span-7 lg:bg-surface lg:border lg:border-border lg:rounded-2xl lg:p-6 lg:shadow-xl lg:sticky lg:top-8 min-w-0">
                 <PredictResult
                 open={resultOpen}
                 onToggle={() => setResultOpen((o) => !o)}

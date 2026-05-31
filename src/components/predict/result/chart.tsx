@@ -4,7 +4,7 @@ import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianG
 import type { ChartDataPoint } from "@/lib/ml/predict";
 import { useTranslations } from "next-intl";
 
-export default function PredictionChart({ data }: { data: ChartDataPoint[] }) {
+export default function PredictionChart({ data, height }: { data: ChartDataPoint[]; height?: number }) {
   const t = useTranslations("predict");
 
   const maxDay = data.length > 0 ? data[data.length - 1].day : 0;
@@ -16,7 +16,7 @@ export default function PredictionChart({ data }: { data: ChartDataPoint[] }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={160}>
+    <ResponsiveContainer width="100%" height={ height || 160 }>
       <AreaChart data={data} margin={{ top: 16, right: 16, left: -24, bottom: 0 }}>
         <defs>
           <linearGradient id="colorAmpere" x1="0" y1="0" x2="0" y2="1">

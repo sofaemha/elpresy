@@ -14,8 +14,9 @@ import {
   ChevronRight,
   History as HistoryIcon,
   Settings as SettingsIcon,
+  Shield,
 } from "lucide-react";
-import { signOut } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -77,9 +78,9 @@ function NavLink({
         )}
         aria-hidden="true"
       />
-      <span>{t(item.labelKey)}</span>
+      <span className="lg:opacity-0 lg:group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">{t(item.labelKey)}</span>
       {isActive && (
-        <ChevronRight size={12} className="ml-auto text-gold/60" aria-hidden="true" />
+        <ChevronRight size={12} className="ml-auto text-gold/60 lg:opacity-0 lg:group-hover/sidebar:opacity-100 transition-opacity duration-300" aria-hidden="true" />
       )}
     </Link>
   );
@@ -90,12 +91,19 @@ function SidebarContent({
   pathname,
   onLogout,
   onNavClick,
+  isAdmin,
 }: {
   t: ReturnType<typeof useTranslations>;
   pathname: string;
   onLogout: () => void;
   onNavClick?: () => void;
+  isAdmin?: boolean;
 }) {
+  const items = [...NAV_ITEMS];
+  if (isAdmin) {
+    items.push({ href: "/admin", labelKey: "admin", icon: Shield });
+  }
+
   return (
     <div className="flex flex-col h-full">
       {/* Logo */}
@@ -107,7 +115,7 @@ function SidebarContent({
             strokeWidth={2.5}
             aria-hidden="true"
           />
-          <span className="font-display font-semibold tracking-wide text-text-primary text-base">
+          <span className="font-display font-semibold tracking-wide text-text-primary text-base lg:opacity-0 lg:group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">
             ELPRESY
           </span>
         </Link>
@@ -115,10 +123,10 @@ function SidebarContent({
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1" aria-label="App navigation">
-        <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-text-faint">
+        <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-text-faint lg:opacity-0 lg:group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">
           Navigation
         </p>
-        {NAV_ITEMS.map((item) => (
+        {items.map((item) => (
           <NavLink
             key={item.href}
             item={item}
@@ -139,7 +147,7 @@ function SidebarContent({
           aria-label="Log Out"
         >
           <LogOut size={16} className="shrink-0 text-red-500/70" aria-hidden="true" />
-          <span>{t("logout")}</span>
+          <span className="lg:opacity-0 lg:group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">{t("logout")}</span>
         </button>
 
         {/* Back to landing */}
@@ -149,7 +157,7 @@ function SidebarContent({
           className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-text-muted hover:bg-gold/5 hover:text-text-primary border border-transparent transition-all duration-200"
         >
           <Home size={16} className="shrink-0 text-text-faint" aria-hidden="true" />
-          <span>{t("backHome")}</span>
+          <span className="lg:opacity-0 lg:group-hover/sidebar:opacity-100 transition-opacity duration-300 whitespace-nowrap">{t("backHome")}</span>
         </Link>
       </div>
     </div>
@@ -161,6 +169,9 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  
+  const { data: session } = useSession();
+  const isAdmin = (session?.user as any)?.role === "admin";
 
   const handleLogout = async () => {
     await signOut({
@@ -177,12 +188,13 @@ export default function Sidebar() {
       {/* ── Desktop sidebar (lg+) ── */}
       <aside
         aria-label="App sidebar"
-        className="fixed inset-y-0 left-0 z-40 w-64 bg-surface border-r border-border-gold hidden lg:flex flex-col"
+        className="fixed inset-y-0 left-0 z-40 w-16 hover:w-64 transition-[width] duration-300 ease-in-out bg-surface border-r border-border-gold hidden lg:flex flex-col group/sidebar overflow-x-hidden"
       >
         <SidebarContent
           t={t}
           pathname={pathname}
           onLogout={handleLogout}
+          isAdmin={isAdmin}
         />
       </aside>
 
@@ -221,6 +233,7 @@ export default function Sidebar() {
                 setMobileOpen(false);
               }}
               onNavClick={() => setMobileOpen(false)}
+              isAdmin={isAdmin}
             />
           </SheetContent>
         </Sheet>

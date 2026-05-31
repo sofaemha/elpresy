@@ -9,9 +9,9 @@ export default async function AppLayout({
   return (
     <div className="flex min-h-screen bg-bg">
       <Sidebar />
-      {/* lg:pl-64 offsets the fixed 256px sidebar on desktop */}
+      {/* lg:pl-16 offsets the fixed 64px sidebar on desktop */}
       {/* pt-14 offsets the fixed mobile top bar on small screens */}
-      <div className="flex-1 flex flex-col min-h-screen pt-14 lg:pt-0 lg:pl-64">
+      <div className="flex-1 flex flex-col min-h-screen pt-14 lg:pt-0 lg:pl-16 min-w-0">
         {children}
       </div>
     </div>
