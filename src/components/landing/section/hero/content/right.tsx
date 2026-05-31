@@ -26,7 +26,7 @@ function generateData(months: TrainMonth) {
 }
 
 import { NumericStepper } from "@/components/ui/numeric-stepper";
-import { AreaChart } from "@/components/ui/area-chart";
+import PredictionChart from "@/components/predict/result/chart";
 
 // ── Main Component ────────────────────────────────────────────────────────
 export default function Right() {
@@ -278,7 +278,9 @@ export default function Right() {
                         </div>
                       </div>
 
-                      <AreaChart pts={result.pts} months={predMonths} liveLabel={t("mockLive")} trendLabel={t("mockPerMonth")} />
+                      <div className="rounded-lg border border-border/30 overflow-hidden p-2 mt-2">
+                        <PredictionChart data={result.pts.map((ampere, i) => ({ day: i + 1, ampere }))} />
+                      </div>
                     </div>
                   ) : (
                     <div className="h-12 flex items-center justify-center rounded-lg border border-dashed border-border/30">
