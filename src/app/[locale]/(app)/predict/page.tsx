@@ -60,7 +60,7 @@ export default function PredictPage() {
 
   const handleGenerate = useCallback(() => {
     const data = generateData(trainMonths);
-    const m = new DecisionTreeRegression({ maxDepth: 5, minNumSamples: 2 });
+    const m = new DecisionTreeRegression({ minNumSamples: 2 });
     m.train(data.x, data.y);
     setTrainData(data);
     setSimulatedModel(m);
