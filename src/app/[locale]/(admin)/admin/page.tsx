@@ -52,7 +52,7 @@ export default async function AdminPage() {
 
         <div className="grid lg:grid-cols-2 gap-8">
           <div className="min-w-0">
-            <UsersTable users={allUsers} />
+            <SessionsTable sessions={allSessions} />
           </div>
           <div className="min-w-0">
             <PredictionsTable predictions={allPredictions} />
@@ -60,7 +60,7 @@ export default async function AdminPage() {
         </div>
         
         <div className="pt-4 min-w-0">
-          <SessionsTable sessions={allSessions} />
+          <UsersTable users={allUsers} />
         </div>
       </div>
     </main>
