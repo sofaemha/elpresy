@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Activity, Zap } from "lucide-react";
 import { DecisionTreeRegression } from "ml-cart";
@@ -64,7 +64,7 @@ export default function PredictPage() {
     m.train(data.x, data.y);
     setTrainData(data);
     setSimulatedModel(m);
-    setResult(null); 
+    setResult(null)
   }, [trainMonths]);
 
   const handlePredict = useCallback(async () => {
@@ -116,7 +116,7 @@ export default function PredictPage() {
          const val = daily + (Math.sin(d * 0.9) * 0.07 + Math.cos(d * 1.5) * 0.04) * daily;
          return { day: d + 1, ampere: parseFloat(val.toFixed(3)) };
       });
-      
+
       const min = Math.min(...pts.map(p => p.ampere));
       const max = Math.max(...pts.map(p => p.ampere));
       const resultLower = parseFloat((min * 0.9).toFixed(3));
@@ -176,6 +176,7 @@ export default function PredictPage() {
 
   const resultStats = useMemo(() => {
     if (!result) return null;
+    
     const pts = result.chartData.map(c => c.ampere);
     const total = pts.reduce((a, b) => a + b, 0);
     const workingDays = pts.length;

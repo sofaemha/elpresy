@@ -1,14 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Search, Filter, Trash2 } from "lucide-react";
+import { Search, Filter, Trash2, AlertTriangle, Download, ChevronLeft, ChevronRight } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -20,8 +33,15 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
   const t = useTranslations("history");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  type ConfirmAction = "delete" | "delete_selected" | "delete_all" | null;
+  const [confirmState, setConfirmState] = useState<{ type: ConfirmAction; id?: string } | null>(null);
+
   const [search, setSearch] = useState("");
   const [selectedColumns, setSelectedColumns] = useState<string[]>(["date", "ampere", "hours", "period", "range"]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const filteredPredictions = initialPredictions.filter((p) => {
     const q = search.toLowerCase();
@@ -49,6 +69,13 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
     });
   });
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedColumns]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredPredictions.length / itemsPerPage));
+  const paginatedPredictions = filteredPredictions.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   const toggleColumn = (col: string, checked: boolean) => {
     if (checked) {
       setSelectedColumns([...selectedColumns, col]);
@@ -74,51 +101,116 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm(t("confirm_delete"))) return;
+  const handleDelete = (id: string) => setConfirmState({ type: "delete", id });
+  const handleDeleteSelected = () => setConfirmState({ type: "delete_selected" });
+  const handleDeleteAll = () => setConfirmState({ type: "delete_all" });
+
+  const executeConfirm = async () => {
+    if (!confirmState) return;
     setIsDeleting(true);
-    await deletePrediction(id);
+    
+    if (confirmState.type === "delete" && confirmState.id) {
+      await deletePrediction(confirmState.id);
+    } else if (confirmState.type === "delete_selected") {
+      await deletePredictions(Array.from(selectedIds));
+      setSelectedIds(new Set());
+    } else if (confirmState.type === "delete_all") {
+      await deleteAllPredictions();
+      setSelectedIds(new Set());
+    }
+    
     setIsDeleting(false);
+    setConfirmState(null);
   };
 
-  const handleDeleteSelected = async () => {
-    if (!confirm(t("confirm_delete_selected"))) return;
-    setIsDeleting(true);
-    await deletePredictions(Array.from(selectedIds));
-    setSelectedIds(new Set());
-    setIsDeleting(false);
-  };
+  const handleDownload = (format: "csv" | "pdf") => {
+    const dataToDownload = selectedIds.size > 0 
+      ? filteredPredictions.filter(p => selectedIds.has(p.id)) 
+      : filteredPredictions;
+    
+    if (dataToDownload.length === 0) return;
 
-  const handleDeleteAll = async () => {
-    if (!confirm(t("confirm_delete_all"))) return;
-    setIsDeleting(true);
-    await deleteAllPredictions();
-    setSelectedIds(new Set());
-    setIsDeleting(false);
+    const dates = dataToDownload.map(p => {
+      const d = new Date(p.createdAt);
+      return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+    });
+    
+    const minDate = dates.reduce((a, b) => a < b ? a : b);
+    const maxDate = dates.reduce((a, b) => a > b ? a : b);
+    
+    let filename = "";
+    if (minDate === maxDate) {
+      filename = `Prediction - [${minDate}]`;
+    } else {
+      filename = `Predictions - [${minDate}-${maxDate}]`;
+    }
+
+    if (format === "csv") {
+      const headers = ["Date", "Time", "Ampere Per Cycle (A)", "Daily Usage (h)", "Prediction Period (d)", "Lower Range (A)", "Upper Range (A)"];
+      const rows = dataToDownload.map(p => {
+        const d = new Date(p.createdAt);
+        return [
+          d.toLocaleDateString(),
+          d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+          p.amperePerCycle,
+          p.dailyUsageHours,
+          p.predictionPeriod,
+          p.resultLower,
+          p.resultUpper
+        ].join(",");
+      });
+      const csvContent = [headers.join(","), ...rows].join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${filename}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else if (format === "pdf") {
+      const doc = new jsPDF();
+      doc.text(filename, 14, 15);
+      autoTable(doc, {
+        head: [["Date", "Time", "Ampere (A)", "Hours", "Period (d)", "Result Range"]],
+        body: dataToDownload.map(p => {
+          const d = new Date(p.createdAt);
+          return [
+            d.toLocaleDateString(),
+            d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            p.amperePerCycle.toString(),
+            p.dailyUsageHours.toString(),
+            p.predictionPeriod.toString(),
+            `${p.resultLower} - ${p.resultUpper}`
+          ];
+        }),
+        startY: 20,
+      });
+      doc.save(`${filename}.pdf`);
+    }
   };
 
   return (
     <main className="flex-1 p-6 lg:p-10 max-w-6xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-500 min-w-0">
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+      <div className="mb-8 flex flex-col gap-4">
         <div>
           <h1 className="font-display text-3xl font-bold text-foreground">{t("title")}</h1>
           <p className="text-text-muted mt-1">{t("subtitle")} ({filteredPredictions.length})</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-          <div className="flex flex-1 md:flex-none items-center gap-2 max-w-sm w-full">
-            <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search size={14} className="text-text-faint" />
-              </div>
-              <input
-                type="text"
-                className="w-full h-9 bg-surface border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
-                placeholder={t("search") || "Search..."}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+        <div className="flex flex-wrap items-center gap-3 w-full">
+          <div className="relative flex-1 min-w-[200px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search size={14} className="text-text-faint" />
             </div>
+            <input
+              type="text"
+              className="w-full h-9 bg-surface border border-border rounded-lg pl-9 pr-3 text-sm text-foreground focus:outline-none focus:border-gold transition-colors placeholder:text-text-faint"
+              placeholder={t("search") || "Search..."}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
             <DropdownMenu>
               <DropdownMenuTrigger className="h-9 px-3 border border-border bg-surface rounded-lg text-sm flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors whitespace-nowrap outline-none">
                 <Filter size={14} /> Filter
@@ -140,8 +232,20 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
-
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger className="h-9 px-3 border border-border bg-surface rounded-lg text-sm flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors whitespace-nowrap outline-none">
+                <Download size={14} /> Download
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40 bg-surface border border-border">
+                <DropdownMenuItem onClick={() => handleDownload("csv")} className="text-foreground focus:bg-surface-2 focus:text-text-primary cursor-pointer">
+                  Comma-Separated Values (CSV)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleDownload("pdf")} className="text-foreground focus:bg-surface-2 focus:text-text-primary cursor-pointer">
+                  Portable Document Format (PDF)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           {selectedIds.size > 0 && (
             <Button variant="destructive" size="sm" onClick={handleDeleteSelected} disabled={isDeleting} className="h-9">
               <Trash2 className="w-4 h-4 mr-2" />
@@ -186,7 +290,7 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {filteredPredictions.map((prediction) => (
+                {paginatedPredictions.map((prediction) => (
                   <tr key={prediction.id} className="hover:bg-bg/30 transition-colors">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -232,6 +336,66 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
           </div>
         )}
       </div>
+
+      {totalPages > 1 && (
+        <div className="mt-4 flex flex-col sm:flex-row items-center justify-between text-sm text-text-muted px-2 gap-4">
+          <div>
+            Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredPredictions.length)} of {filteredPredictions.length} entries
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="h-8"
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" /> Previous
+            </Button>
+            <div className="font-medium text-foreground px-2">
+              Page {currentPage} of {totalPages}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="h-8"
+            >
+              Next <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        </div>
+      )}
+
+      <AlertDialog open={confirmState !== null} onOpenChange={(open) => !open && setConfirmState(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2 text-destructive">
+              <AlertTriangle className="h-5 w-5" />
+              Confirmation
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {confirmState?.type === "delete" && t("confirm_delete")}
+              {confirmState?.type === "delete_selected" && t("confirm_delete_selected")}
+              {confirmState?.type === "delete_all" && t("confirm_delete_all")}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={(e) => {
+                e.preventDefault();
+                executeConfirm();
+              }}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? "..." : t("btn_delete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </main>
   );
 }
