@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChartBar, ChevronDown, Sparkles, LayoutTemplate } from "lucide-react";
+import { ChartBar, ChevronDown, Sparkles, LayoutTemplate, TrendingDown, TrendingUp, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import PredictionChart from "@/components/predict/result/chart";
 import type { PredictionResult } from "@/lib/ml/predict";
@@ -19,6 +19,7 @@ export interface PredictResultProps {
     pts: number[];
     monthsLabel: number;
   } | null;
+  historyAvgs?: { min: number; max: number } | null;
   isReady: boolean;
 }
 
@@ -27,6 +28,7 @@ export function PredictResult({
   onToggle,
   result,
   resultStats,
+  historyAvgs,
   isReady,
 }: PredictResultProps) {
   const t = useTranslations("predict");
@@ -65,6 +67,30 @@ export function PredictResult({
                       {resultStats.total.toFixed(1)}<span className="text-base text-text-muted ml-1">Ah</span>
                     </div>
                   </div>
+
+                  <div className="flex flex-col items-center pb-0.5">
+                    <div className="text-[9px] text-text-faint uppercase tracking-wider mb-1">Avg Ampere</div>
+                    {(() => {
+                      const avg = resultStats.total / resultStats.workingDays;
+                      let colorClass = "text-white";
+                      let Icon = Minus;
+                      if (historyAvgs) {
+                        if (avg < historyAvgs.min) {
+                          colorClass = "text-green-500";
+                          Icon = TrendingDown;
+                        } else if (avg > historyAvgs.max) {
+                          colorClass = "text-red-500";
+                          Icon = TrendingUp;
+                        }
+                      }
+                      return (
+                        <div className={`flex items-center gap-1 text-xl font-display font-bold tabular-nums ${colorClass}`}>
+                          {avg.toFixed(2)} Ah <Icon size={14} />
+                        </div>
+                      );
+                    })()}
+                  </div>
+
                   <div className="flex flex-col items-end gap-1 pb-0.5">
                     <div className="text-[9px] text-text-faint uppercase tracking-wider">{t("stat_working_days")}</div>
                     <div className="text-sm font-bold text-gold font-mono">{resultStats.workingDays}d</div>

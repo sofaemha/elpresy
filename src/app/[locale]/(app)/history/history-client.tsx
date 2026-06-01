@@ -146,7 +146,7 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
     }
 
     if (format === "csv") {
-      const headers = ["Date", "Time", "Ampere Per Cycle (A)", "Daily Usage (h)", "Prediction Period (d)", "Lower Range (A)", "Upper Range (A)"];
+      const headers = ["Date", "Time", "Ampere Per Cycle (A)", "Daily Usage (h)", "Prediction Period (d)", "Total Ampere (A)", "Avg Ampere (A)", "Lower Range (A)", "Upper Range (A)"];
       const rows = dataToDownload.map(p => {
         const d = new Date(p.createdAt);
         return [
@@ -155,6 +155,8 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
           p.amperePerCycle,
           p.dailyUsageHours,
           p.predictionPeriod,
+          p.totalAmpere,
+          (p.totalAmpere / p.predictionPeriod).toFixed(3),
           p.resultLower,
           p.resultUpper
         ].join(",");
@@ -172,7 +174,7 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
       const doc = new jsPDF();
       doc.text(filename, 14, 15);
       autoTable(doc, {
-        head: [["Date", "Time", "Ampere (A)", "Hours", "Period (d)", "Result Range"]],
+        head: [["Date", "Time", "Ampere (A)", "Hours", "Period (d)", "Total (A)", "Avg (A)", "Result Range"]],
         body: dataToDownload.map(p => {
           const d = new Date(p.createdAt);
           return [
@@ -181,6 +183,8 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
             p.amperePerCycle.toString(),
             p.dailyUsageHours.toString(),
             p.predictionPeriod.toString(),
+            p.totalAmpere.toFixed(1),
+            (p.totalAmpere / p.predictionPeriod).toFixed(2),
             `${p.resultLower} - ${p.resultUpper}`
           ];
         }),
@@ -285,6 +289,8 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
                   <th scope="col" className="px-6 py-4 font-medium">{t("col_ampere")}</th>
                   <th scope="col" className="px-6 py-4 font-medium">{t("col_hours")}</th>
                   <th scope="col" className="px-6 py-4 font-medium">{t("col_period")}</th>
+                  <th scope="col" className="px-6 py-4 font-medium">Total Ampere</th>
+                  <th scope="col" className="px-6 py-4 font-medium">Avg Ampere</th>
                   <th scope="col" className="px-6 py-4 font-medium">{t("col_range")}</th>
                   <th scope="col" className="px-6 py-4 font-medium text-right">{t("col_actions")}</th>
                 </tr>
@@ -313,6 +319,12 @@ export default function HistoryClient({ initialPredictions }: { initialPredictio
                     </td>
                     <td className="px-6 py-4 text-text-muted">
                       {prediction.predictionPeriod} d
+                    </td>
+                    <td className="px-6 py-4 text-text-muted">
+                      {prediction.totalAmpere.toFixed(1)} A
+                    </td>
+                    <td className="px-6 py-4 text-text-muted">
+                      {(prediction.totalAmpere / prediction.predictionPeriod).toFixed(1)} A
                     </td>
                     <td className="px-6 py-4 font-medium text-gold whitespace-nowrap">
                       {prediction.resultLower} - {prediction.resultUpper} A

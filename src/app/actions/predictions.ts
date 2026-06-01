@@ -63,6 +63,7 @@ export async function savePrediction(data: {
   predictionPeriod: number;
   resultLower: number;
   resultUpper: number;
+  totalAmpere: number;
   chartData: { day: number; ampere: number }[];
 }) {
   const userId = await getUserId();

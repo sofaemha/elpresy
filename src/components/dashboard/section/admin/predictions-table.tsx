@@ -21,6 +21,7 @@ type PredictionItem = {
     predictionPeriod: number;
     resultLower: number;
     resultUpper: number;
+    totalAmpere: number;
     createdAt: Date;
   };
   userName: string | null;
@@ -131,6 +132,7 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
             <tr>
               <th className="px-4 py-3">{t("col_user")}</th>
               <th className="px-4 py-3">Inputs</th>
+              <th className="px-4 py-3">Total / Avg Ampere</th>
               <th className="px-4 py-3">Range</th>
               <th className="px-4 py-3">Date</th>
             </tr>
@@ -141,6 +143,9 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
                 <td className="px-4 py-3">{userName || "Unknown"}</td>
                 <td className="px-4 py-3 text-text-muted text-xs">
                   {prediction.amperePerCycle}A, {prediction.dailyUsageHours}h, {prediction.predictionPeriod}d
+                </td>
+                <td className="px-4 py-3 text-text-muted text-xs">
+                  {prediction.totalAmpere?.toFixed(1) || 0} A / {(prediction.totalAmpere / prediction.predictionPeriod || 0).toFixed(1)} A
                 </td>
                 <td className="px-4 py-3 text-primary font-medium">
                   {prediction.resultLower.toFixed(1)} - {prediction.resultUpper.toFixed(1)} A

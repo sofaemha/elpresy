@@ -13,6 +13,7 @@ export interface MockPrediction {
   predictionPeriod: number;
   resultLower: number;
   resultUpper: number;
+  totalAmpere: number;
   createdAt: string;
   chartData?: any;
 }
@@ -49,6 +50,8 @@ export default function HistoryTable({
     t("colAmpere"),
     t("colHours"),
     t("colPeriod"),
+    "Total Ampere",
+    "Avg Ampere",
     t("colRange"),
   ] as const;
 
@@ -113,6 +116,12 @@ export default function HistoryTable({
                   </td>
                   <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
                     {row.predictionPeriod}&thinsp;d
+                  </td>
+                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
+                    {row.totalAmpere?.toFixed(1) || 0}&thinsp;{unit}
+                  </td>
+                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
+                    {(row.totalAmpere / row.predictionPeriod || 0).toFixed(1)}&thinsp;{unit}
                   </td>
                   <td className="px-4 py-3 text-xs whitespace-nowrap">
                     <span className="font-mono font-semibold text-gold">

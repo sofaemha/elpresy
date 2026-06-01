@@ -56,6 +56,7 @@ export const predictions = pgTable("predictions", {
   predictionPeriod: integer("prediction_period").notNull(),
   resultLower:      real("result_lower").notNull(),
   resultUpper:      real("result_upper").notNull(),
+  totalAmpere:      real("total_ampere").notNull().default(0),
   chartData:        jsonb("chart_data"),  // Array<{ day: number; ampere: number }>
   createdAt:        timestamp("created_at").notNull().defaultNow(),
 });

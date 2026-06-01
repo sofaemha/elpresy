@@ -10,7 +10,7 @@ import { PredictResult } from "@/components/dashboard/section/predict/predict-re
 import type { PredictionResult } from "@/lib/ml/predict";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { savePrediction } from "@/app/actions/predictions";
+import { savePrediction, getPredictions } from "@/app/actions/predictions";
 
 // ── Constants ─────────────────────────────────────────────────────────────
 const GOLD = "#C9A84C";
@@ -25,6 +25,10 @@ function generateData(months: TrainMonth) {
     y.push(+(a * h + (Math.random() - 0.5) * 1.4).toFixed(1));
   }
   return { x, y };
+}
+
+function calculateTotalAmpere(chartData: { day: number; ampere: number }[]) {
+  return parseFloat(chartData.reduce((sum, p) => sum + p.ampere, 0).toFixed(3));
 }
 
 // ── Main Component ────────────────────────────────────────────────────────
@@ -52,6 +56,20 @@ export default function PredictPage() {
   const [trainOpen, setTrainOpen] = useState(false);
   const [predOpen, setPredOpen] = useState(true);
   const [resultOpen, setResultOpen] = useState(false);
+
+  const [historyAvgs, setHistoryAvgs] = useState<{ min: number; max: number } | null>(null);
+
+  useEffect(() => {
+    getPredictions().then((data) => {
+      if (data.length > 0) {
+        const avgs = data.map(d => d.totalAmpere / d.predictionPeriod);
+        setHistoryAvgs({
+          min: Math.min(...avgs),
+          max: Math.max(...avgs)
+        });
+      }
+    }).catch(console.error);
+  }, []);
 
   const avgY = useMemo(() => {
     if (!trainData) return null;
@@ -121,6 +139,7 @@ export default function PredictPage() {
       const max = Math.max(...pts.map(p => p.ampere));
       const resultLower = parseFloat((min * 0.9).toFixed(3));
       const resultUpper = parseFloat((max * 1.1).toFixed(3));
+      const totalAmpere = calculateTotalAmpere(pts);
       
       try {
         await savePrediction({
@@ -129,6 +148,7 @@ export default function PredictPage() {
            predictionPeriod: periodVal,
            resultLower,
            resultUpper,
+           totalAmpere,
            chartData: pts
         });
         toast.success("Prediction processed and saved successfully", { id: toastId });
@@ -139,7 +159,8 @@ export default function PredictPage() {
       setResult({
          chartData: pts,
          resultLower,
-         resultUpper
+         resultUpper,
+         totalAmpere
       });
       setResultOpen(true);
       setPredOpen(false);
@@ -269,6 +290,7 @@ export default function PredictPage() {
                 onToggle={() => setResultOpen((o) => !o)}
                 result={result}
                 resultStats={resultStats}
+                historyAvgs={historyAvgs}
                 isReady={isReady}
                 />
             </div>

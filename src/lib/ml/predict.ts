@@ -7,6 +7,7 @@ export interface PredictionResult {
   chartData: ChartDataPoint[];
   resultLower: number;
   resultUpper: number;
+  totalAmpere: number;
 }
 
 const reg = DTR.load(modelJSON as any);
@@ -23,5 +24,6 @@ export function runPrediction(
   const resultLower = parseFloat((Math.min(...predictions) * 0.9).toFixed(3));
   const resultUpper = parseFloat((Math.max(...predictions) * 1.1).toFixed(3));
   const chartData   = predictions.map((v, i) => ({ day: i + 1, ampere: parseFloat(v.toFixed(3)) }));
-  return { chartData, resultLower, resultUpper };
+  const totalAmpere = parseFloat(chartData.reduce((sum, p) => sum + p.ampere, 0).toFixed(3));
+  return { chartData, resultLower, resultUpper, totalAmpere };
 }

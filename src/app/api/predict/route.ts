@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
       amperePerCycle, dailyUsageHours, predictionPeriod,
       resultLower: result.resultLower,
       resultUpper: result.resultUpper,
+      totalAmpere: result.totalAmpere,
       chartData:   result.chartData,
     });
   }
