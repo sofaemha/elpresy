@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -31,6 +32,8 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
   const t = useTranslations("admin");
   const [search, setSearch] = useState("");
   const [selectedColumns, setSelectedColumns] = useState<string[]>(["userName", "inputs", "range", "date"]);
+  const [page, setPage] = useState(1);
+  const pageSize = 5;
 
   const filteredPredictions = predictions.filter((p) => {
     const q = search.toLowerCase();
@@ -64,6 +67,11 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
       }
     }
   };
+
+  const totalPages = Math.max(1, Math.ceil(filteredPredictions.length / pageSize));
+  const from = (page - 1) * pageSize + 1;
+  const to = Math.min(page * pageSize, filteredPredictions.length);
+  const slice = filteredPredictions.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="space-y-4">
@@ -138,7 +146,7 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {filteredPredictions.map(({ prediction, userName }) => (
+            {slice.map(({ prediction, userName }) => (
               <tr key={prediction.id} className="text-foreground">
                 <td className="px-4 py-3">{userName || "Unknown"}</td>
                 <td className="px-4 py-3 text-text-muted text-xs">
@@ -164,6 +172,48 @@ export function PredictionsTable({ predictions }: { predictions: PredictionItem[
             )}
           </tbody>
         </table>
+        {filteredPredictions.length > 0 && (
+          <div className="flex items-center justify-between px-5 py-3 border-t border-border bg-surface-2 shrink-0 gap-4 flex-wrap rounded-b-xl">
+            <p className="text-[11px] text-text-faint font-mono">
+              Showing {from} to {to} of {filteredPredictions.length} entries
+            </p>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                <ChevronLeft size={13} aria-hidden="true" />
+              </Button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => setPage(p)}
+                  aria-current={p === page ? "page" : undefined}
+                  className={`inline-flex items-center justify-center size-6 rounded text-[11px] font-mono transition-all border ${
+                    p === page
+                      ? "bg-primary/10 border-primary/40 text-primary font-semibold"
+                      : "border-border text-text-faint hover:border-primary/30 hover:text-text-muted"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+
+              <Button
+                variant="outline"
+                size="icon-sm"
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                <ChevronRight size={13} aria-hidden="true" />
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

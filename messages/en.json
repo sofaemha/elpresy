@@ -213,6 +213,7 @@
     "totalPredictions": "Total Predictions",
     "lastRange": "Last Predicted Range",
     "lastDate": "Last Prediction Date",
+    "avgDailyAmpere": "Avg Daily Ampere",
     "historyTitle": "Prediction History",
     "chart_live": "LIVE",
     "lastPredictionTitle": "Last Prediction",

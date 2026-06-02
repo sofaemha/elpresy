@@ -11,6 +11,7 @@ import type { PredictionResult } from "@/lib/ml/predict";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { savePrediction, getPredictions } from "@/app/actions/predictions";
+import { avgDistinct } from "drizzle-orm";
 
 // ── Constants ─────────────────────────────────────────────────────────────
 const GOLD = "#C9A84C";
@@ -63,13 +64,17 @@ export default function PredictPage() {
     getPredictions().then((data) => {
       if (data.length > 0) {
         const avgs = data.map(d => d.totalAmpere / d.predictionPeriod);
+        const avgData = avgs.reduce((a, b) => a + b, 0) / avgs.length
+        const avgAbove = avgs.filter(avg => avg > avgData)
+        const avgBelow = avgs.filter(avg => avg < avgData)
+        console.log(avgs.sort(), avgData)
         setHistoryAvgs({
-          min: Math.min(...avgs),
-          max: Math.max(...avgs)
+          min: Math.max(...avgBelow),
+          max: Math.min(...avgAbove)
         });
       }
     }).catch(console.error);
-  }, []);
+  }, [resultOpen]);
 
   const avgY = useMemo(() => {
     if (!trainData) return null;

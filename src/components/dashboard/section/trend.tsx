@@ -98,18 +98,17 @@ export default function Trend({ t, data }: TrendProps) {
                 dx={-10}
               />
               <Tooltip 
-                contentStyle={{ backgroundColor: "rgba(9,9,11,0.9)", border: "1px solid rgba(201,168,76,0.2)", color: "#FAFAFA", borderRadius: "0.5rem", backdropFilter: "blur(4px)" }}
-                itemStyle={{ color: "#C9A84C", fontWeight: "bold", fontFamily: "monospace" }}
-                labelStyle={{ color: "#A1A1AA", fontSize: "10px", textTransform: "uppercase" }}
+                content={<CustomTooltip />}
+                cursor={{ stroke: 'rgba(255,255,255,0.1)', strokeWidth: 1, strokeDasharray: "3 3" }}
               />
               <Area 
                 type="monotone" 
                 dataKey="value" 
                 stroke="#C9A84C" 
-                strokeWidth={2}
+                strokeWidth={5}
                 fillOpacity={1} 
                 fill="url(#colorAmpereTrend)"
-                activeDot={{ r: 4, fill: "#C9A84C", stroke: "#09090B", strokeWidth: 2 }} 
+                activeDot={{ r: 7, fill: "#C9A84C", stroke: "#C9A84C", strokeWidth: 7, strokeOpacity: 0.5 }} 
               />
             </AreaChart>
           </ResponsiveContainer>

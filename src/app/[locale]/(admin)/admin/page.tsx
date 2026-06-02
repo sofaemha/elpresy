@@ -25,23 +25,21 @@ export default async function AdminPage() {
   }
 
   // All users
-  const allUsers = await db.select().from(users).orderBy(desc(users.createdAt)).limit(50);
+  const allUsers = await db.select().from(users).orderBy(desc(users.createdAt));
 
   // All predictions with user name
   const allPredictions = await db
     .select({ prediction: predictions, userName: users.name })
     .from(predictions)
     .leftJoin(users, eq(predictions.userId, users.id))
-    .orderBy(desc(predictions.createdAt))
-    .limit(50);
+    .orderBy(desc(predictions.createdAt));
 
   // All sessions with user name
   const allSessions = await db
     .select({ session: sessions, userName: users.name })
     .from(sessions)
     .leftJoin(users, eq(sessions.userId, users.id))
-    .orderBy(desc(sessions.createdAt))
-    .limit(50);
+    .orderBy(desc(sessions.createdAt));
 
   return (
     <main className="container mx-auto px-6 py-12 md:py-20 min-h-[100dvh]">

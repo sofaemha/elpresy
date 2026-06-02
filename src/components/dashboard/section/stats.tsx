@@ -1,11 +1,11 @@
 // filepath: src/components/dashboard/section/stats.tsx
 import { useTranslations } from "next-intl";
-import { Hash, Zap, CalendarDays } from "lucide-react";
+import { Hash, Zap, Activity } from "lucide-react";
 
 interface StatsData {
   total: number;
   lastRange: string;
-  lastDate: string;
+  overallAvg: string;
 }
 
 interface StatsProps {
@@ -72,9 +72,9 @@ export default function Stats({ t, stats }: StatsProps) {
       accent: true,
     },
     {
-      label: t("lastDate"),
-      value: stats.lastDate || "—",
-      icon: CalendarDays,
+      label: t("avgDailyAmpere"),
+      value: stats.overallAvg,
+      icon: Activity,
       accent: false,
     },
   ];

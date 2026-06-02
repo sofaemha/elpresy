@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { History, ChevronLeft, ChevronRight, Inbox } from "lucide-react";
+import { History, ChevronLeft, ChevronRight, Inbox, TrendingDown, TrendingUp, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export interface MockPrediction {
@@ -24,7 +24,7 @@ interface HistoryProps {
   pageSize?: number;
 }
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 15;
 
 function formatRange(lower: number, upper: number, unit: string): string {
   return `${lower.toFixed(3)} ${unit} — ${upper.toFixed(3)} ${unit}`;
@@ -42,6 +42,10 @@ export default function HistoryTable({
   const from = (page - 1) * pageSize + 1;
   const to = Math.min(page * pageSize, predictions.length);
   const slice = predictions.slice((page - 1) * pageSize, page * pageSize);
+
+  const sumAmpere = predictions.reduce((acc, p) => acc + (p.totalAmpere || 0), 0);
+  const sumDays = predictions.reduce((acc, p) => acc + (p.predictionPeriod || 0), 0);
+  const overallAvg = sumDays > 0 ? sumAmpere / sumDays : 0;
 
   const isEmpty = predictions.length === 0;
 
@@ -90,7 +94,7 @@ export default function HistoryTable({
                   <th
                     key={col}
                     scope="col"
-                    className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-faint whitespace-nowrap"
+                    className="px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-faint whitespace-nowrap"
                   >
                     {col}
                   </th>
@@ -105,25 +109,48 @@ export default function HistoryTable({
                     i < slice.length - 1 ? "border-b border-border-gold" : ""
                   }`}
                 >
-                  <td className="px-4 py-3 font-mono text-text-muted text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 font-mono text-center text-text-muted text-xs whitespace-nowrap">
                     {row.createdAt}
                   </td>
-                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 font-mono text-center text-text-primary text-xs whitespace-nowrap">
                     {row.amperePerCycle.toFixed(1)}&thinsp;{unit}
                   </td>
-                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 font-mono text-center text-text-primary text-xs whitespace-nowrap">
                     {row.dailyUsageHours.toFixed(1)}&thinsp;h
                   </td>
-                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 font-mono text-center text-text-primary text-xs whitespace-nowrap">
                     {row.predictionPeriod}&thinsp;d
                   </td>
-                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 font-mono text-center text-text-primary text-xs whitespace-nowrap">
                     {row.totalAmpere?.toFixed(1) || 0}&thinsp;{unit}
                   </td>
-                  <td className="px-4 py-3 font-mono text-text-primary text-xs whitespace-nowrap">
-                    {(row.totalAmpere / row.predictionPeriod || 0).toFixed(1)}&thinsp;{unit}
+                  <td className="px-4 py-3 font-mono text-center text-xs whitespace-nowrap">
+                    {(() => {
+                      const rowAvg = row.predictionPeriod ? row.totalAmpere / row.predictionPeriod : 0;
+                      
+                      let colorClass = "text-gold";
+                      let Icon = Minus;
+
+                      if (sumDays > 0) {
+                         const diff = rowAvg - overallAvg;
+                         if (diff < -0.001) {
+                           colorClass = "text-red-500";
+                           Icon = TrendingDown;
+                         } else if (diff > 0.001) {
+                           colorClass = "text-green-500";
+                           Icon = TrendingUp;
+                         }
+                      }
+
+                      return (
+                        <div className={`flex items-center gap-1 ${colorClass}`}>
+                          <span>{rowAvg.toFixed(2)}&thinsp;{unit}</span>
+                          <Icon size={12} />
+                        </div>
+                      );
+                    })()}
                   </td>
-                  <td className="px-4 py-3 text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 text-center text-xs whitespace-nowrap">
                     <span className="font-mono font-semibold text-gold">
                       {formatRange(row.resultLower, row.resultUpper, unit)}
                     </span>

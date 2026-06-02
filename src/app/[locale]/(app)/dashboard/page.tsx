@@ -28,8 +28,7 @@ export default async function DashboardPage() {
     .select()
     .from(predictions)
     .where(eq(predictions.userId, session.user.id))
-    .orderBy(desc(predictions.createdAt))
-    .limit(20);
+    .orderBy(desc(predictions.createdAt));
 
   // Convert Date objects to strings for the client component
   const formattedPredictions = userPredictions.map(p => ({
@@ -41,7 +40,7 @@ export default async function DashboardPage() {
     resultUpper: p.resultUpper,
     totalAmpere: p.totalAmpere,
     chartData: p.chartData,
-    createdAt: p.createdAt.toISOString().split("T")[0],
+    createdAt: p.createdAt.toISOString(),
   }));
 
   return <DashboardShell predictions={formattedPredictions} />;

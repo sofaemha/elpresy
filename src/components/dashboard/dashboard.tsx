@@ -26,12 +26,21 @@ export default function DashboardShell({ predictions }: DashboardShellProps) {
 
   const latest = sorted[0];
 
+  let overallAvg = "—";
+  if (predictions.length > 0) {
+    const sumAmpere = predictions.reduce((acc, p) => acc + (p.totalAmpere || 0), 0);
+    const sumDays = predictions.reduce((acc, p) => acc + (p.predictionPeriod || 0), 0);
+    if (sumDays > 0) {
+      overallAvg = `${(sumAmpere / sumDays).toFixed(2)} ${unit}`;
+    }
+  }
+
   const stats = {
     total: totalCount,
     lastRange: latest
       ? `${latest.resultLower.toFixed(3)} ${unit} — ${latest.resultUpper.toFixed(3)} ${unit}`
       : "",
-    lastDate: latest ? latest.createdAt : "",
+    overallAvg,
   };
 
   // ── Trend data: resultUpper sorted ascending by date ──────────────────────

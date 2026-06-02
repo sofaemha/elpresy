@@ -56,10 +56,10 @@ export default function PredictionChart({ data, height }: { data: ChartDataPoint
           type="monotone" 
           dataKey="ampere" 
           stroke="#C9A84C" 
-          strokeWidth={2}
+          strokeWidth={5}
           fillOpacity={1} 
           fill="url(#colorAmpere)"
-          activeDot={{ r: 4, fill: "#C9A84C", stroke: "#09090B", strokeWidth: 2 }} 
+          activeDot={{ r: 7, fill: "#C9A84C", stroke: "#C9A84C", strokeWidth: 7, strokeOpacity: 0.5 }} 
         />
       </AreaChart>
     </ResponsiveContainer>

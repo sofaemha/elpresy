@@ -32,6 +32,7 @@ export function PredictResult({
   isReady,
 }: PredictResultProps) {
   const t = useTranslations("predict");
+  console.log(historyAvgs)
 
   return (
     <div>
