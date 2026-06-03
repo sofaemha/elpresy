@@ -19,13 +19,14 @@ type User = {
   name: string;
   email: string;
   role: string;
+  status?: string;
   createdAt: Date;
 };
 
 export function UsersTable({ users }: { users: User[] }) {
   const t = useTranslations("admin");
   const [search, setSearch] = useState("");
-  const [selectedColumns, setSelectedColumns] = useState<string[]>(["name", "email", "role", "registered"]);
+  const [selectedColumns, setSelectedColumns] = useState<string[]>(["name", "email", "role", "status", "registered"]);
   const [page, setPage] = useState(1);
   const pageSize = 5;
 
@@ -87,14 +88,14 @@ export function UsersTable({ users }: { users: User[] }) {
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="text-text-primary">Search Columns</DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-border" />
-                {["name", "email", "role"].map((col) => (
+                {["name", "email", "role", "status"].map((col) => (
                   <DropdownMenuCheckboxItem
                     key={col}
                     checked={selectedColumns.includes(col)}
                     onCheckedChange={(checked) => toggleColumn(col, checked)}
                     className="text-foreground focus:bg-surface-2 focus:text-text-primary"
                   >
-                    {t(`col_${col}`)}
+                    {col === "status" ? "Status" : t(`col_${col}`)}
                   </DropdownMenuCheckboxItem>
                 ))}
                 <DropdownMenuCheckboxItem
@@ -117,6 +118,7 @@ export function UsersTable({ users }: { users: User[] }) {
               <th className="px-4 py-3">{t("col_name")}</th>
               <th className="px-4 py-3">{t("col_email")}</th>
               <th className="px-4 py-3">{t("col_role")}</th>
+              <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">{t("col_registered")}</th>
             </tr>
           </thead>
@@ -136,6 +138,17 @@ export function UsersTable({ users }: { users: User[] }) {
                     {user.role}
                   </span>
                 </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-wider ${
+                      user.status === "Online"
+                        ? "bg-green-500/20 text-green-500"
+                        : "bg-red-500/20 text-red-500"
+                    }`}
+                  >
+                    {user.status || "Offline"}
+                  </span>
+                </td>
                 <td className="px-4 py-3 text-text-muted">
                   {new Date(user.createdAt).toISOString().split("T")[0]}
                 </td>
@@ -143,7 +156,7 @@ export function UsersTable({ users }: { users: User[] }) {
             ))}
             {filteredUsers.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center text-text-muted">
+                <td colSpan={5} className="px-4 py-8 text-center text-text-muted">
                   No users found.
                 </td>
               </tr>

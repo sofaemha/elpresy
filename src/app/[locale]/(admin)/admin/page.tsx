@@ -24,9 +24,6 @@ export default async function AdminPage() {
     return <div className="p-12 text-center text-foreground">Access Denied</div>;
   }
 
-  // All users
-  const allUsers = await db.select().from(users).orderBy(desc(users.createdAt));
-
   // All predictions with user name
   const allPredictions = await db
     .select({ prediction: predictions, userName: users.name })
@@ -40,6 +37,21 @@ export default async function AdminPage() {
     .from(sessions)
     .leftJoin(users, eq(sessions.userId, users.id))
     .orderBy(desc(sessions.createdAt));
+
+  // All users
+  const dbUsers = await db.select().from(users).orderBy(desc(users.createdAt));
+  const now = new Date();
+  const allUsers = dbUsers.map((user) => {
+    const userSessions = allSessions.filter((s) => s.session.userId === user.id);
+    let status = "Offline";
+    if (userSessions.length > 0) {
+      const latestSession = userSessions[0].session;
+      if (latestSession.expiresAt > now) {
+        status = "Online";
+      }
+    }
+    return { ...user, status };
+  });
 
   return (
     <main className="container mx-auto px-6 py-12 md:py-20 min-h-[100dvh]">

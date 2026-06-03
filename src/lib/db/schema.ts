@@ -23,18 +23,6 @@ export const sessions = pgTable("session", {
     userId: text("userId").notNull().references(() => users.id)
 });
 
-export const sessionLogs = pgTable("session_log", {
-    id: uuid("id").primaryKey().defaultRandom(),
-    session: text("session").notNull(),
-    token: text("token").notNull(),
-    expiresAt: timestamp("expiresAt").notNull(),
-    ipAddress: text("ipAddress"),
-    userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
-    status: text("status").notNull().default("Online"),
-    createdAt: timestamp("createdAt").notNull().defaultNow(),
-    updatedAt: timestamp("updatedAt").notNull().defaultNow()
-});
-
 export const accounts = pgTable("account", {
     id: text("id").primaryKey(),
     accountId: text("accountId").notNull(),
