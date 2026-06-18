@@ -374,6 +374,37 @@
     "fail": "FAIL",
     "criteria_r2": "R² must be ≥ 0.85",
     "criteria_mae": "MAE must be ≤ 10% of mean actual test data",
-    "error_load": "Failed to load evaluation data."
+    "error_load": "Failed to load evaluation data.",
+    "activePrediction": {
+      "title": "Active Prediction",
+      "description": "Select a prediction to use as actual data for model evaluation.",
+      "statusActive": "Active",
+      "statusNotSelected": "Not Selected",
+      "btnSelect": "Select Prediction",
+      "btnChange": "Change Prediction",
+      "emptyTitle": "No predictions yet",
+      "emptyDescription": "Run a prediction first to use it for evaluation.",
+      "emptyAction": "Go to Predict",
+      "statsTotal": "Total Ampere",
+      "statsAvg": "Avg Ampere/Day",
+      "statsRange": "Range",
+      "statsExecuted": "Executed",
+      "statsMeta": "{period} days · {ampere}A/cycle · {hours}h/day"
+    },
+    "selector": {
+      "title": "Select Active Prediction",
+      "description": "Choose one prediction to use as the basis for model evaluation.",
+      "searchPlaceholder": "Search by date or value...",
+      "colDate": "Date",
+      "colTotal": "Total A",
+      "colAvg": "Avg/Day",
+      "colRange": "Range (A)",
+      "colPeriod": "Period",
+      "btnConfirm": "Confirm Selection",
+      "btnClear": "Clear Selection",
+      "emptySearch": "No predictions match your search.",
+      "emptyList": "No predictions available. Run a prediction first."
+    },
+    "noActiveCallout": "Select an active prediction above to compute evaluation metrics."
   }
 }

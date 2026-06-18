@@ -374,6 +374,37 @@
     "fail": "TIDAK LULUS",
     "criteria_r2": "R² harus ≥ 0.85",
     "criteria_mae": "MAE harus ≤ 10% dari rata-rata aktual uji",
-    "error_load": "Gagal memuat data evaluasi."
+    "error_load": "Gagal memuat data evaluasi.",
+    "activePrediction": {
+      "title": "Prediksi Aktif",
+      "description": "Pilih prediksi yang akan digunakan sebagai data aktual untuk evaluasi model.",
+      "statusActive": "Aktif",
+      "statusNotSelected": "Belum Dipilih",
+      "btnSelect": "Pilih Prediksi",
+      "btnChange": "Ubah Prediksi",
+      "emptyTitle": "Belum ada prediksi",
+      "emptyDescription": "Jalankan prediksi terlebih dahulu untuk menggunakannya dalam evaluasi.",
+      "emptyAction": "Ke Halaman Prediksi",
+      "statsTotal": "Total Ampere",
+      "statsAvg": "Rata-rata/Hari",
+      "statsRange": "Rentang",
+      "statsExecuted": "Dijalankan",
+      "statsMeta": "{period} hari · {ampere}A/siklus · {hours}jam/hari"
+    },
+    "selector": {
+      "title": "Pilih Prediksi Aktif",
+      "description": "Pilih salah satu prediksi sebagai basis data aktual evaluasi model.",
+      "searchPlaceholder": "Cari berdasarkan tanggal atau nilai...",
+      "colDate": "Tanggal",
+      "colTotal": "Total A",
+      "colAvg": "Rata-rata/Hari",
+      "colRange": "Rentang (A)",
+      "colPeriod": "Periode",
+      "btnConfirm": "Konfirmasi Pilihan",
+      "btnClear": "Hapus Pilihan",
+      "emptySearch": "Tidak ada prediksi yang sesuai pencarian.",
+      "emptyList": "Tidak ada prediksi. Jalankan prediksi terlebih dahulu."
+    },
+    "noActiveCallout": "Pilih prediksi aktif di atas untuk menghitung metrik evaluasi."
   }
 }

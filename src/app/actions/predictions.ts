@@ -12,6 +12,19 @@ async function getUserId() {
   return session?.user?.id;
 }
 
+export async function getPredictionById(id: string) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Unauthorized");
+
+  const result = await db.query.predictions.findFirst({
+    where: and(
+      eq(predictions.id, id),
+      eq(predictions.userId, userId)
+    )
+  });
+  return result || null;
+}
+
 export async function getPredictions() {
   const userId = await getUserId();
   if (!userId) throw new Error("Unauthorized");
