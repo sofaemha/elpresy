@@ -18,7 +18,8 @@
     "backHome": "Kembali ke Beranda",
     "newPrediction": "Prediksi Baru",
     "history": "Riwayat",
-    "settings": "Pengaturan"
+    "settings": "Pengaturan",
+    "evaluate": "Evaluasi Model"
   },
   "hero": {
     "badge": "Proyek Skripsi Sarjana • 2026",
@@ -355,5 +356,24 @@
     "search_users": "Cari pengguna...",
     "search_predictions": "Cari prediksi...",
     "search_sessions": "Cari sesi..."
+  },
+  "evaluate": {
+    "title": "Evaluasi Model",
+    "description": "Evaluasi akurasi model CART Decision Tree terhadap dataset uji.",
+    "datasetInfo": "Informasi Dataset",
+    "totalSamples": "Total Sampel",
+    "trainSize": "Ukuran Data Latih",
+    "testSize": "Ukuran Data Uji",
+    "metricsTitle": "Metrik Performa",
+    "mse": "Mean Squared Error (MSE)",
+    "mae": "Mean Absolute Error (MAE)",
+    "rmse": "Root Mean Squared Error (RMSE)",
+    "r2": "R-Squared (R²)",
+    "criteriaTitle": "Kriteria Keberhasilan Skripsi",
+    "pass": "LULUS",
+    "fail": "TIDAK LULUS",
+    "criteria_r2": "R² harus ≥ 0.85",
+    "criteria_mae": "MAE harus ≤ 10% dari rata-rata aktual uji",
+    "error_load": "Gagal memuat data evaluasi."
   }
 }

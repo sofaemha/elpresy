@@ -305,6 +305,7 @@ The application uses **Better Auth** for authentication, supporting email/passwo
 | `predictionPeriod` | `integer` | Not null                                         |
 | `resultLower`      | `real`    | Not null                                         |
 | `resultUpper`      | `real`    | Not null                                         |
+| `totalAmpere`      | `real`    | Not null, default 0                              |
 | `chartData`        | `jsonb`   | Nullable — `Array<{ day: number; ampere: number }>` |
 | `createdAt`        | `timestamp`| Not null, default now                            |
 

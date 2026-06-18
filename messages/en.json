@@ -18,7 +18,8 @@
     "backHome": "Back to Home",
     "newPrediction": "New Prediction",
     "history": "History",
-    "settings": "Settings"
+    "settings": "Settings",
+    "evaluate": "Model Evaluation"
   },
   "hero": {
     "badge": "Undergraduate Thesis Project • 2026",
@@ -355,5 +356,24 @@
     "search_users": "Search users...",
     "search_predictions": "Search predictions...",
     "search_sessions": "Search sessions..."
+  },
+  "evaluate": {
+    "title": "Model Evaluation",
+    "description": "Evaluate the accuracy of the CART Decision Tree model against the test dataset.",
+    "datasetInfo": "Dataset Information",
+    "totalSamples": "Total Samples",
+    "trainSize": "Training Set Size",
+    "testSize": "Testing Set Size",
+    "metricsTitle": "Performance Metrics",
+    "mse": "Mean Squared Error (MSE)",
+    "mae": "Mean Absolute Error (MAE)",
+    "rmse": "Root Mean Squared Error (RMSE)",
+    "r2": "R-Squared (R²)",
+    "criteriaTitle": "Thesis Success Criteria",
+    "pass": "PASS",
+    "fail": "FAIL",
+    "criteria_r2": "R² must be ≥ 0.85",
+    "criteria_mae": "MAE must be ≤ 10% of mean actual test data",
+    "error_load": "Failed to load evaluation data."
   }
 }
