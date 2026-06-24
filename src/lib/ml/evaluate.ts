@@ -105,3 +105,44 @@ export function evaluateModel(): EvaluationResult {
     meanActual: parseFloat(meanActual.toFixed(4)),
   };
 }
+
+export function evaluateModelWithPrediction(
+  amperePerCycle: number,
+  dailyUsageHours: number,
+  predictionPeriod: number,
+  actualValues: number[]
+): EvaluationResult {
+  const totalSamples = dataset.trainingSet.length;
+  const { train } = splitDataset(dataset, 0.7);
+  
+  // Train the model on 70% split
+  const reg = new DTR({ maxDepth: 10, minNumSamples: 5 });
+  reg.train(train.trainingSet, train.trainingValues);
+  
+  // Create input matrix for the requested prediction
+  const inputMatrix = Array.from({ length: predictionPeriod }, (_, i) => [
+    amperePerCycle, dailyUsageHours, i,
+  ]);
+  
+  // Predict on the input matrix
+  const predicted = reg.predict(inputMatrix) as number[];
+  const actual = actualValues;
+  
+  const mse = computeMSE(actual, predicted);
+  const mae = computeMAE(actual, predicted);
+  const rmse = computeRMSE(actual, predicted);
+  const r2 = computeR2(actual, predicted);
+  
+  const meanActual = actual.reduce((sum, val) => sum + val, 0) / actual.length;
+  
+  return {
+    mse: parseFloat(mse.toFixed(4)),
+    mae: parseFloat(mae.toFixed(4)),
+    rmse: parseFloat(rmse.toFixed(4)),
+    r2: parseFloat(r2.toFixed(4)),
+    sampleCount: totalSamples,
+    trainSize: train.trainingSet.length,
+    testSize: predictionPeriod,
+    meanActual: parseFloat(meanActual.toFixed(4)),
+  };
+}

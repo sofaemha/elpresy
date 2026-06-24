@@ -3,7 +3,8 @@
 
 import { useTranslations } from "next-intl";
 import { Zap, Activity, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Prediction } from "@/lib/db/schema";
 import Link from "next/link";
 import { useState } from "react";
@@ -48,9 +49,9 @@ export function ActivePrediction({
         <p className="font-sans text-text-muted max-w-md mb-6">
           {t("emptyDescription")}
         </p>
-        <Button asChild className="bg-gold hover:bg-gold-hover text-surface font-semibold rounded-full px-8">
-          <Link href="/predict">{t("emptyAction")}</Link>
-        </Button>
+        <Link href="/predict" className={cn(buttonVariants(), "bg-gold hover:bg-gold-hover text-surface font-semibold rounded-full px-8")}>
+          {t("emptyAction")}
+        </Link>
       </div>
     );
   }

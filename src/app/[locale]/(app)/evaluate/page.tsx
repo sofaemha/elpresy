@@ -26,7 +26,7 @@ export default function EvaluatePage() {
   useEffect(() => {
     if (activePredictionId) {
       setEvalData(null);
-      fetch('/api/evaluate')
+      fetch(`/api/evaluate?predictionId=${activePredictionId}`)
         .then(r => r.json())
         .then(setEvalData)
         .catch(() => setError(true));

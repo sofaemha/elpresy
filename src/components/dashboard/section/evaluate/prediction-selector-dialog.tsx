@@ -65,7 +65,7 @@ export function PredictionSelectorDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl bg-surface border-border-gold p-0 gap-0 overflow-hidden flex flex-col max-h-[85dvh]">
+      <DialogContent className="w-[calc(100vw-2rem)] sm:max-w-4xl lg:max-w-5xl bg-surface border-border-gold p-0 gap-0 overflow-hidden flex flex-col max-h-[85dvh]">
         <div className="p-6 pb-4 border-b border-border">
           <DialogHeader>
             <DialogTitle className="font-display text-2xl text-text-primary">
