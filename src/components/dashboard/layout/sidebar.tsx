@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Settings as SettingsIcon,
   Shield,
+  Database as DatabaseIcon,
 } from "lucide-react";
 import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
@@ -32,6 +33,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
+  { href: "/firebase", labelKey: "firebase", icon: DatabaseIcon },
   { href: "/settings", labelKey: "settings", icon: SettingsIcon },
 ];
 

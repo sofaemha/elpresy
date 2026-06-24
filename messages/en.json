@@ -19,7 +19,8 @@
     "newPrediction": "New Prediction",
     "history": "History",
     "settings": "Settings",
-    "evaluate": "Model Evaluation"
+    "evaluate": "Model Evaluation",
+    "firebase": "Firebase"
   },
   "hero": {
     "badge": "Undergraduate Thesis Project • 2026",
@@ -226,7 +227,7 @@
     "colPeriod": "Period (days)",
     "colRange": "Predicted Range",
     "empty": "No predictions yet. Start your first forecast.",
-    "showing": "Showing {from}\u2013{to} of {total} records",
+    "showing": "Showing {from}–{to} of {total} records",
     "pagePrev": "Previous",
     "pageNext": "Next",
     "unit": "A"

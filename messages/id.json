@@ -19,7 +19,8 @@
     "newPrediction": "Prediksi Baru",
     "history": "Riwayat",
     "settings": "Pengaturan",
-    "evaluate": "Evaluasi Model"
+    "evaluate": "Evaluasi Model",
+    "firebase": "Firebase"
   },
   "hero": {
     "badge": "Proyek Skripsi Sarjana • 2026",
@@ -226,7 +227,7 @@
     "colPeriod": "Periode (hari)",
     "colRange": "Rentang Prediksi",
     "empty": "Belum ada prediksi. Mulai prediksi pertama Anda.",
-    "showing": "Menampilkan {from}\u2013{to} dari {total} data",
+    "showing": "Menampilkan {from}–{to} dari {total} data",
     "pagePrev": "Sebelumnya",
     "pageNext": "Berikutnya",
     "unit": "A"

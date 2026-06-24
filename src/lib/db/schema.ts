@@ -1,5 +1,5 @@
 // filepath: src/lib/db/schema.ts
-import { pgTable, text, timestamp, boolean, uuid, real, integer, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, uuid, real, integer, bigint, jsonb } from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
   id:            text("id").primaryKey(),
@@ -48,3 +48,11 @@ export const verifications = pgTable("verification", {
     updatedAt: timestamp("updatedAt")
 });
 
+export const firebaseData = pgTable("firebase", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    current: real("current").notNull(),
+    voltage: real("voltage").notNull(),
+    powerWatt: real("power_watt").notNull(),
+    lastUpdated: bigint("last_updated", { mode: "number" }).notNull(),
+    createdAt: timestamp("createdAt").notNull().defaultNow()
+});

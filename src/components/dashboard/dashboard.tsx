@@ -22,8 +22,7 @@ export default function DashboardShell() {
             Belum ada fitur
           </h3>
           <p className="text-sm text-text-muted leading-relaxed">
-            Halaman dashboard saat ini kosong karena fitur prediksi telah dihapus.
-            Fitur baru akan segera ditambahkan di sini.
+            Halaman dashboard saat ini kosong karena fitur telah dipindahkan.
           </p>
         </div>
       </div>
