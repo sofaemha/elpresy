@@ -6,16 +6,13 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import {
   LayoutDashboard,
-  Plus,
   Home,
   Menu,
   Zap,
   LogOut,
   ChevronRight,
-  History as HistoryIcon,
   Settings as SettingsIcon,
   Shield,
-  Activity,
 } from "lucide-react";
 import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
@@ -35,9 +32,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
-  { href: "/predict", labelKey: "newPrediction", icon: Plus },
-  { href: "/evaluate", labelKey: "evaluate", icon: Activity },
-  { href: "/history", labelKey: "history", icon: HistoryIcon },
   { href: "/settings", labelKey: "settings", icon: SettingsIcon },
 ];
 

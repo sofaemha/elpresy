@@ -4,11 +4,11 @@ import { headers } from "next/headers";
 import { desc, eq } from "drizzle-orm";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
-import { users, predictions, sessions } from "@/lib/db/schema";
+import { users, sessions } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 
 import { UsersTable } from "@/components/dashboard/section/admin/users-table";
-import { PredictionsTable } from "@/components/dashboard/section/admin/predictions-table";
+
 import { SessionsTable } from "@/components/dashboard/section/admin/sessions-table";
 
 export const metadata: Metadata = {
@@ -24,12 +24,7 @@ export default async function AdminPage() {
     return <div className="p-12 text-center text-foreground">Access Denied</div>;
   }
 
-  // All predictions with user name
-  const allPredictions = await db
-    .select({ prediction: predictions, userName: users.name })
-    .from(predictions)
-    .leftJoin(users, eq(predictions.userId, users.id))
-    .orderBy(desc(predictions.createdAt));
+
 
   // All sessions with user name
   const allSessions = await db
@@ -64,9 +59,7 @@ export default async function AdminPage() {
           <div className="min-w-0">
             <SessionsTable sessions={allSessions} />
           </div>
-          <div className="min-w-0">
-            <PredictionsTable predictions={allPredictions} />
-          </div>
+
         </div>
         
         <div className="pt-4 min-w-0">

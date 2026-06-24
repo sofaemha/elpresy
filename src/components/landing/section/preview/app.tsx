@@ -4,11 +4,9 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LayoutDashboard, BarChart3, History, Settings, Zap, Menu, X } from "lucide-react";
 import DashboardArea from "@/components/landing/section/preview/app/dashboard";
-import PredictionArea from "@/components/landing/section/preview/app/prediction";
-import HistoryArea from "@/components/landing/section/preview/app/history";
 import SettingsArea from "@/components/landing/section/preview/app/settings";
 
-type Tab = "dashboard" | "predictions" | "history" | "settings";
+type Tab = "dashboard" | "settings";
 
 export default function App() {
   const t = useTranslations("preview");
@@ -17,8 +15,6 @@ export default function App() {
 
   const NAV_ITEMS: { icon: React.ElementType; key: Tab; label: string }[] = [
     { icon: LayoutDashboard, key: "dashboard",   label: t("dashboard") },
-    { icon: BarChart3,       key: "predictions", label: t("predictions") },
-    { icon: History,         key: "history",     label: t("history") },
     { icon: Settings,        key: "settings",    label: t("settings") },
   ];
 
@@ -125,8 +121,6 @@ export default function App() {
       {/* ── Main Content ───────────────────────────────────────── */}
       <div className="flex-1 p-5 lg:p-6 flex flex-col gap-5 overflow-hidden bg-[#0a0a0c]">
         {activeTab === "dashboard"   && <DashboardArea  t={t} />}
-        {activeTab === "predictions" && <PredictionArea t={t} />}
-        {activeTab === "history"     && <HistoryArea    t={t} />}
         {activeTab === "settings"    && <SettingsArea   t={t} />}
       </div>
 
