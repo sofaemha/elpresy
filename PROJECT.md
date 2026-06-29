@@ -41,6 +41,8 @@ src/
 │   │   ├── auth/
 │   │   │   └── [...all]/
 │   │   │       └── route.ts    # Better Auth catch-all API handler
+│   │   ├── evaluate/
+│   │   │   └── route.ts        # GET endpoint: dynamic evaluate active prediction metrics
 │   │   └── predict/
 │   │       └── route.ts        # POST endpoint: run server-side ML prediction
 │   └── [locale]/
@@ -57,6 +59,8 @@ src/
 │       │   │   └── page.tsx    # Dashboard: stats, trend chart, history table
 │       │   ├── predict/
 │       │   │   └── page.tsx    # Predict: training model + input + results
+│       │   ├── evaluate/
+│       │   │   └── page.tsx    # Evaluate: Model performance metrics based on active prediction
 │       │   ├── history/
 │       │   │   ├── page.tsx    # History: server component data fetcher
 │       │   │   └── history-client.tsx  # History: client search, filter, pagination, export, delete
@@ -80,6 +84,7 @@ src/
 │   │   └── seed-admin.ts       # Script to assign admin role to a user by email
 │   └── ml/
 │       ├── predict.ts          # Server-side ML prediction using pre-trained model
+│       ├── evaluate.ts         # Server-side model evaluation with split logic and metrics (MSE, MAE, R2)
 │       ├── model.json          # Pre-trained CART Decision Tree model weights
 │       └── data/
 │           └── dummy/          # Dummy training data directory
@@ -109,6 +114,9 @@ src/
     │       │   ├── predict-training.tsx   # Training model type selector + simulator controls
     │       │   ├── predict-input.tsx      # Prediction input form (ampere, hours, period)
     │       │   └── predict-result.tsx     # Prediction results display + chart
+    │       ├── evaluate/
+    │       │   ├── active-prediction.tsx      # Evaluator active prediction trigger and stats display
+    │       │   └── prediction-selector-dialog.tsx # Interactive dialog for searching and selecting past predictions
     │       └── admin/
     │           ├── users-table.tsx        # Admin: all registered users table
     │           ├── predictions-table.tsx  # Admin: all predictions (with user names)
@@ -367,6 +375,15 @@ The application uses **Better Auth** for authentication, supporting email/passwo
   - If the user has an authenticated session, automatically saves the prediction to the database.
   - Returns the prediction result as JSON.
 
+### `src/app/api/evaluate/route.ts`
+* **Path**: [src/app/api/evaluate/route.ts](file:///d:/Kuliah/Skripsi/Aplikasi/v1/src/app/api/evaluate/route.ts)
+* **Purpose**: GET API endpoint for evaluating the machine learning model against actual data.
+* **Detailed Contents**:
+  - Dynamically computes model performance metrics based on a user's selected "active prediction".
+  - Accepts `?predictionId=...` in the query params.
+  - Fetches the active prediction and extracts its `chartData` to use as actual values.
+  - Returns calculated `mse`, `mae`, `rmse`, `r2`, and data size parameters.
+
 ---
 
 ## 8. Internationalization (i18n) Architecture
@@ -508,6 +525,15 @@ The project implements automated language detection and redirection. Translated 
   - **Period Options**: `1mo` (22 days), `3mo` (66 days), `6mo` (132 days), or custom days.
   - **Layout**: Mobile — single column with gold gradient separators. Desktop — 12-column grid: controls (5 cols) + results (7 cols, sticky).
   - Three collapsible accordion sections: Training Data, Prediction Input, Prediction Results.
+
+#### `src/app/[locale]/(app)/evaluate/page.tsx`
+* **Path**: [evaluate/page.tsx](file:///d:/Kuliah/Skripsi/Aplikasi/v1/src/app/%5Blocale%5D/%28app%29/evaluate/page.tsx)
+* **Directive**: `"use client"`
+* **Purpose**: Model Evaluation page allowing users to assess model performance based on historical predictions.
+* **Key Behaviors**:
+  - **Active Prediction Selection**: Users can trigger `<PredictionSelectorDialog>` through `<ActivePrediction>` to pick a past prediction.
+  - **Dynamic Metrics**: The chosen prediction acts as actual data values which the API uses to compute performance metrics (R², MAE, MSE, RMSE) in real-time.
+  - **Validation Cards**: Displays pass/fail status for strict thresholds (e.g., R² ≥ 0.85, MAE ≤ 10%).
 
 #### `src/app/[locale]/(app)/history/page.tsx` + `history-client.tsx`
 * **Path**: [history/page.tsx](file:///d:/Kuliah/Skripsi/Aplikasi/v1/src/app/%5Blocale%5D/%28app%29/history/page.tsx) / [history-client.tsx](file:///d:/Kuliah/Skripsi/Aplikasi/v1/src/app/%5Blocale%5D/%28app%29/history/history-client.tsx)
