@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { ref, onValue } from "firebase/database";
 import { database } from "@/lib/firebase/config";
-import { Activity, Zap, Gauge, Clock, Play, Square } from "lucide-react";
+import { Activity, Zap, Plug, Clock, Play, Square } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface FirebaseData {
@@ -133,43 +133,47 @@ export default function FirebaseMonitor() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 transition-colors hover:border-gold/50">
-          <div className="flex items-center gap-2 text-text-faint">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 shadow-lg relative overflow-hidden group transition-colors duration-300 hover:border-gold">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="flex items-center gap-2 text-text-faint relative z-10">
             <Activity size={16} className="text-blue-400" />
             <span className="text-xs font-semibold uppercase tracking-wider">Current</span>
           </div>
-          <div className="text-2xl font-display font-bold text-text-primary">
+          <div className="text-2xl font-display font-bold text-text-primary relative z-10">
             {data.current} <span className="text-sm text-text-muted font-normal">A</span>
           </div>
         </div>
 
-        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 transition-colors hover:border-gold/50">
-          <div className="flex items-center gap-2 text-text-faint">
+        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 shadow-lg relative overflow-hidden group transition-colors duration-300 hover:border-gold">
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="flex items-center gap-2 text-text-faint relative z-10">
             <Zap size={16} className="text-amber-400" />
             <span className="text-xs font-semibold uppercase tracking-wider">Voltage</span>
           </div>
-          <div className="text-2xl font-display font-bold text-text-primary">
+          <div className="text-2xl font-display font-bold text-text-primary relative z-10">
             {data.voltage} <span className="text-sm text-text-muted font-normal">V</span>
           </div>
         </div>
 
-        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 transition-colors hover:border-gold/50">
-          <div className="flex items-center gap-2 text-text-faint">
-            <Gauge size={16} className="text-emerald-400" />
+        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 shadow-lg relative overflow-hidden group transition-colors duration-300 hover:border-gold">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="flex items-center gap-2 text-text-faint relative z-10">
+            <Plug size={16} className="text-emerald-400" />
             <span className="text-xs font-semibold uppercase tracking-wider">Power Watt</span>
           </div>
-          <div className="text-2xl font-display font-bold text-text-primary">
+          <div className="text-2xl font-display font-bold text-text-primary relative z-10">
             {data.power_watt} <span className="text-sm text-text-muted font-normal">W</span>
           </div>
         </div>
 
-        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 transition-colors hover:border-gold/50">
-          <div className="flex items-center gap-2 text-text-faint">
+        <div className="bg-surface border border-border-gold rounded-xl p-5 flex flex-col gap-3 shadow-lg relative overflow-hidden group transition-colors duration-300 hover:border-gold">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="flex items-center gap-2 text-text-faint relative z-10">
             <Clock size={16} className="text-purple-400" />
             <span className="text-xs font-semibold uppercase tracking-wider">Last Updated</span>
           </div>
-          <div className="text-base font-display font-semibold text-text-primary leading-tight mt-1">
+          <div className="text-base font-display font-semibold text-text-primary leading-tight mt-1 relative z-10">
             {formattedDate}
           </div>
         </div>
